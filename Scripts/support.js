@@ -345,4 +345,65 @@
         }, 4000);
     }
 
+    // ---- Dynamic Contact Info & Preset WhatsApp Chat ----
+    function updateSupportPageContact(settings) {
+        const phone = (settings && settings.phoneNumber) || window.CONTACT_NUMBER || '218916808225';
+        const cleanPhone = phone.replace(/[^0-9]/g, '');
+        const email = (settings && settings.contactEmail) || window.CONTACT_EMAIL || 'support@newdesgin.store';
+
+        // Retrieve visitor/user profile if saved
+        let userProfile = {};
+        try {
+            if (typeof getUserProfile === 'function') userProfile = getUserProfile() || {};
+        } catch (e) {}
+
+        const userName = userProfile.name ? `\n- اسم العميل: ${userProfile.name}` : '';
+        const userPhone = userProfile.phone ? `\n- رقم الهاتف: ${userProfile.phone}` : '';
+
+        // Preset WhatsApp Support message
+        const presetMessage = encodeURIComponent(
+            `مرحباً خدمة عملاء متجر New Desgin 💙\nأرغب في الحصول على مساعدة ودعم فني بخصوص الطلبات والمنتجات:${userName}${userPhone}\n- نوع الاستفسار: `
+        );
+
+        // Update WhatsApp Card
+        const whatsappCard = document.getElementById('support-whatsapp-card');
+        const whatsappText = document.getElementById('support-whatsapp-text');
+        if (whatsappCard) {
+            whatsappCard.href = `https://wa.me/${cleanPhone}?text=${presetMessage}`;
+            whatsappCard.target = '_blank';
+        }
+        if (whatsappText) {
+            whatsappText.textContent = `+${cleanPhone} (تواصل فوري)`;
+        }
+
+        // Update Email Card
+        const emailCard = document.getElementById('support-email-card');
+        const emailText = document.getElementById('support-email-text');
+        if (emailCard) {
+            emailCard.href = `mailto:${email}?subject=${encodeURIComponent('طلب دعم فني - متجر New Desgin')}`;
+        }
+        if (emailText) {
+            emailText.textContent = email;
+        }
+    }
+
+    // Attach listener to Firebase settings in Realtime
+    try {
+        if (typeof firebase !== 'undefined' && firebase.database) {
+            const db = firebase.database();
+            db.ref('settings').on('value', snapshot => {
+                const settings = snapshot.val() || {};
+                updateSupportPageContact(settings);
+            });
+        } else {
+            updateSupportPageContact({});
+        }
+    } catch (e) {
+        updateSupportPageContact({});
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateSupportPageContact({});
+    });
+
 })();

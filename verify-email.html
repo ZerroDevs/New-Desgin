@@ -4,39 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تأكيد البريد الإلكتروني - متجر زيرونكس</title>
-    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+    <title>تأكيد البريد الإلكتروني - New Desgin</title>
+    <link rel="icon" type="image/png" href="Images/Logo-noBG.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="Style/auth.css">
 
     <style>
-        /* Specific overrides for verification page if needed */
         .verification-message {
             text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-size: 15px;
         }
 
         .icon-box {
             width: 80px;
             height: 80px;
-            background: rgba(102, 126, 234, 0.1);
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.05) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            font-size: 32px;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            font-size: 34px;
+            box-shadow: 0 0 25px rgba(14, 165, 233, 0.25);
+            animation: floatIcon 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatIcon {
+            from { transform: translateY(0); }
+            to { transform: translateY(-6px); }
         }
 
         .resend-link {
@@ -48,6 +55,11 @@
             font-family: inherit;
             padding: 0;
             font-size: inherit;
+            transition: color 0.2s;
+        }
+
+        .resend-link:hover {
+            color: #ffffff;
         }
 
         .resend-link:disabled {
@@ -64,9 +76,10 @@
         <!-- Logo Header -->
         <div class="auth-header">
             <a href="index.html">
-                <img src="https://assets.zeronux.store/Logo.png" alt="ZeroNux Store">
+                <img src="Images/Logo-noBG.png" alt="New Desgin" style="height: 65px; width: auto; object-fit: contain;">
             </a>
-            <h2>تحقق من صندوق الوارد 📩</h2>
+            <div class="icon-box">📩</div>
+            <h2>تحقق من صندوق الوارد</h2>
         </div>
 
         <div id="login-box"> <!-- Reusing login-box container style -->

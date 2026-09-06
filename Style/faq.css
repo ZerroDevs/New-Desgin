@@ -1,16 +1,17 @@
 .page-header {
     padding: 120px 0 60px;
     text-align: center;
-    background: linear-gradient(180deg, rgba(26, 26, 46, 0) 0%, rgba(102, 126, 234, 0.1) 100%);
+    background: linear-gradient(180deg, rgba(7, 11, 20, 0) 0%, rgba(14, 165, 233, 0.12) 100%);
 }
 
 .page-title {
     font-size: 3rem;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+    background: linear-gradient(135deg, #fff 0%, #7dd3fc 50%, #38bdf8 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 15px rgba(14, 165, 233, 0.3));
 }
 
 .faq-section {
@@ -20,16 +21,19 @@
 }
 
 .faq-item {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-radius: 16px;
     margin-bottom: 1rem;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 }
 
 .faq-item:hover {
-    border-color: rgba(102, 126, 234, 0.5);
+    border-color: rgba(56, 189, 248, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
 }
 
 .faq-question {
@@ -46,7 +50,7 @@
 .faq-question::after {
     content: '+';
     font-size: 1.5rem;
-    color: #667eea;
+    color: #38bdf8;
     transition: transform 0.3s ease;
 }
 

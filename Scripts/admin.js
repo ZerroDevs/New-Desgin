@@ -370,50 +370,41 @@ window.applyThemePreset = function (preset) {
 
     const presetNameInput = document.getElementById('theme-preset-name');
 
-    if (preset === 'purple') {
+    if (preset === 'newdesgin' || preset === 'blue') {
+        primaryInput.value = '#0ea5e9';
+        secondaryInput.value = '#0284c7';
+        accentInput.value = '#38bdf8';
+        bgPrimaryInput.value = '#070b14';
+        bgSecondaryInput.value = '#0f172a';
+        textPrimaryInput.value = '#ffffff';
+        textSecondaryInput.value = '#e2e8f0';
+        presetNameInput.value = 'newdesgin';
+    } else if (preset === 'purple') {
         primaryInput.value = '#667eea';
-        secondaryInput.value = '#f5576c';
-        accentInput.value = '#4facfe';
-        bgPrimaryInput.value = '#0f0f1e';
-        bgSecondaryInput.value = '#1a1a2e';
+        secondaryInput.value = '#764ba2';
+        accentInput.value = '#38bdf8';
+        bgPrimaryInput.value = '#0b132b';
+        bgSecondaryInput.value = '#1c2541';
         textPrimaryInput.value = '#ffffff';
-        textSecondaryInput.value = '#b3b3b3';
+        textSecondaryInput.value = '#e2e8f0';
         presetNameInput.value = 'purple';
-    } else if (preset === 'red') {
-        primaryInput.value = '#e53935';
-        secondaryInput.value = '#ff5252';
-        accentInput.value = '#ff1744';
-        bgPrimaryInput.value = '#1a0505';
-        bgSecondaryInput.value = '#2d0a0a';
-        textPrimaryInput.value = '#ffffff';
-        textSecondaryInput.value = '#ffa8a8';
-        presetNameInput.value = 'red';
-    } else if (preset === 'blue') {
-        primaryInput.value = '#1e88e5';
-        secondaryInput.value = '#42a5f5';
-        accentInput.value = '#2979ff';
-        bgPrimaryInput.value = '#05131a';
-        bgSecondaryInput.value = '#0a232e';
-        textPrimaryInput.value = '#ffffff';
-        textSecondaryInput.value = '#a8d5ff';
-        presetNameInput.value = 'blue';
     } else if (preset === 'pitchblack') {
-        primaryInput.value = '#ffffff';
-        secondaryInput.value = '#333333';
+        primaryInput.value = '#38bdf8';
+        secondaryInput.value = '#0284c7';
         accentInput.value = '#ffffff';
         bgPrimaryInput.value = '#000000';
         bgSecondaryInput.value = '#0a0a0a';
-        textPrimaryInput.value = '#e0e0e0';
-        textSecondaryInput.value = '#888888';
+        textPrimaryInput.value = '#ffffff';
+        textSecondaryInput.value = '#cbd5e1';
         presetNameInput.value = 'pitchblack';
     } else if (preset === 'light') {
-        primaryInput.value = '#2563eb';
-        secondaryInput.value = '#1d4ed8';
-        accentInput.value = '#3b82f6';
-        bgPrimaryInput.value = '#f3f4f6';
+        primaryInput.value = '#0284c7';
+        secondaryInput.value = '#0ea5e9';
+        accentInput.value = '#38bdf8';
+        bgPrimaryInput.value = '#f8fafc';
         bgSecondaryInput.value = '#ffffff';
-        textPrimaryInput.value = '#111827';
-        textSecondaryInput.value = '#4b5563';
+        textPrimaryInput.value = '#0f172a';
+        textSecondaryInput.value = '#475569';
         presetNameInput.value = 'light';
     } else {
         presetNameInput.value = 'custom';
@@ -621,10 +612,10 @@ window.resetSystemPrompt = function () {
 
 // System Prompt Presets
 const PROMPT_PRESETS = {
-    product: '🛍️ أنت كاتب محتوى تسويقي محترف لمتجر إلكتروني يبيع منتجات رقمية (برامج، ألعاب، اشتراكات). مهمتك كتابة أوصاف منتجات جذابة واحترافية باللغة العربية. اجعل الوصف تسويقياً ومقنعاً ومختصراً بدون حشو. استخدم لغة تشجع على الشراء. لا تضف علامات اقتباس أو عناوين — أعد النص الخام فقط.',
+    product: '🛍️ أنت كاتب محتوى تسويقي محترف لمتجر الأزياء والملابس والعطور الفاخرة New Desgin. مهمتك كتابة أوصاف منتجات راقية وجذابة باللغة العربية تبرز جودة الخامات والتصاميم العصرية ونوتات العطور الفاخرة وثباتها. اجعل الوصف تسويقياً ومقنعاً ومختصراً بدون حشو. لا تضف علامات اقتباس أو عناوين — أعد النص الخام فقط.',
     announcement: '📢 أنت كاتب إعلانات محترف لمتجر إلكتروني. مهمتك كتابة نصوص إعلانية قصيرة وجذابة لشريط الإعلانات. يجب أن تكون النصوص مختصرة (سطر واحد فقط)، مع إيموجي مناسبة، ولغة تحفيزية تشجع على التفاعل والشراء. أعد نص الإعلان فقط بدون أي شرح.',
-    support: '🎧 أنت موظف دعم عملاء ودود ومحترف لمتجر إلكتروني يبيع منتجات رقمية. ساعد العملاء بأسلوب مهذب وصبور. قدم حلولاً واضحة ومختصرة. إذا لم تعرف الإجابة، وجّه العميل للتواصل مع الإدارة. أجب دائماً باللغة العربية. كن متعاطفاً مع مشاكل العملاء.',
-    seo: '🔍 أنت خبير SEO محترف. مهمتك كتابة عناوين ميتا (meta titles) وأوصاف ميتا (meta descriptions) وكلمات مفتاحية محسّنة لمحركات البحث باللغة العربية. اجعل العناوين جذابة وتحتوي على الكلمات المفتاحية الرئيسية. الأوصاف يجب أن تكون بين 150-160 حرف.',
+    support: '🎧 أنت موظف دعم عملاء ودود ومحترف لمتجر New Desgin للملابس والعطور. ساعد العملاء بأسلوب مهذب وصبور في الاستفسار عن المقاسات ونوتات العطور والشحن والطلبات. قدم حلولاً واضحة ومختصرة. أجب دائماً باللغة العربية.',
+    seo: '🔍 أنت خبير SEO محترف لمتجر New Desgin للملابس والعطور الفاخرة. مهمتك كتابة عناوين ميتا (meta titles) وأوصاف ميتا (meta descriptions) وكلمات مفتاحية محسّنة لمحركات البحث باللغة العربية. اجعل العناوين جذابة وتحتوي على الكلمات المفتاحية الرئيسية. الأوصاف يجب أن تكون بين 150-160 حرف.',
     translator: '🌐 أنت مترجم محترف متخصص في الترجمة بين العربية والإنجليزية في مجال التقنية والمنتجات الرقمية. ترجم النصوص بدقة مع الحفاظ على المعنى والسياق. إذا احتوى النص على مصطلحات تقنية، استخدم الترجمة المتعارف عليها. أعد الترجمة فقط بدون أي شرح.',
     email: '✉️ أنت كاتب إيميلات محترف لمتجر إلكتروني. مهمتك كتابة رسائل بريد إلكتروني احترافية وودية باللغة العربية. تشمل: رسائل ترحيب، تأكيد الطلبات، عروض ترويجية، متابعة العملاء، واستعادة السلات المتروكة. اجعل الإيميل مختصراً وجذاباً مع دعوة واضحة للإجراء (CTA). أعد نص الإيميل فقط.',
     general: '🤖 أنت مساعد ذكاء اصطناعي ذكي ومفيد لمتجر إلكتروني. أجب على الأسئلة باللغة العربية بشكل مختصر ومفيد. يمكنك المساعدة في كتابة المحتوى، تحليل البيانات، اقتراح أفكار تسويقية، والإجابة على الأسئلة العامة. كن ودوداً ومحترفاً.'
@@ -1254,6 +1245,12 @@ function loadSettings() {
             if (settings.phoneNumber) document.getElementById('contact-phone').value = settings.phoneNumber;
             if (settings.facebookUrl) document.getElementById('facebook-url').value = settings.facebookUrl;
             if (settings.contactEmail) document.getElementById('contact-email').value = settings.contactEmail;
+            if (settings.storeLocation && document.getElementById('contact-location')) {
+                document.getElementById('contact-location').value = settings.storeLocation;
+            }
+            if ((settings.footerDescription || settings.footerDesc) && document.getElementById('footer-description')) {
+                document.getElementById('footer-description').value = settings.footerDescription || settings.footerDesc;
+            }
 
             // Hero Settings
             if (settings.heroTitle) document.getElementById('hero-title').value = settings.heroTitle;
@@ -1262,13 +1259,14 @@ function loadSettings() {
             if (settings.heroImage) document.getElementById('hero-image').value = settings.heroImage;
 
             // Populate Categories Dropdown and Input
-            if (settings.storeCategories) {
-                document.getElementById('store-categories').value = settings.storeCategories;
-                populateCategoryDropdown(settings.storeCategories);
-            } else {
-                // Default defaults
-                populateCategoryDropdown('برامج, ألعاب, اشتراكات');
+            const categoriesToUse = (settings.storeCategories && !isLegacyCategories(settings.storeCategories)) 
+                ? settings.storeCategories 
+                : DEFAULT_STORE_CATEGORIES;
+
+            if (document.getElementById('store-categories')) {
+                document.getElementById('store-categories').value = categoriesToUse;
             }
+            populateCategoryDropdown(categoriesToUse);
 
             // Announcement Bar
             if (settings.announcementEnabled !== undefined) {
@@ -1278,6 +1276,38 @@ function loadSettings() {
                 document.getElementById('announcement-interval').value = settings.announcementInterval;
             }
 
+            // Category Showcase Cards (Homepage)
+            if (settings.categoryCardsEnabled !== undefined) {
+                const el = document.getElementById('category-showcase-enabled');
+                if (el) el.checked = settings.categoryCardsEnabled;
+            }
+            if (settings.categoryCardsTitle) {
+                const el = document.getElementById('category-showcase-title');
+                if (el) el.value = settings.categoryCardsTitle;
+            }
+            if (settings.categoryCardsSubtitle) {
+                const el = document.getElementById('category-showcase-subtitle');
+                if (el) el.value = settings.categoryCardsSubtitle;
+            }
+            if (settings.categoryCards && Array.isArray(settings.categoryCards)) {
+                activeCategoryCards = settings.categoryCards;
+            } else {
+                activeCategoryCards = DEFAULT_CATEGORY_CARDS.slice();
+            }
+            renderCategoryCardsList();
+
+            // Trust & Highlights Cards (Homepage)
+            if (settings.trustSectionEnabled !== undefined) {
+                const el = document.getElementById('trust-section-enabled');
+                if (el) el.checked = settings.trustSectionEnabled;
+            }
+            if (settings.trustCards && Array.isArray(settings.trustCards)) {
+                activeTrustCards = settings.trustCards;
+            } else {
+                activeTrustCards = DEFAULT_TRUST_CARDS.slice();
+            }
+            renderTrustCardsList();
+
             // Load Active Announcements
             if (settings.announcements) {
                 activeAnnouncements = settings.announcements || [];
@@ -1285,7 +1315,7 @@ function loadSettings() {
                 // Migration: If old text exists but no new list, create one item
                 activeAnnouncements = [{
                     text: settings.announcementText,
-                    backgroundColor: '#667eea',
+                    backgroundColor: '#0ea5e9',
                     textColor: '#ffffff'
                 }];
             } else {
@@ -1318,26 +1348,59 @@ function loadSettings() {
 
             // Theme Settings
             if (settings.theme) {
-                if (settings.theme.primary) document.getElementById('theme-primary').value = settings.theme.primary;
-                if (settings.theme.secondary) document.getElementById('theme-secondary').value = settings.theme.secondary;
-                if (settings.theme.accent) document.getElementById('theme-accent').value = settings.theme.accent;
-                if (settings.theme.bgPrimary) document.getElementById('theme-bg-primary').value = settings.theme.bgPrimary;
-                if (settings.theme.bgSecondary) document.getElementById('theme-bg-secondary').value = settings.theme.bgSecondary;
-                if (settings.theme.textPrimary) document.getElementById('theme-text-primary').value = settings.theme.textPrimary;
-                if (settings.theme.textSecondary) document.getElementById('theme-text-secondary').value = settings.theme.textSecondary;
-                if (settings.theme.preset) document.getElementById('theme-preset-name').value = settings.theme.preset;
-                if (settings.theme.effect) document.getElementById('theme-effect').value = settings.theme.effect;
+                let p = settings.theme.primary;
+                let s = settings.theme.secondary;
+                let a = settings.theme.accent;
+                let bg1 = settings.theme.bgPrimary;
+                let bg2 = settings.theme.bgSecondary;
+                let t1 = settings.theme.textPrimary;
+                let t2 = settings.theme.textSecondary;
+
+                // Sanitize / Migrate legacy purple and outdated colors to New Desgin Dark Blue & Light Blue
+                if (!p || p === '#667eea' || p.toLowerCase() === '#667eea') p = '#0ea5e9';
+                if (!s || s === '#764ba2' || s === '#f5576c' || s.toLowerCase() === '#764ba2' || s.toLowerCase() === '#f5576c') s = '#0284c7';
+                if (!a || a === '#4facfe' || a.toLowerCase() === '#4facfe') a = '#38bdf8';
+                if (!bg1 || bg1 === '#0f0f1e' || bg1 === '#0f0c29' || bg1 === '#1a1a2e') bg1 = '#070b14';
+                if (!bg2 || bg2 === '#1a1a2e' || bg2 === '#302b63' || bg2 === '#24243e') bg2 = '#0f172a';
+                if (!t1) t1 = '#ffffff';
+                if (!t2) t2 = '#e2e8f0';
+
+                const pInput = document.getElementById('theme-primary');
+                if (pInput) pInput.value = p;
+                const sInput = document.getElementById('theme-secondary');
+                if (sInput) sInput.value = s;
+                const aInput = document.getElementById('theme-accent');
+                if (aInput) aInput.value = a;
+                const bg1Input = document.getElementById('theme-bg-primary');
+                if (bg1Input) bg1Input.value = bg1;
+                const bg2Input = document.getElementById('theme-bg-secondary');
+                if (bg2Input) bg2Input.value = bg2;
+                const t1Input = document.getElementById('theme-text-primary');
+                if (t1Input) t1Input.value = t1;
+                const t2Input = document.getElementById('theme-text-secondary');
+                if (t2Input) t2Input.value = t2;
+                const presetInput = document.getElementById('theme-preset-name');
+                if (presetInput) presetInput.value = settings.theme.preset || 'newdesgin';
+                const effInput = document.getElementById('theme-effect');
+                if (effInput) effInput.value = settings.theme.effect || '';
 
                 // Load Effect Config
                 const effectConfig = settings.theme.effectConfig || { speed: 1.0, density: 1.0, size: 1.0 };
-                document.getElementById('effect-speed').value = effectConfig.speed || 1.0;
-                document.getElementById('effect-speed-val').textContent = (effectConfig.speed || 1.0) + 'x';
-
-                document.getElementById('effect-density').value = effectConfig.density || 1.0;
-                document.getElementById('effect-density-val').textContent = (effectConfig.density || 1.0) + 'x';
-
-                document.getElementById('effect-size').value = effectConfig.size || 1.0;
-                document.getElementById('effect-size-val').textContent = (effectConfig.size || 1.0) + 'x';
+                const speedInput = document.getElementById('effect-speed');
+                if (speedInput) {
+                    speedInput.value = effectConfig.speed || 1.0;
+                    document.getElementById('effect-speed-val').textContent = (effectConfig.speed || 1.0) + 'x';
+                }
+                const densityInput = document.getElementById('effect-density');
+                if (densityInput) {
+                    densityInput.value = effectConfig.density || 1.0;
+                    document.getElementById('effect-density-val').textContent = (effectConfig.density || 1.0) + 'x';
+                }
+                const sizeInput = document.getElementById('effect-size');
+                if (sizeInput) {
+                    sizeInput.value = effectConfig.size || 1.0;
+                    document.getElementById('effect-size-val').textContent = (effectConfig.size || 1.0) + 'x';
+                }
 
                 // Update live effect if available
                 if (window.SeasonalEffects && settings.theme.effect && isAdminPreviewEnabled) {
@@ -1349,12 +1412,15 @@ function loadSettings() {
                     // Ensure it's off if preview is disabled, even if setting exists
                     window.SeasonalEffects.init({ type: 'none' });
                 }
+            } else {
+                // Apply default New Desgin preset if no theme in DB
+                if (window.applyThemePreset) window.applyThemePreset('newdesgin');
             }
         } else {
             // Default exchange rate
             document.getElementById('exchange-rate').value = 9;
             window.exchangeRate = 9;
-            populateCategoryDropdown('برامج, ألعاب, اشتراكات');
+            populateCategoryDropdown(DEFAULT_STORE_CATEGORIES);
             loadAdminEmails(null);
         }
     });
@@ -1462,122 +1528,545 @@ window.removeAdminEmail = function (key) {
     });
 };
 
+const DEFAULT_STORE_CATEGORIES = 'ملابس وأزياء, عطور وبخور, جينزات وسراويل, قمصان وتيشيرتات, أطقم فاخرة, عطور شرقية, عطور فرنسية, إكسسوارات وهدايا, أحذية, عام';
+
+function isLegacyCategories(str) {
+    if (!str) return true;
+    const s = str.toLowerCase();
+    return s.includes('برامج') || s.includes('ألعاب') || s.includes('اشتراكات');
+}
+
 function populateCategoryDropdown(categoriesString) {
     const select = document.getElementById('product-category');
+    if (!select) return;
     const currentVal = select.value;
-    select.innerHTML = '<option value="general">عام</option>';
+    select.innerHTML = '';
 
-    if (categoriesString) {
-        const categories = categoriesString.split(',').map(c => c.trim()).filter(c => c);
-        categories.forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat;
-            option.textContent = cat;
-            select.appendChild(option);
-        });
+    const defaultList = ['ملابس وأزياء', 'عطور وبخور', 'جينزات وسراويل', 'قمصان وتيشيرتات', 'أطقم فاخرة', 'عطور شرقية', 'عطور فرنسية', 'إكسسوارات وهدايا', 'أحذية', 'عام'];
+
+    let cats = defaultList;
+    if (categoriesString && !isLegacyCategories(categoriesString)) {
+        cats = categoriesString.split(',').map(c => c.trim()).filter(Boolean);
+        if (!cats.includes('عام')) cats.push('عام');
     }
 
-    // Restore selection if possible, otherwise default
-    // We only restore if the option exists now
-    // Actually for 'Edit' mode, we need to set value AFTER populating.
+    cats.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat;
+        if (cat === currentVal) option.selected = true;
+        select.appendChild(option);
+    });
 }
+
+window.appendCategoryTag = function (tag) {
+    const input = document.getElementById('store-categories');
+    if (!input) return;
+    const current = input.value.split(',').map(s => s.trim()).filter(Boolean);
+    if (!current.includes(tag)) {
+        current.push(tag);
+        input.value = current.join(', ');
+        populateCategoryDropdown(input.value);
+        showNotification(`تمت إضافة "${tag}" إلى التصنيفات ✨`);
+    } else {
+        showNotification(`التصنيف "${tag}" مضاف مسبقاً`, 'info');
+    }
+};
+
+window.saveHomepageSettings = function () {
+    const heroTitle = document.getElementById('hero-title') ? document.getElementById('hero-title').value : '';
+    const heroSubtitle = document.getElementById('hero-subtitle') ? document.getElementById('hero-subtitle').value : '';
+    const heroDescription = document.getElementById('hero-description') ? document.getElementById('hero-description').value : '';
+    const heroImage = document.getElementById('hero-image') ? document.getElementById('hero-image').value : '';
+    const storeCategories = document.getElementById('store-categories') ? document.getElementById('store-categories').value : DEFAULT_STORE_CATEGORIES;
+
+    const categoryCardsEnabled = document.getElementById('category-showcase-enabled') ? document.getElementById('category-showcase-enabled').checked : true;
+    const categoryCardsTitle = document.getElementById('category-showcase-title') ? document.getElementById('category-showcase-title').value : 'الأقسام الرئيسية';
+    const categoryCardsSubtitle = document.getElementById('category-showcase-subtitle') ? document.getElementById('category-showcase-subtitle').value : '';
+
+    const trustSectionEnabled = document.getElementById('trust-section-enabled') ? document.getElementById('trust-section-enabled').checked : true;
+
+    const announcementEnabled = document.getElementById('announcement-enabled') ? document.getElementById('announcement-enabled').checked : false;
+    const announcementInterval = parseInt(document.getElementById('announcement-interval') ? document.getElementById('announcement-interval').value : 5) || 5;
+
+    const dataToSave = {
+        heroTitle: heroTitle,
+        heroSubtitle: heroSubtitle,
+        heroDescription: heroDescription,
+        heroImage: heroImage,
+        storeCategories: storeCategories,
+
+        categoryCardsEnabled: categoryCardsEnabled,
+        categoryCardsTitle: categoryCardsTitle,
+        categoryCardsSubtitle: categoryCardsSubtitle,
+        categoryCards: activeCategoryCards,
+
+        trustSectionEnabled: trustSectionEnabled,
+        trustCards: activeTrustCards,
+
+        announcementEnabled: announcementEnabled,
+        announcementInterval: announcementInterval,
+        announcements: activeAnnouncements,
+        lastUpdated: Date.now()
+    };
+
+    settingsRef.update(dataToSave)
+        .then(() => {
+            showNotification('تم حفظ كافة إعدادات وتخصيصات واجهة المتجر بنجاح! 💾');
+            populateCategoryDropdown(storeCategories);
+            if (window.adminLog) window.adminLog.settingsSaved();
+        })
+        .catch((error) => {
+            showNotification('حدث خطأ أثناء الحفظ: ' + error.message, 'error');
+        });
+};
 
 // Save settings handler
 document.getElementById('settings-form').addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const exchangeRate = parseFloat(document.getElementById('exchange-rate').value);
-    const phoneNumber = document.getElementById('contact-phone').value;
-    const facebookUrl = document.getElementById('facebook-url').value;
-    const contactEmail = document.getElementById('contact-email').value;
+    const exchangeRate = parseFloat(document.getElementById('exchange-rate') ? document.getElementById('exchange-rate').value : 9) || 9;
+    const phoneNumber = document.getElementById('contact-phone') ? document.getElementById('contact-phone').value : '';
+    const facebookUrl = document.getElementById('facebook-url') ? document.getElementById('facebook-url').value : '';
+    const contactEmail = document.getElementById('contact-email') ? document.getElementById('contact-email').value : '';
+    const storeLocation = document.getElementById('contact-location') ? document.getElementById('contact-location').value : 'ليبيا - طرابلس (شحن وتوصيل لجميع المدن)';
+    const footerDescription = document.getElementById('footer-description') ? document.getElementById('footer-description').value : '';
 
-    const heroTitle = document.getElementById('hero-title').value;
-    const heroSubtitle = document.getElementById('hero-subtitle').value;
-    const heroDescription = document.getElementById('hero-description').value;
-    const heroImage = document.getElementById('hero-image').value;
+    const heroTitle = document.getElementById('hero-title') ? document.getElementById('hero-title').value : '';
+    const heroSubtitle = document.getElementById('hero-subtitle') ? document.getElementById('hero-subtitle').value : '';
+    const heroDescription = document.getElementById('hero-description') ? document.getElementById('hero-description').value : '';
+    const heroImage = document.getElementById('hero-image') ? document.getElementById('hero-image').value : '';
 
-    const storeCategories = document.getElementById('store-categories').value;
+    const storeCategories = document.getElementById('store-categories') ? document.getElementById('store-categories').value : DEFAULT_STORE_CATEGORIES;
 
-    const announcementEnabled = document.getElementById('announcement-enabled').checked;
-    const announcementInterval = parseInt(document.getElementById('announcement-interval').value) || 5;
-    // Announcements list is already in activeAnnouncements global var, we save it from there
+    const announcementEnabled = document.getElementById('announcement-enabled') ? document.getElementById('announcement-enabled').checked : false;
+    const announcementInterval = parseInt(document.getElementById('announcement-interval') ? document.getElementById('announcement-interval').value : 5) || 5;
 
-    const maintenanceEnabled = document.getElementById('maintenance-enabled').checked;
-    const maintenancePreset = document.getElementById('maintenance-preset').value;
-    const maintenanceCustomMessage = document.getElementById('maintenance-custom-message').value;
+    const maintenanceEnabled = document.getElementById('maintenance-enabled') ? document.getElementById('maintenance-enabled').checked : false;
+    const maintenancePreset = document.getElementById('maintenance-preset') ? document.getElementById('maintenance-preset').value : 'maintenance';
+    const maintenanceCustomMessage = document.getElementById('maintenance-custom-message') ? document.getElementById('maintenance-custom-message').value : '';
 
     // Theme Data
     const themeData = {
-        primary: document.getElementById('theme-primary').value,
-        secondary: document.getElementById('theme-secondary').value,
-        accent: document.getElementById('theme-accent').value,
-        bgPrimary: document.getElementById('theme-bg-primary').value,
-        bgSecondary: document.getElementById('theme-bg-secondary').value,
-        textPrimary: document.getElementById('theme-text-primary').value,
-        textSecondary: document.getElementById('theme-text-secondary').value,
-        preset: document.getElementById('theme-preset-name').value,
+        primary: document.getElementById('theme-primary') ? document.getElementById('theme-primary').value : '#0ea5e9',
+        secondary: document.getElementById('theme-secondary') ? document.getElementById('theme-secondary').value : '#0b132b',
+        accent: document.getElementById('theme-accent') ? document.getElementById('theme-accent').value : '#38bdf8',
+        bgPrimary: document.getElementById('theme-bg-primary') ? document.getElementById('theme-bg-primary').value : '#070b14',
+        bgSecondary: document.getElementById('theme-bg-secondary') ? document.getElementById('theme-bg-secondary').value : '#0f172a',
+        textPrimary: document.getElementById('theme-text-primary') ? document.getElementById('theme-text-primary').value : '#f8fafc',
+        textSecondary: document.getElementById('theme-text-secondary') ? document.getElementById('theme-text-secondary').value : '#94a3b8',
+        preset: document.getElementById('theme-preset-name') ? document.getElementById('theme-preset-name').value : 'newdesgin',
         // Save Effect
-        effect: document.getElementById('theme-effect').value,
+        effect: document.getElementById('theme-effect') ? document.getElementById('theme-effect').value : 'none',
         effectConfig: {
-            speed: parseFloat(document.getElementById('effect-speed').value) || 1.0,
-            density: parseFloat(document.getElementById('effect-density').value) || 1.0,
-            size: parseFloat(document.getElementById('effect-size').value) || 1.0
+            speed: parseFloat(document.getElementById('effect-speed') ? document.getElementById('effect-speed').value : 1.0) || 1.0,
+            density: parseFloat(document.getElementById('effect-density') ? document.getElementById('effect-density').value : 1.0) || 1.0,
+            size: parseFloat(document.getElementById('effect-size') ? document.getElementById('effect-size').value : 1.0) || 1.0
         }
     };
+
+    const categoryCardsEnabled = document.getElementById('category-showcase-enabled') ? document.getElementById('category-showcase-enabled').checked : true;
+    const categoryCardsTitle = document.getElementById('category-showcase-title') ? document.getElementById('category-showcase-title').value : 'الأقسام الرئيسية';
+    const categoryCardsSubtitle = document.getElementById('category-showcase-subtitle') ? document.getElementById('category-showcase-subtitle').value : '';
+
+    const trustSectionEnabled = document.getElementById('trust-section-enabled') ? document.getElementById('trust-section-enabled').checked : true;
 
     const settingsData = {
         exchangeRate: exchangeRate,
         phoneNumber: phoneNumber,
         facebookUrl: facebookUrl,
         contactEmail: contactEmail,
+        storeLocation: storeLocation,
+        footerDescription: footerDescription,
         heroTitle: heroTitle,
         heroSubtitle: heroSubtitle,
         heroDescription: heroDescription,
         heroImage: heroImage,
         storeCategories: storeCategories,
+
+        categoryCardsEnabled: categoryCardsEnabled,
+        categoryCardsTitle: categoryCardsTitle,
+        categoryCardsSubtitle: categoryCardsSubtitle,
+        categoryCards: activeCategoryCards,
+
+        trustSectionEnabled: trustSectionEnabled,
+        trustCards: activeTrustCards,
+
         announcementEnabled: announcementEnabled,
         announcementInterval: announcementInterval,
-        announcements: activeAnnouncements, // Save the array
+        announcements: activeAnnouncements,
         maintenanceEnabled: maintenanceEnabled,
         maintenancePreset: maintenancePreset,
         maintenanceCustomMessage: maintenanceCustomMessage,
 
-        // AI Settings
-        aiProvider: window.AdminAI ? window.AdminAI.getCurrentProvider() : 'groq',
-        aiModel: document.getElementById('groq-model-select').value,
-        aiApiKeys: (function () {
-            const keys = {};
-            if (window.AdminAI) {
-                const providers = window.AdminAI.getProviders();
-                Object.keys(providers).forEach(pid => {
-                    keys[pid] = window.AdminAI.getApiKey(pid);
-                });
-                // Ensure current input value is saved
-                const currentPid = window.AdminAI.getCurrentProvider();
-                keys[currentPid] = document.getElementById('ai-api-key').value.trim();
-            }
-            return keys;
-        })(),
-
-        // Legacy Support
-        groqApiKey: document.getElementById('ai-api-key').value.trim(), // Saves current key as legacy groq key if provider is groq
-        groqModel: document.getElementById('groq-model-select').value,
-
         theme: themeData,
-        lastUpdated: Date.now() // Keep lastUpdated
+        lastUpdated: Date.now()
     };
 
     settingsRef.update(settingsData)
         .then(() => {
-            showNotification('تم حفظ الإعدادات بنجاح! 💾');
+            showNotification('تم حفظ الإعدادات وأقسام الواجهة بنجاح! 💾');
             if (window.adminLog) window.adminLog.settingsSaved();
-            // Update dropdown immediately
             populateCategoryDropdown(storeCategories);
         })
         .catch((error) => {
             showNotification('حدث خطأ: ' + error.message, 'error');
         });
 });
+
+// ============================================
+// DEFAULT HOMEPAGE SECTIONS DATA & MANAGER
+// ============================================
+const DEFAULT_CATEGORY_CARDS = [
+    {
+        tag: 'أزياء & جينز أصلية',
+        title: 'تشكيلة الملابس العصرية',
+        desc: 'جينزات فاخرة وتصاميم حديثة تجمع بين الراحة المطلقة والأناقة الفائقة.',
+        btnText: 'استكشف تشكيلة الملابس ←',
+        link: 'products.html?category=clothes',
+        image: 'Images/Lee Jeans 2.png',
+        fit: 'cover',
+        bgColor: 'transparent',
+        enabled: true
+    },
+    {
+        tag: 'عطور نادرة & بخور',
+        title: 'عطور شرقية وفرنسية',
+        desc: 'نوتات عطرية ساحرة بتركيز عالي وثبات يدوم لأيام لتعكس حضورك المميز.',
+        btnText: 'استكشف تشكيلة العطور ←',
+        link: 'products.html?category=perfumes',
+        image: 'Images/Logo-text.png',
+        fit: 'contain',
+        bgColor: '#0b132b',
+        enabled: true
+    }
+];
+
+const DEFAULT_TRUST_CARDS = [
+    {
+        icon: '💎',
+        title: 'أصلي 100% ومضمون',
+        desc: 'نضمن لك أصالة جميع المنتجات والخامات وأعلى درجات الثبات للعطور.',
+        enabled: true
+    },
+    {
+        icon: '🚚',
+        title: 'شحن وتوصيل سريع',
+        desc: 'خدمة توصيل آمنة وموثوقة تغطي كافة المدن والمناطق في ليبيا.',
+        enabled: true
+    },
+    {
+        icon: '🎁',
+        title: 'تغليف فاخر للهدايا',
+        desc: 'تغليف أنيق ومميز يحافظ على المنتجات ويكون جاهزاً للإهداء فوراً.',
+        enabled: true
+    },
+    {
+        icon: '💬',
+        title: 'خدمة عملاء راقية',
+        desc: 'فريق دعم متواجد على مدار الساعة لمساعدتك والإجابة عن استفساراتك.',
+        enabled: true
+    }
+];
+
+let activeCategoryCards = DEFAULT_CATEGORY_CARDS.slice();
+let activeTrustCards = DEFAULT_TRUST_CARDS.slice();
+
+// ---- Category Cards Manager Functions ----
+function renderCategoryCardsList() {
+    const list = document.getElementById('category-cards-list');
+    if (!list) return;
+    list.innerHTML = '';
+
+    if (!activeCategoryCards || activeCategoryCards.length === 0) {
+        list.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.5); padding: 15px; grid-column: 1/-1;">لا توجد بطاقات أقسام مضافة حالياً. اضغط "إضافة بطاقة قسم" لإضافة قسم جديد.</div>';
+        return;
+    }
+
+    activeCategoryCards.forEach((card, index) => {
+        const item = document.createElement('div');
+        item.className = 'cat-card-item';
+        const isHidden = card.enabled === false;
+        item.style.cssText = `
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid ${isHidden ? 'rgba(255,255,255,0.1)' : 'rgba(56, 189, 248, 0.3)'};
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: ${isHidden ? '0.6' : '1'};
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        `;
+
+        item.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                <div>
+                    <span style="font-size: 0.72rem; color: #38bdf8; font-weight: 600; display: block;">${card.tag || 'قسم'}</span>
+                    <strong style="font-size: 0.95rem; color: #fff;">${card.title || 'بدون عنوان'}</strong>
+                </div>
+                <span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; background: ${isHidden ? 'rgba(255,255,255,0.1)' : 'rgba(16,185,129,0.2)'}; color: ${isHidden ? '#94a3b8' : '#34d399'}; font-weight: 600;">
+                    ${isHidden ? 'مخفي' : 'معروض'}
+                </span>
+            </div>
+            <p style="font-size: 0.8rem; color: #cbd5e1; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                ${card.desc || ''}
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">
+                <span>🔗 ${card.link || 'بدون رابط'}</span>
+                <div style="display: flex; gap: 6px;">
+                    <button type="button" onclick="toggleCategoryCard(${index})" class="btn btn-sm btn-secondary" style="padding: 4px 8px;" title="${isHidden ? 'إظهار للزوار' : 'إخفاء عن الزوار'}">
+                        ${isHidden ? '👁️' : '🚫'}
+                    </button>
+                    <button type="button" onclick="openCategoryCardModal(${index})" class="btn btn-sm btn-secondary" style="padding: 4px 8px;" title="تعديل">✏️</button>
+                    <button type="button" onclick="deleteCategoryCard(${index})" class="btn btn-sm btn-danger" style="padding: 4px 8px;" title="حذف">🗑️</button>
+                </div>
+            </div>
+        `;
+        list.appendChild(item);
+    });
+}
+
+window.openCategoryCardModal = function (editIndex = null) {
+    const modal = document.getElementById('category-card-modal');
+    if (!modal) return;
+    const titleModal = document.getElementById('category-card-modal-title');
+    const indexInput = document.getElementById('edit-cat-card-index');
+    const tagInput = document.getElementById('edit-cat-card-tag');
+    const titleInput = document.getElementById('edit-cat-card-title');
+    const descInput = document.getElementById('edit-cat-card-desc');
+    const btnTextInput = document.getElementById('edit-cat-card-btn-text');
+    const linkInput = document.getElementById('edit-cat-card-link');
+    const imageInput = document.getElementById('edit-cat-card-image');
+    const fitInput = document.getElementById('edit-cat-card-fit');
+    const bgInput = document.getElementById('edit-cat-card-bg');
+    const enabledInput = document.getElementById('edit-cat-card-enabled');
+
+    if (editIndex !== null && activeCategoryCards[editIndex]) {
+        const card = activeCategoryCards[editIndex];
+        titleModal.textContent = 'تعديل بطاقة القسم';
+        indexInput.value = editIndex;
+        tagInput.value = card.tag || '';
+        titleInput.value = card.title || '';
+        descInput.value = card.desc || '';
+        btnTextInput.value = card.btnText || '';
+        linkInput.value = card.link || '';
+        imageInput.value = card.image || '';
+        fitInput.value = card.fit || 'cover';
+        bgInput.value = card.bgColor || 'transparent';
+        enabledInput.checked = card.enabled !== false;
+    } else {
+        titleModal.textContent = 'إضافة بطاقة قسم جديد';
+        indexInput.value = '';
+        tagInput.value = 'أزياء فاخرة';
+        titleInput.value = '';
+        descInput.value = '';
+        btnTextInput.value = 'استكشف التشكيلة ←';
+        linkInput.value = 'products.html?category=clothes';
+        imageInput.value = '';
+        fitInput.value = 'cover';
+        bgInput.value = 'transparent';
+        enabledInput.checked = true;
+    }
+
+    modal.style.display = 'flex';
+};
+
+window.closeCategoryCardModal = function () {
+    const modal = document.getElementById('category-card-modal');
+    if (modal) modal.style.display = 'none';
+};
+
+window.saveCategoryCard = function () {
+    const indexInput = document.getElementById('edit-cat-card-index');
+    const tag = document.getElementById('edit-cat-card-tag').value.trim();
+    const title = document.getElementById('edit-cat-card-title').value.trim();
+    const desc = document.getElementById('edit-cat-card-desc').value.trim();
+    const btnText = document.getElementById('edit-cat-card-btn-text').value.trim();
+    const link = document.getElementById('edit-cat-card-link').value.trim();
+    const image = document.getElementById('edit-cat-card-image').value.trim();
+    const fit = document.getElementById('edit-cat-card-fit').value;
+    const bgColor = document.getElementById('edit-cat-card-bg').value.trim() || 'transparent';
+    const enabled = document.getElementById('edit-cat-card-enabled').checked;
+
+    if (!title) {
+        showNotification('يرجى كتابة عنوان للقسم', 'error');
+        return;
+    }
+
+    const cardObj = {
+        tag,
+        title,
+        desc,
+        btnText: btnText || 'استكشف التشكيلة ←',
+        link: link || 'products.html',
+        image: image || 'Images/Logo-text.png',
+        fit,
+        bgColor,
+        enabled
+    };
+
+    if (indexInput.value !== '') {
+        const idx = parseInt(indexInput.value);
+        activeCategoryCards[idx] = cardObj;
+    } else {
+        activeCategoryCards.push(cardObj);
+    }
+
+    renderCategoryCardsList();
+    closeCategoryCardModal();
+    showNotification('تم تحديث بطاقة القسم. اضغط "حفظ الإعدادات" لتثبيت التعديل على الموقع.', 'info');
+};
+
+window.toggleCategoryCard = function (index) {
+    if (activeCategoryCards[index]) {
+        activeCategoryCards[index].enabled = activeCategoryCards[index].enabled === false ? true : false;
+        renderCategoryCardsList();
+        showNotification(activeCategoryCards[index].enabled ? 'تم تفعيل وإظهار القسم' : 'تم إخفاء القسم عن الزوار', 'info');
+    }
+};
+
+window.deleteCategoryCard = function (index) {
+    showConfirmModal('حذف بطاقة القسم', 'هل أنت متأكد من حذف هذه البطاقة من الصفحة الرئيسية؟', () => {
+        activeCategoryCards.splice(index, 1);
+        renderCategoryCardsList();
+        showNotification('تم حذف البطاقة من القائمة', 'info');
+    });
+};
+
+// ---- Trust Cards Manager Functions ----
+function renderTrustCardsList() {
+    const list = document.getElementById('trust-cards-list');
+    if (!list) return;
+    list.innerHTML = '';
+
+    if (!activeTrustCards || activeTrustCards.length === 0) {
+        list.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.5); padding: 15px; grid-column: 1/-1;">لا توجد مميزات مضافة حالياً. اضغط "إضافة ميزة جديدة" لإضافة ميزة.</div>';
+        return;
+    }
+
+    activeTrustCards.forEach((card, index) => {
+        const item = document.createElement('div');
+        item.className = 'trust-card-item';
+        const isHidden = card.enabled === false;
+        item.style.cssText = `
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid ${isHidden ? 'rgba(255,255,255,0.1)' : 'rgba(56, 189, 248, 0.3)'};
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: ${isHidden ? '0.6' : '1'};
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        `;
+
+        item.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.4rem;">${card.icon || '✨'}</span>
+                    <strong style="font-size: 0.95rem; color: #fff;">${card.title || 'بدون عنوان'}</strong>
+                </div>
+                <span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; background: ${isHidden ? 'rgba(255,255,255,0.1)' : 'rgba(16,185,129,0.2)'}; color: ${isHidden ? '#94a3b8' : '#34d399'}; font-weight: 600;">
+                    ${isHidden ? 'مخفي' : 'معروض'}
+                </span>
+            </div>
+            <p style="font-size: 0.8rem; color: #cbd5e1; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                ${card.desc || ''}
+            </p>
+            <div style="display: flex; justify-content: flex-end; gap: 6px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">
+                <button type="button" onclick="toggleTrustCard(${index})" class="btn btn-sm btn-secondary" style="padding: 4px 8px;" title="${isHidden ? 'إظهار للزوار' : 'إخفاء عن الزوار'}">
+                    ${isHidden ? '👁️' : '🚫'}
+                </button>
+                <button type="button" onclick="openTrustCardModal(${index})" class="btn btn-sm btn-secondary" style="padding: 4px 8px;" title="تعديل">✏️</button>
+                <button type="button" onclick="deleteTrustCard(${index})" class="btn btn-sm btn-danger" style="padding: 4px 8px;" title="حذف">🗑️</button>
+            </div>
+        `;
+        list.appendChild(item);
+    });
+}
+
+window.openTrustCardModal = function (editIndex = null) {
+    const modal = document.getElementById('trust-card-modal');
+    if (!modal) return;
+    const titleModal = document.getElementById('trust-card-modal-title');
+    const indexInput = document.getElementById('edit-trust-card-index');
+    const iconInput = document.getElementById('edit-trust-card-icon');
+    const titleInput = document.getElementById('edit-trust-card-title');
+    const descInput = document.getElementById('edit-trust-card-desc');
+    const enabledInput = document.getElementById('edit-trust-card-enabled');
+
+    if (editIndex !== null && activeTrustCards[editIndex]) {
+        const card = activeTrustCards[editIndex];
+        titleModal.textContent = 'تعديل ميزة المتجر';
+        indexInput.value = editIndex;
+        iconInput.value = card.icon || '✨';
+        titleInput.value = card.title || '';
+        descInput.value = card.desc || '';
+        enabledInput.checked = card.enabled !== false;
+    } else {
+        titleModal.textContent = 'إضافة ميزة جديدة';
+        indexInput.value = '';
+        iconInput.value = '✨';
+        titleInput.value = '';
+        descInput.value = '';
+        enabledInput.checked = true;
+    }
+
+    modal.style.display = 'flex';
+};
+
+window.closeTrustCardModal = function () {
+    const modal = document.getElementById('trust-card-modal');
+    if (modal) modal.style.display = 'none';
+};
+
+window.saveTrustCard = function () {
+    const indexInput = document.getElementById('edit-trust-card-index');
+    const icon = document.getElementById('edit-trust-card-icon').value.trim() || '✨';
+    const title = document.getElementById('edit-trust-card-title').value.trim();
+    const desc = document.getElementById('edit-trust-card-desc').value.trim();
+    const enabled = document.getElementById('edit-trust-card-enabled').checked;
+
+    if (!title) {
+        showNotification('يرجى كتابة عنوان للميزة', 'error');
+        return;
+    }
+
+    const cardObj = {
+        icon,
+        title,
+        desc,
+        enabled
+    };
+
+    if (indexInput.value !== '') {
+        const idx = parseInt(indexInput.value);
+        activeTrustCards[idx] = cardObj;
+    } else {
+        activeTrustCards.push(cardObj);
+    }
+
+    renderTrustCardsList();
+    closeTrustCardModal();
+    showNotification('تم تحديث الميزة. اضغط "حفظ الإعدادات" لتثبيت التعديل على الموقع.', 'info');
+};
+
+window.toggleTrustCard = function (index) {
+    if (activeTrustCards[index]) {
+        activeTrustCards[index].enabled = activeTrustCards[index].enabled === false ? true : false;
+        renderTrustCardsList();
+        showNotification(activeTrustCards[index].enabled ? 'تم تفعيل وإظهار الميزة' : 'تم إخفاء الميزة عن الزوار', 'info');
+    }
+};
+
+window.deleteTrustCard = function (index) {
+    showConfirmModal('حذف الميزة', 'هل أنت متأكد من حذف هذه الميزة من الصفحة الرئيسية؟', () => {
+        activeTrustCards.splice(index, 1);
+        renderTrustCardsList();
+        showNotification('تم حذف الميزة من القائمة', 'info');
+    });
+};
 
 // ============================================
 // ANNOUNCEMENT MANAGER LOGIC
@@ -2498,6 +2987,23 @@ document.getElementById('maintenance-enabled').addEventListener('change', functi
 document.getElementById('maintenance-preset').addEventListener('change', function () {
     const customField = document.getElementById('custom-message-field');
     customField.style.display = this.value === 'custom' ? 'block' : 'none';
+});
+
+// ============================================
+// MODALS OUTSIDE-CLICK & ESCAPE LISTENERS
+// ============================================
+document.addEventListener('click', (e) => {
+    if (e.target.classList && e.target.classList.contains('custom-modal')) {
+        e.target.style.display = 'none';
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+        document.querySelectorAll('.custom-modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {

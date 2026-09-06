@@ -1,77 +1,172 @@
+/* =========================================================
+   New Desgin - 404 Error Page Styles
+   Theme: True Light Blue & Dark Blue with Metallic Sheen
+   ========================================================= */
+
 .error-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    background: radial-gradient(circle at 50% 20%, #0b132b 0%, #070b14 60%, #030712 100%);
     padding: 2rem;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.error-page::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
 }
 
 .error-content {
-    max-width: 600px;
+    max-width: 620px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 28px;
+    padding: 3.5rem 2.5rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(14, 165, 233, 0.2);
+    backdrop-filter: blur(16px);
+    position: relative;
+    z-index: 2;
 }
 
 .error-code {
-    font-size: 8rem;
-    font-weight: 800;
+    font-size: 7.5rem;
+    font-weight: 900;
     line-height: 1;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 40%, #7dd3fc 70%, #38bdf8 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    opacity: 0.8;
     font-family: 'Outfit', sans-serif;
+    letter-spacing: 2px;
+    filter: drop-shadow(0 4px 20px rgba(14, 165, 233, 0.4));
+    animation: sheenPulse 3s ease-in-out infinite;
+}
+
+@keyframes sheenPulse {
+    0%, 100% {
+        filter: drop-shadow(0 4px 15px rgba(14, 165, 233, 0.35));
+    }
+    50% {
+        filter: drop-shadow(0 8px 30px rgba(56, 189, 248, 0.65));
+    }
 }
 
 h1 {
-    font-size: 2rem;
-    color: white;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #ffffff;
     margin-bottom: 1rem;
+    font-family: 'Cairo', sans-serif;
 }
 
 p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 2.25rem;
+}
+
+.error-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .btn-home {
-    background: #667eea;
+    background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
     color: white;
     text-decoration: none;
-    padding: 1rem 3rem;
+    padding: 1rem 2.2rem;
     border-radius: 50px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 18px rgba(14, 165, 233, 0.4);
     display: inline-flex;
     align-items: center;
     gap: 10px;
 }
 
 .btn-home:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    background: #764ba2;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(56, 189, 248, 0.6);
+    background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
 }
 
-/* Responsive Design */
+.btn-catalog {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-catalog:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: #38bdf8;
+    transform: translateY(-3px);
+}
+
+.mobile-home-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 12px;
+    border-radius: 12px;
+    color: #38bdf8;
+    text-decoration: none;
+    display: none;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
 @media (max-width: 768px) {
+    .mobile-home-btn {
+        display: flex;
+    }
+
+    .error-content {
+        padding: 2.5rem 1.5rem;
+    }
+
     .error-code {
-        font-size: 5rem;
+        font-size: 5.5rem;
     }
 
     h1 {
-        font-size: 1.5rem;
+        font-size: 1.45rem;
     }
 
-    .btn-home {
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
+    p {
+        font-size: 0.95rem;
+    }
+
+    .btn-home, .btn-catalog {
         width: 100%;
         justify-content: center;
+        padding: 0.85rem 1.5rem;
     }
 }

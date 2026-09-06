@@ -37,16 +37,19 @@
         const profileData = {
             id: userId,
             isAuth: isAuth,
-            name: data.name || '',
-            phone: data.phone || '',
-            city: data.city || '',
-            address: data.address || '',
-            notes: data.notes || '',
+            name: data.name !== undefined ? data.name : '',
+            phone: data.phone !== undefined ? data.phone : '',
+            city: data.city !== undefined ? data.city : '',
+            address: data.address !== undefined ? data.address : '',
+            notes: data.notes !== undefined ? data.notes : '',
+            preferences: data.preferences !== undefined ? data.preferences : (data.preferences || {}),
             updatedAt: Date.now()
         };
 
         // Also cache in localStorage for instant load
-        localStorage.setItem('user_profile', JSON.stringify(profileData));
+        const existingCached = JSON.parse(localStorage.getItem('user_profile') || '{}');
+        const mergedCache = { ...existingCached, ...profileData };
+        localStorage.setItem('user_profile', JSON.stringify(mergedCache));
 
         return db.ref(PROFILE_REF + '/' + userId).update(profileData);
     };

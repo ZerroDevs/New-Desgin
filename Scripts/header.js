@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="nav-content">
                 <div class="logo">
                      <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                        <img src="Images/Logo-noBG.png" alt="New Desgin Logo" style="height: 52px; width: auto; object-fit: contain;">
+                        <img src="Images/Logo-noBG.png" alt="New Desgin Logo" style="height: 68px; max-height: 75px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.2));">
                     </a>
                 </div>
 
@@ -33,8 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="nav-links">
                     <a href="index.html" class="nav-link ${currentPage === 'index.html' || currentPage === '' ? 'active' : ''}">الرئيسية</a>
                     <a href="products.html" class="nav-link ${currentPage === 'products.html' ? 'active' : ''}">كافة المنتجات</a>
-                    <a href="products.html?category=clothes" class="nav-link">ملابس</a>
-                    <a href="products.html?category=perfumes" class="nav-link">عطور</a>
                     <a href="track-order.html" class="nav-link ${currentPage === 'track-order.html' ? 'active' : ''}">تتبع طلبك</a>
                     
                     <!-- Mobile Quick Actions (icon row) -->
@@ -355,26 +353,29 @@ function initAuthLogic() {
                             <img src="${photoURL}" 
                                  alt="${displayName}" 
                                  onerror="this.src='${defaultAvatar}'"
-                                 style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid ${isAdmin ? '#f5576c' : '#667eea'}; background: #fff;">
+                                 style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 2px solid ${isAdmin ? '#38bdf8' : '#0ea5e9'}; background: #070b14; box-shadow: 0 0 10px rgba(56,189,248,0.3);">
                         </button>
-                        <div class="user-dropdown-menu" id="user-dropdown" style="display: none; position: absolute; top: 120%; right: -10px; background: #1a1a2e; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); width: 220px; padding: 10px; z-index: 10002; text-align: right; backdrop-filter: blur(10px);">
-                            <div style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 5px;">
+                        <div class="user-dropdown-menu" id="user-dropdown" style="display: none; position: absolute; top: 120%; right: -10px; background: #0f172a; border: 1px solid rgba(56,189,248,0.25); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); width: 230px; padding: 10px; z-index: 10002; text-align: right; backdrop-filter: blur(14px);">
+                            <div style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 5px;">
                                 <strong style="display: block; color: white;">${displayName} ${adminBadge}</strong>
-                                <small style="color: rgba(255,255,255,0.6); font-size: 12px;">${user.email}</small>
+                                <small style="color: #94a3b8; font-size: 12px;">${user.email}</small>
                             </div>
                             
                             ${adminLink}
                             
-                            <a href="uorder.html" style="display: flex; align-items: center; gap: 10px; padding: 10px; color: rgba(255,255,255,0.8); text-decoration: none; border-radius: 8px; transition: background 0.2s;">
-                                <span>📦</span> طلباتي
+                            <a href="profile.html" style="display: flex; align-items: center; gap: 10px; padding: 10px; color: #e2e8f0; text-decoration: none; border-radius: 8px; transition: background 0.2s;">
+                                <span>👤</span> حسابي ولوحة التحكم
                             </a>
-                            <a href="profile.html" style="display: flex; align-items: center; gap: 10px; padding: 10px; color: rgba(255,255,255,0.8); text-decoration: none; border-radius: 8px; transition: background 0.2s;">
-                                <span>⚙️</span> الإعدادات
+                            <a href="profile.html#orders" onclick="if(window.switchProfileTab) switchProfileTab('orders');" style="display: flex; align-items: center; gap: 10px; padding: 10px; color: #e2e8f0; text-decoration: none; border-radius: 8px; transition: background 0.2s;">
+                                <span>📦</span> سجل الطلبات والتتبع
                             </a>
-                            <button id="change-password-action" style="background: none; border: none; width: 100%; text-align: right; display: flex; align-items: center; gap: 10px; padding: 10px; color: rgba(255,255,255,0.8); cursor: pointer; border-radius: 8px; font-family: inherit; font-size: inherit; transition: background 0.2s;">
+                            <a href="profile.html#wishlist" onclick="if(window.switchProfileTab) switchProfileTab('wishlist');" style="display: flex; align-items: center; gap: 10px; padding: 10px; color: #e2e8f0; text-decoration: none; border-radius: 8px; transition: background 0.2s;">
+                                <span>❤️</span> المفضلة
+                            </a>
+                            <button id="change-password-action" style="background: none; border: none; width: 100%; text-align: right; display: flex; align-items: center; gap: 10px; padding: 10px; color: #e2e8f0; cursor: pointer; border-radius: 8px; font-family: inherit; font-size: inherit; transition: background 0.2s;">
                                 <span>🔒</span> تغيير كلمة المرور
                             </button>
-                            <button id="logout-action" style="background: none; border: none; width: 100%; text-align: right; display: flex; align-items: center; gap: 10px; padding: 10px; color: #ff4444; cursor: pointer; border-radius: 8px; font-family: inherit; font-size: inherit; margin-top: 5px;">
+                            <button id="logout-action" style="background: none; border: none; width: 100%; text-align: right; display: flex; align-items: center; gap: 10px; padding: 10px; color: #f87171; cursor: pointer; border-radius: 8px; font-family: inherit; font-size: inherit; margin-top: 5px;">
                                 <span>🚪</span> تسجيل الخروج
                             </button>
                         </div>
@@ -433,7 +434,8 @@ function initAuthLogic() {
                 animation: fadeIn 0.3s ease;
             }
             .modal-content {
-                background: #1a1a2e; border: 1px solid rgba(255,255,255,0.1);
+                background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(7, 11, 20, 0.98)); 
+                border: 1px solid rgba(56, 189, 248, 0.25);
                 border-radius: 16px; padding: 25px; width: 90%; max-width: 400px;
                 text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
                 transform: translateY(0); animation: slideUp 0.3s ease;
@@ -445,7 +447,7 @@ function initAuthLogic() {
                 padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;
                 font-family: inherit; font-weight: 600; transition: all 0.2s;
             }
-            .modal-btn.confirm { background: var(--primary-color, #667eea); color: white; flex: 1; }
+            .modal-btn.confirm { background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; flex: 1; }
             .modal-btn.confirm:hover { filter: brightness(1.1); transform: translateY(-2px); }
             .modal-btn.cancel { background: rgba(255,255,255,0.1); color: white; flex: 1; }
             .modal-btn.cancel:hover { background: rgba(255,255,255,0.2); }

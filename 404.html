@@ -3,50 +3,38 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+    <link rel="icon" type="image/png" href="Images/Logo-noBG.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة غير موجودة - متجر زيرونكس</title>
+    <title>الصفحة غير موجودة 404 - New Desgin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cairo:wght@400;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#667eea">
+    <meta name="theme-color" content="#0ea5e9">
     <link rel="stylesheet" href="Style/index.css">
     <link rel="stylesheet" href="Style/404.css">
 </head>
 
 <body>
     <div class="error-page">
-        <style>
-            .mobile-home-btn {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: rgba(255, 255, 255, 0.1);
-                padding: 10px;
-                border-radius: 8px;
-                color: white;
-                text-decoration: none;
-                display: none;
-            }
-
-            @media (max-width: 768px) {
-                .mobile-home-btn {
-                    display: block;
-                }
-            }
-        </style>
-        <a href="index.html" class="mobile-home-btn">🏠</a>
+        <a href="index.html" class="mobile-home-btn" title="الرئيسية"><i class="fas fa-home"></i></a>
 
         <div class="error-content">
+            <div class="brand-logo-404">
+                <img src="Images/Logo-noBG.png" alt="New Desgin" style="height: 70px; object-fit: contain; margin-bottom: 20px; filter: drop-shadow(0 4px 15px rgba(56,189,248,0.4));">
+            </div>
             <div class="error-code">404</div>
             <h1>عذراً، الصفحة غير موجودة</h1>
-            <p>يبدو أن الرابط الذي حاولت الوصول إليه غير صحيح أو تم نقله.</p>
-            <a href="index.html" class="btn-home">
-                🏠 العودة للرئيسية
-            </a>
+            <p>يبدو أن الرابط الذي حاولت الوصول إليه غير صحيح أو تم نقله. استكشف مجموعاتنا الحصرية من الملابس والعطور الفاخرة.</p>
+            <div class="error-actions">
+                <a href="index.html" class="btn-home">
+                    <i class="fas fa-home"></i> العودة للرئيسية
+                </a>
+                <a href="products.html" class="btn-catalog">
+                    <i class="fas fa-shopping-bag"></i> تصفح المنتجات
+                </a>
+            </div>
         </div>
     </div>
     <script src="Scripts/instant-page.js" type="module"></script>

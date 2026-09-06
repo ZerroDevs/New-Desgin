@@ -1,100 +1,106 @@
-        {
-            "rules": {
-                ".read": false,
-                ".write": false,
-                "products": {
-                    ".read": true,
-                    // Only admins can change products
-                    ".write": "auth != null && root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists()"
-                },
-                "settings": {
-                    ".read": true,
-                    // Only admins can change settings
-                    ".write": "auth != null && root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists()"
-                },
-                "orders": {
-                    // Admins can read all. Users can only read their own via query.
-                    ".read": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (query.orderByChild == 'userId' && query.equalTo == auth.uid))",
-                    ".write": true, // Anyone can place an order
-                    ".indexOn": [
-                        "userId"
-                    ],
-                    "$orderId": {
-                        // Users can read their specific order if they own it, or if they are admin
-                        ".read": "auth != null && (data.child('userId').val() === auth.uid || root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists())"
-                    }
-                },
-                "promos": {
-                    ".read": true,
-                    ".indexOn": [
-                        "code"
-                    ],
-                    "$promoId": {
-                        // Only admins can create/edit promos
-                        ".write": "auth != null && root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists()",
-                        "usedCount": {
-                            // Anyone can increment usedCount (needed for promo logic)
-                            ".write": true
-                        }
-                    }
-                },
-                "studentBooks": {
-                    ".read": true,
-                    // Only admins
-                    ".write": "auth != null && root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists()"
-                },
-                "bookRequests": {
-                    // Admins can read all. Users can't list all.
-                    ".read": "auth != null && root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists()",
-                    ".write": true
-                },
-                "activityLog": {
-                    // Only admins
-                    ".read": "auth != null && root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists()",
-                    ".write": "auth != null",
-                    ".indexOn": [
-                        "timestamp"
-                    ]
-                },
-                "supportTickets": {
-                    ".read": true,
-                    ".write": true,
-                    ".indexOn": [
-                        "visitorId",
-                        "status",
-                        "createdAt"
-                    ]
-                },
-                "seoSettings": {
-                    ".read": true,
-                    // Only admins
-                    ".write": "auth != null && root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists()"
-                },
-                "userProfiles": {
-                    ".indexOn": [
-                        "visitorId"
-                    ],
-                    "$uid": {
-                        // Allow read/write if it's the user's own UID OR if it's a anonymous visitor ID
-                        ".read": "$uid === auth.uid || $uid.beginsWith('visitor_')",
-                        ".write": "$uid === auth.uid || $uid.beginsWith('visitor_')"
-                    }
-                },
-                "reviews": {
-                    ".read": true,
-                    ".write": true,
-                    ".indexOn": [
-                        "productId",
-                        "visitorId",
-                        "timestamp"
-                    ]
-                },
-                "newsletter": {
-                    ".read": "auth != null && root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists()",
-                    ".write": true,
-                    ".indexOn": [
-                        "timestamp"
-                    ]
-                }
-            }
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "products": {
+      ".read": true,
+      ".write": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email))",
+      ".indexOn": [
+        "category",
+        "visible",
+        "timestamp",
+        "price"
+      ],
+      "$productId": {
+        "stock": {
+          ".write": true
         }
+      }
+    },
+
+    "settings": {
+      ".read": true,
+      ".write": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email))"
+    },
+
+    "orders": {
+      ".read": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email) || (query.orderByChild == 'userId' && query.equalTo == auth.uid))",
+      ".write": true,
+      ".indexOn": [
+        "userId",
+        "timestamp",
+        "status"
+      ],
+      "$orderId": {
+        ".read": true,
+        ".write": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email)) || !data.exists()"
+      }
+    },
+
+    "promos": {
+      ".read": true,
+      ".indexOn": [
+        "code"
+      ],
+      "$promoId": {
+        ".write": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email))",
+        "usedCount": {
+          ".write": true
+        }
+      }
+    },
+
+    "activityLog": {
+      ".read": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email))",
+      ".write": "auth != null",
+      ".indexOn": [
+        "timestamp",
+        "type"
+      ]
+    },
+
+    "supportTickets": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": [
+        "visitorId",
+        "status",
+        "createdAt"
+      ]
+    },
+
+    "seoSettings": {
+      ".read": true,
+      ".write": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email))"
+    },
+
+    "userProfiles": {
+      ".indexOn": [
+        "visitorId"
+      ],
+      "$uid": {
+        ".read": "($uid === auth.uid) || $uid.beginsWith('visitor_') || (auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email)))",
+        ".write": "($uid === auth.uid) || $uid.beginsWith('visitor_') || (auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email)))"
+      }
+    },
+
+    "reviews": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": [
+        "productId",
+        "visitorId",
+        "timestamp"
+      ]
+    },
+
+    "newsletter": {
+      ".read": "auth != null && (root.child('settings/adminEmails').child(auth.token.email.replace('.', ',')).exists() || (root.child('settings/ownerEmail').exists() && root.child('settings/ownerEmail').val() == auth.token.email))",
+      ".write": true,
+      ".indexOn": [
+        "timestamp"
+      ]
+    }
+  }
+}

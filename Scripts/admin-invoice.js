@@ -86,10 +86,10 @@
         }
 
         // Store info
-        const storeName = settings.heroTitle || 'متجر زيرونكس';
-        const storePhone = settings.phoneNumber || '';
+        const storeName = settings.storeName || settings.heroTitle || 'New Desgin';
+        const storePhone = settings.phoneNumber || '+218 91 6808225';
         const storeEmail = settings.contactEmail || '';
-        const storeLogo = 'https://assets.zeronux.store/Logo.png';
+        const storeLogo = 'Images/Logo-noBG.png';
 
         const invoiceHtml = `
 <!DOCTYPE html>
@@ -97,8 +97,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فاتورة #${order.orderId || orderId.slice(-6)}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>فاتورة طلب #${order.orderId || orderId.slice(-6)} - New Desgin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -106,29 +106,40 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Cairo', sans-serif;
-            background: #f8f9fa;
-            color: #1a1a2e;
-            padding: 0;
+            font-family: 'Cairo', 'Outfit', sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 20px;
             direction: rtl;
         }
         .invoice-page {
-            max-width: 800px;
-            margin: 20px auto;
+            max-width: 820px;
+            margin: 0 auto;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             overflow: hidden;
+            border: 1px solid #e2e8f0;
         }
 
         /* Header */
         .invoice-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #070b14 0%, #0f172a 40%, #0284c7 100%);
             color: white;
-            padding: 2rem 2.5rem;
+            padding: 2.2rem 2.8rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+        }
+        .invoice-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0ea5e9, #38bdf8, #7dd3fc);
         }
         .store-info {
             display: flex;
@@ -136,85 +147,90 @@
             gap: 16px;
         }
         .store-logo {
-            width: 60px;
             height: 60px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.2);
-            padding: 6px;
+            width: auto;
             object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(56, 189, 248, 0.4));
         }
         .store-name {
             font-size: 1.6rem;
-            font-weight: 700;
+            font-weight: 800;
+            font-family: 'Outfit', 'Cairo', sans-serif;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 60%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .store-contact {
-            font-size: 0.8rem;
-            opacity: 0.85;
-            margin-top: 2px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-top: 3px;
         }
         .invoice-label {
             text-align: left;
         }
         .invoice-label h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
             letter-spacing: 1px;
         }
         .invoice-label .invoice-number {
-            font-size: 0.85rem;
-            opacity: 0.9;
+            font-size: 0.95rem;
+            color: #38bdf8;
+            font-weight: 700;
+            font-family: 'Outfit', monospace;
             margin-top: 4px;
         }
 
         /* Meta Info */
         .invoice-meta {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(4, 1fr);
             gap: 1rem;
             padding: 1.5rem 2.5rem;
-            background: #f0f2ff;
-            border-bottom: 1px solid #e8e8f0;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
         }
         .meta-card {
             background: white;
-            padding: 1rem 1.2rem;
-            border-radius: 10px;
-            border: 1px solid #e8e8f0;
+            padding: 0.9rem 1.1rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
         }
         .meta-card .meta-label {
             font-size: 0.75rem;
-            color: #888;
+            color: #64748b;
             margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight: 600;
         }
         .meta-card .meta-value {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #1a1a2e;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #0f172a;
         }
         .status-badge {
             display: inline-block;
-            padding: 3px 12px;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.78rem;
+            font-weight: 700;
         }
-        .status-pending { background: rgba(255,193,7,0.15); color: #e6a700; }
-        .status-processing { background: rgba(33,150,243,0.15); color: #1976d2; }
-        .status-shipped { background: rgba(0,188,212,0.15); color: #00838f; }
-        .status-completed { background: rgba(76,175,80,0.15); color: #2e7d32; }
-        .status-cancelled { background: rgba(244,67,54,0.15); color: #c62828; }
+        .status-pending { background: rgba(245,158,11,0.15); color: #d97706; }
+        .status-processing { background: rgba(14,165,233,0.15); color: #0284c7; }
+        .status-shipped { background: rgba(56,189,248,0.15); color: #0369a1; }
+        .status-completed { background: rgba(16,185,129,0.15); color: #059669; }
+        .status-cancelled { background: rgba(239,68,68,0.15); color: #dc2626; }
 
         /* Items Table */
         .invoice-body {
-            padding: 1.5rem 2.5rem 2rem;
+            padding: 1.8rem 2.5rem 2rem;
         }
         .section-title {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            color: #667eea;
-            margin-bottom: 0.8rem;
+            color: #0284c7;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -225,95 +241,104 @@
             margin-bottom: 1.5rem;
         }
         .items-table thead th {
-            background: #f0f2ff;
-            color: #555;
-            font-weight: 600;
-            font-size: 0.8rem;
-            padding: 10px 14px;
+            background: #f1f5f9;
+            color: #475569;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 12px 16px;
             text-align: right;
-            border-bottom: 2px solid #e0e0f0;
+            border-bottom: 2px solid #cbd5e1;
         }
         .items-table tbody td {
-            padding: 12px 14px;
-            border-bottom: 1px solid #f0f0f5;
-            font-size: 0.9rem;
-            color: #333;
+            padding: 13px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.92rem;
+            color: #1e293b;
         }
         .items-table tbody tr:last-child td {
-            border-bottom: 2px solid #e0e0f0;
+            border-bottom: 2px solid #cbd5e1;
         }
         .items-table tbody tr:hover {
-            background: #fafafe;
+            background: #f8fafc;
         }
         .discount-row td {
-            color: #4caf50;
-            font-weight: 600;
+            color: #059669;
+            font-weight: 700;
+            background: #ecfdf5;
         }
 
         /* Totals */
         .totals-section {
             display: flex;
-            justify-content: flex-start;
-            margin-top: 0.5rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
         }
         .totals-table {
-            width: 280px;
+            width: 320px;
+            background: #f8fafc;
+            padding: 1rem 1.4rem;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
         }
         .totals-table .total-row {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
-            font-size: 0.9rem;
-            color: #555;
+            padding: 6px 0;
+            font-size: 0.92rem;
+            color: #475569;
         }
         .totals-table .total-row.final {
-            border-top: 2px solid #667eea;
-            margin-top: 6px;
-            padding-top: 12px;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #1a1a2e;
+            border-top: 2px solid #0ea5e9;
+            margin-top: 8px;
+            padding-top: 10px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .totals-table .total-row.final span:last-child {
+            color: #0284c7;
         }
 
         /* Footer */
         .invoice-footer {
-            background: #f8f9fa;
-            padding: 1.5rem 2.5rem;
+            background: #f8fafc;
+            padding: 1.6rem 2.5rem;
             text-align: center;
-            border-top: 1px solid #e8e8f0;
+            border-top: 1px solid #e2e8f0;
         }
         .footer-thanks {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #667eea;
-            margin-bottom: 6px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0284c7;
+            margin-bottom: 4px;
         }
         .footer-contact {
-            font-size: 0.8rem;
-            color: #999;
+            font-size: 0.85rem;
+            color: #64748b;
         }
 
         /* Print Actions */
         .print-actions {
             text-align: center;
-            padding: 1.5rem;
-            background: #f8f9fa;
+            padding: 1.2rem;
+            margin-bottom: 10px;
         }
         .print-btn {
             padding: 12px 36px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             font-family: 'Cairo', sans-serif;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.35);
         }
         .print-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.55);
         }
 
         /* Print Styles */
@@ -326,23 +351,13 @@
                 margin: 0;
                 box-shadow: none;
                 border-radius: 0;
+                border: none;
+                max-width: 100%;
             }
             .print-actions {
                 display: none !important;
             }
-            .invoice-header {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .invoice-meta {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .items-table thead th {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .status-badge {
+            .invoice-header, .invoice-meta, .items-table thead th, .status-badge {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
@@ -358,14 +373,14 @@
         <!-- Header -->
         <div class="invoice-header">
             <div class="store-info">
-                <img src="${storeLogo}" class="store-logo" alt="Logo">
+                <img src="${storeLogo}" class="store-logo" alt="New Desgin" onerror="this.style.display='none'">
                 <div>
                     <div class="store-name">${storeName}</div>
                     <div class="store-contact">${storePhone}${storeEmail ? ' • ' + storeEmail : ''}</div>
                 </div>
             </div>
             <div class="invoice-label">
-                <h2>فاتورة</h2>
+                <h2>فاتورة مبيعات</h2>
                 <div class="invoice-number">#${order.orderId || orderId.slice(-6)}</div>
             </div>
         </div>
@@ -392,7 +407,7 @@
 
         <!-- Body -->
         <div class="invoice-body">
-            <div class="section-title">📦 تفاصيل المنتجات</div>
+            <div class="section-title">📦 تفاصيل المنتجات والطلبية</div>
             <table class="items-table">
                 <thead>
                     <tr>
@@ -416,7 +431,7 @@
                         <span>${formatPrice(order.total, currencySymbol)}</span>
                     </div>
                     ${order.discount ? `
-                    <div class="total-row" style="color: #4caf50;">
+                    <div class="total-row" style="color: #059669; font-weight: 600;">
                         <span>الخصم (${order.discount.value}%):</span>
                         <span>-${formatPrice(order.total - order.finalTotal, currencySymbol)}</span>
                     </div>
@@ -429,17 +444,16 @@
             </div>
         </div>
 
-
         <!-- QR Code -->
-        <div style="text-align: center; margin-bottom: 1.5rem;">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(`${window.location.origin}/track-order.html?id=${order.orderId || orderId}`)}" alt="QR Code" style="width: 100px; height: 100px; padding: 5px; border: 1px solid #eee; border-radius: 8px;">
-            <div style="font-size: 0.75rem; color: #888; margin-top: 5px;">امسح الكود لتتبع طلبك</div>
+        <div style="text-align: center; margin: 1rem 0 1.5rem;">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(`${window.location.origin}/track-order.html?id=${order.orderId || orderId}`)}" alt="QR Code" style="width: 90px; height: 90px; padding: 4px; border: 1px solid #cbd5e1; border-radius: 8px;">
+            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">امسح الكود لتتبع حالة شحنتك فوراً</div>
         </div>
 
         <!-- Footer -->
         <div class="invoice-footer">
-            <div class="footer-thanks">شكراً لتسوقك معنا! 💜</div>
-            <div class="footer-contact">${storeName}${storePhone ? ' • ' + storePhone : ''}${storeEmail ? ' • ' + storeEmail : ''}</div>
+            <div class="footer-thanks">شكراً لثقتك واختيارك New Desgin ✨</div>
+            <div class="footer-contact">${storeName} • أرقى تشكيلات الملابس والعطور الفاخرة</div>
         </div>
     </div>
 </body>

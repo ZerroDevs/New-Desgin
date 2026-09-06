@@ -93,7 +93,7 @@ body {
     height: 80px;
     object-fit: contain;
     margin-bottom: 15px;
-    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+    filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.45));
 }
 
 .auth-header h2 {
@@ -157,9 +157,10 @@ body {
 }
 
 .social-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(56, 189, 248, 0.1);
     transform: translateY(-2px);
-    border-color: var(--primary-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
 }
 
 .divider {
@@ -212,13 +213,13 @@ body {
 }
 
 .input-group input:focus {
-    border-color: var(--primary-color);
+    border-color: var(--accent-color);
     background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 40%, #38bdf8 100%);
     color: white;
     border: none;
     padding: 14px;
@@ -226,14 +227,18 @@ body {
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.35);
+    position: relative;
+    overflow: hidden;
 }
 
 .submit-btn:hover {
-    opacity: 0.95;
+    opacity: 1;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.55);
+    background: linear-gradient(135deg, #0369a1 0%, #0284c7 40%, #0ea5e9 100%);
 }
 
 .toggle-auth {

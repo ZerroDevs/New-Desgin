@@ -12,14 +12,14 @@ function openGlobalSearchOverlay() {
             <div class="gso-header">
                 <div class="gso-input-wrap">
                     <span class="gso-search-icon">🔍</span>
-                    <input type="text" id="gso-input" placeholder="ابحث عن منتجات أو كتب..." autocomplete="off" autofocus>
+                    <input type="text" id="gso-input" placeholder="ابحث عن الملابس، العطور، والمنتجات..." autocomplete="off" autofocus>
                 </div>
                 <button class="gso-close-btn" aria-label="إغلاق">✕</button>
             </div>
             <div class="gso-results" id="gso-results">
                 <div class="gso-hint">
                     <span style="font-size:2.5rem">🔎</span>
-                    <p>اكتب للبحث في المنتجات والكتب</p>
+                    <p>اكتب للبحث في تشكيلات الملابس والعطور والمنتجات</p>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@ function openGlobalSearchOverlay() {
             #global-search-overlay {
                 position: fixed;
                 top: 0; left: 0; right: 0; bottom: 0;
-                background: rgba(10, 10, 20, 0.96);
+                background: rgba(7, 11, 20, 0.96);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
                 z-index: 100000;
@@ -80,8 +80,8 @@ function openGlobalSearchOverlay() {
             #gso-input {
                 width: 100%;
                 padding: 1rem 3rem 1rem 1rem;
-                background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: rgba(15, 23, 42, 0.8);
+                border: 1px solid rgba(56, 189, 248, 0.2);
                 border-radius: 14px;
                 color: white;
                 font-family: 'Cairo', 'Inter', sans-serif;
@@ -91,16 +91,16 @@ function openGlobalSearchOverlay() {
                 transition: all 0.3s ease;
             }
             #gso-input:focus {
-                border-color: #667eea;
-                background: rgba(255, 255, 255, 0.12);
-                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+                border-color: #0ea5e9;
+                background: rgba(15, 23, 42, 0.95);
+                box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
             }
             #gso-input::placeholder { color: rgba(255,255,255,0.4); }
             .gso-close-btn {
                 width: 44px; height: 44px;
                 border-radius: 12px;
-                border: 1px solid rgba(255,255,255,0.1);
-                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(56, 189, 248, 0.2);
+                background: rgba(15, 23, 42, 0.6);
                 color: white;
                 font-size: 1.1rem;
                 cursor: pointer;
@@ -110,7 +110,7 @@ function openGlobalSearchOverlay() {
                 transition: all 0.2s;
                 flex-shrink: 0;
             }
-            .gso-close-btn:hover { background: rgba(255,255,255,0.1); }
+            .gso-close-btn:hover { background: rgba(14, 165, 233, 0.2); border-color: #38bdf8; }
             .gso-results {
                 flex: 1;
                 overflow-y: auto;
@@ -129,13 +129,13 @@ function openGlobalSearchOverlay() {
             .gso-hint p { margin: 0; font-size: 1rem; }
             .gso-section-title {
                 font-size: 0.85rem;
-                color: rgba(255,255,255,0.5);
+                color: #38bdf8;
                 font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 margin: 1.25rem 0 0.5rem;
                 padding-bottom: 0.4rem;
-                border-bottom: 1px solid rgba(255,255,255,0.06);
+                border-bottom: 1px solid rgba(56, 189, 248, 0.15);
             }
             .gso-item {
                 display: flex;
@@ -147,10 +147,13 @@ function openGlobalSearchOverlay() {
                 transition: all 0.2s ease;
                 text-decoration: none;
                 color: white;
+                border: 1px solid transparent;
                 animation: gsoSlideDown 0.3s ease-out both;
             }
             .gso-item:hover, .gso-item:active {
-                background: rgba(255,255,255,0.06);
+                background: rgba(14, 165, 233, 0.12);
+                border-color: rgba(56, 189, 248, 0.25);
+                transform: translateX(-3px);
             }
             .gso-item-img {
                 width: 50px; height: 50px;
@@ -181,7 +184,7 @@ function openGlobalSearchOverlay() {
             .gso-item-price {
                 font-weight: 700;
                 font-size: 0.9rem;
-                color: #667eea;
+                color: #38bdf8;
                 white-space: nowrap;
                 flex-shrink: 0;
             }
@@ -194,7 +197,7 @@ function openGlobalSearchOverlay() {
             .gso-loading {
                 text-align: center;
                 padding: 2rem;
-                color: rgba(255,255,255,0.5);
+                color: #38bdf8;
             }
         `;
         document.head.appendChild(style);
@@ -264,14 +267,9 @@ function openGlobalSearchOverlay() {
             ? Promise.resolve(cachedProducts)
             : db.ref('products').once('value').then(snap => { cachedProducts = snap.val() || {}; return cachedProducts; });
 
-        const fetchBooks = cachedBooks
-            ? Promise.resolve(cachedBooks)
-            : db.ref('studentBooks').once('value').then(snap => { cachedBooks = snap.val() || {}; return cachedBooks; });
-
-        Promise.all([fetchProducts, fetchBooks]).then(([products, books]) => {
+        fetchProducts.then(products => {
             const q = query.toLowerCase();
             let html = '';
-            let totalResults = 0;
 
             // Search products
             const productResults = [];
@@ -286,21 +284,7 @@ function openGlobalSearchOverlay() {
                 }
             });
 
-            // Search books
-            const bookResults = [];
-            Object.entries(books).forEach(([id, b]) => {
-                if (b.visible === false) return;
-                const name = (b.name || '').toLowerCase();
-                const exact = name.includes(q);
-                const fuzzy = !exact && q.length > 2 && name.split(' ').some(w => levenshteinDist(q, w) <= 2);
-                if (exact || fuzzy) {
-                    bookResults.push({ id, ...b });
-                }
-            });
-
-            totalResults = productResults.length + bookResults.length;
-
-            if (totalResults === 0) {
+            if (productResults.length === 0) {
                 resultsContainer.innerHTML = `
                     <div class="gso-no-results">
                         <span>🤔</span>
@@ -312,43 +296,22 @@ function openGlobalSearchOverlay() {
             }
 
             // Render product results
-            if (productResults.length > 0) {
-                html += `<div class="gso-section-title">🛍️ المنتجات (${productResults.length})</div>`;
-                productResults.forEach((p, i) => {
-                    const price = p.priceType === 'contact' ? '📞 تواصل' :
-                        p.priceType === 'negotiable' ? '🤝 تفاوض' :
-                            p.price ? `$${parseFloat(p.price).toFixed(2)}` : '';
-                    html += `
-                        <a href="index.html?product=${p.id}" class="gso-item" style="animation-delay: ${i * 0.05}s">
-                            <img class="gso-item-img" src="${p.image || 'https://via.placeholder.com/50?text=📦'}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/50?text=📦'">
-                            <div class="gso-item-info">
-                                <div class="gso-item-name">${p.name}</div>
-                                <div class="gso-item-meta">${p.shortDesc || (p.description || '').substring(0, 50)}</div>
-                            </div>
-                            <div class="gso-item-price">${price}</div>
-                        </a>
-                    `;
-                });
-            }
-
-            // Render book results
-            if (bookResults.length > 0) {
-                html += `<div class="gso-section-title">📚 الكتب الدراسية (${bookResults.length})</div>`;
-                bookResults.forEach((b, i) => {
-                    const price = b.priceType === 'contact' ? '📞 تواصل' :
-                        b.price ? `$${parseFloat(b.price).toFixed(2)}` : '';
-                    html += `
-                        <a href="students.html" class="gso-item" style="animation-delay: ${(productResults.length + i) * 0.05}s">
-                            <img class="gso-item-img" src="${b.image || 'https://via.placeholder.com/50?text=📖'}" alt="${b.name}" onerror="this.src='https://via.placeholder.com/50?text=📖'">
-                            <div class="gso-item-info">
-                                <div class="gso-item-name">${b.name}</div>
-                                <div class="gso-item-meta">كتاب دراسي</div>
-                            </div>
-                            <div class="gso-item-price">${price}</div>
-                        </a>
-                    `;
-                });
-            }
+            html += `<div class="gso-section-title">🛍️ المنتجات (${productResults.length})</div>`;
+            productResults.forEach((p, i) => {
+                const price = p.priceType === 'contact' ? '📞 تواصل' :
+                    p.priceType === 'negotiable' ? '🤝 تفاوض' :
+                        p.price ? `${parseFloat(p.price).toFixed(2)} د.ل` : '';
+                html += `
+                    <a href="product.html?id=${p.id}" class="gso-item" style="animation-delay: ${i * 0.05}s">
+                        <img class="gso-item-img" src="${p.image || 'Images/Logo-noBG.png'}" alt="${p.name}" onerror="this.src='Images/Logo-noBG.png'">
+                        <div class="gso-item-info">
+                            <div class="gso-item-name">${p.name}</div>
+                            <div class="gso-item-meta">${p.shortDesc || (p.description || '').substring(0, 50)}</div>
+                        </div>
+                        <div class="gso-item-price">${price}</div>
+                    </a>
+                `;
+            });
 
             resultsContainer.innerHTML = html;
         }).catch(err => {

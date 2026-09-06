@@ -1,102 +1,162 @@
+/**
+ * New Desgin - User Profile & Luxury Account Dashboard
+ */
 (function () {
     'use strict';
 
     document.addEventListener('DOMContentLoaded', () => {
 
-        // --- UI References ---
-        const tabs = document.querySelectorAll('.nav-item[data-tab]');
-        const panels = document.querySelectorAll('.tab-panel');
+        // UI Element References
         const loadingOverlay = document.getElementById('loading-overlay');
-        const sidebarAvatar = document.getElementById('sidebar-avatar');
-        const sidebarName = document.getElementById('sidebar-name');
-        const sidebarEmail = document.getElementById('sidebar-email');
-        const welcomeName = document.getElementById('welcome-name');
-        const navOrderCount = document.getElementById('nav-order-count');
+        const userHeroAvatar = document.getElementById('user-hero-avatar');
+        const userHeroName = document.getElementById('user-hero-name');
+        const userHeroEmail = document.getElementById('user-hero-email');
+        const userHeroPhone = document.getElementById('user-hero-phone');
 
-        // Stats Refs
-        const statTotalSpent = document.getElementById('stat-total-spent');
-        const statTotalOrders = document.getElementById('stat-total-orders');
-        const statWishlistCount = document.getElementById('stat-wishlist-count');
-        const latestOrderPreview = document.getElementById('latest-order-preview');
+        const heroStatOrders = document.getElementById('hero-stat-orders');
+        const heroStatSpent = document.getElementById('hero-stat-spent');
+        const heroStatWishlist = document.getElementById('hero-stat-wishlist');
 
-        // Form Refs
-        const profileForm = document.getElementById('profile-form');
-        const saveBtn = document.getElementById('save-btn');
+        const kpiTotalSpent = document.getElementById('kpi-total-spent');
+        const kpiTotalOrders = document.getElementById('kpi-total-orders');
+        const kpiWishlistCount = document.getElementById('kpi-wishlist-count');
+
+        const badgeOrderCount = document.getElementById('badge-order-count');
+        const badgeWishlistCount = document.getElementById('badge-wishlist-count');
+
+        // Forms
+        const personalForm = document.getElementById('personal-form');
         const pName = document.getElementById('p-name');
         const pPhone = document.getElementById('p-phone');
         const pCity = document.getElementById('p-city');
         const pAddress = document.getElementById('p-address');
         const pEmail = document.getElementById('p-email');
         const pNotes = document.getElementById('p-notes');
-        const changePassBtn = document.getElementById('change-pass-btn');
+        const btnSavePersonal = document.getElementById('btn-save-personal');
+
+        const preferencesForm = document.getElementById('preferences-form');
+        const btnSavePref = document.getElementById('btn-save-pref');
+        const customShoeContainer = document.getElementById('custom-shoe-size-container');
+        const customShoeInput = document.getElementById('custom-shoe-size');
+
+        // Tab Navigation
+        const navItems = document.querySelectorAll('.nav-item[data-tab]');
+        const tabPanels = document.querySelectorAll('.tab-panel');
 
         let currentUser = null;
-        let userProfile = null;
+        let userProfileData = {};
         let userOrders = [];
+        let currentOrderFilter = 'all';
 
-        // --- 1. Tab Navigation ---
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const target = tab.dataset.tab;
+        // --- 1. Tab Switching ---
+        window.switchProfileTab = function (tabName) {
+            navItems.forEach(item => {
+                if (item.dataset.tab === tabName) item.classList.add('active');
+                else item.classList.remove('active');
+            });
 
-                // Redirect Orders to uorder.html
-                if (target === 'orders') {
-                    window.location.href = 'uorder.html';
-                    return;
-                }
+            tabPanels.forEach(panel => {
+                if (panel.id === `tab-${tabName}`) panel.classList.add('active');
+                else panel.classList.remove('active');
+            });
 
-                // Active Class on Nav
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+            if (tabName === 'wishlist') renderWishlist();
+            if (tabName === 'orders') renderOrders();
+        };
 
-                // Show Panel
-                panels.forEach(p => p.classList.remove('active'));
-                document.getElementById(`tab-${target}`).classList.add('active');
-
-                // If specific tab needs refresh
-                if (target === 'wishlist') renderWishlist();
-                if (target === 'orders') renderOrders();
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const target = item.dataset.tab;
+                if (target) switchProfileTab(target);
             });
         });
 
-        // Logout from Sidebar
-        const logoutBtn = document.getElementById('logout-btn-sidebar');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-                firebase.auth().signOut().then(() => window.location.href = 'index.html');
+        // Logout Handlers
+        function handleLogout() {
+            if (confirm('هل تريد بالتأكيد تسجيل الخروج من حسابك؟')) {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = 'index.html';
+                });
+            }
+        }
+
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+
+        const logoutSecBtn = document.getElementById('btn-logout-sec');
+        if (logoutSecBtn) logoutSecBtn.addEventListener('click', handleLogout);
+
+        // Password Reset Button
+        const resetPassBtn = document.getElementById('btn-reset-password');
+        if (resetPassBtn) {
+            resetPassBtn.addEventListener('click', () => {
+                if (!currentUser || !currentUser.email) return;
+                resetPassBtn.disabled = true;
+                resetPassBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+
+                firebase.auth().sendPasswordResetEmail(currentUser.email).then(() => {
+                    showToast('✅ تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني', 'success');
+                    resetPassBtn.innerHTML = '<i class="fas fa-check"></i> تم إرسال الرابط';
+                }).catch(err => {
+                    console.error('Password reset error:', err);
+                    showToast('❌ تعذر إرسال الرابط: ' + (err.message || 'حدث خطأ'), 'error');
+                    resetPassBtn.disabled = false;
+                    resetPassBtn.innerHTML = '<i class="fas fa-key"></i> إعادة المحاولة';
+                });
             });
         }
 
-        // --- 2. Auth & Data Loading ---
-        firebase.auth().onAuthStateChanged(async (user) => {
+        // --- Shoe Size Radio Listener (Custom 'Other' size toggle) ---
+        document.querySelectorAll('input[name="shoe_size"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'other') {
+                    if (customShoeContainer) {
+                        customShoeContainer.style.display = 'block';
+                        if (customShoeInput) customShoeInput.focus();
+                    }
+                } else {
+                    if (customShoeContainer) customShoeContainer.style.display = 'none';
+                }
+            });
+        });
+
+        // --- 2. Auth State & Data Sync ---
+        firebase.auth().onAuthStateChanged((user) => {
             if (!user) {
-                window.location.href = 'login.html';
+                window.location.href = 'login.html?redirect=profile.html';
                 return;
             }
             currentUser = user;
 
-            // Load Profile Data
-            loadUserProfile((profile) => {
-                userProfile = profile || {};
-                updateUI(user, userProfile);
-                loadOrders(user.uid);
-            });
+            // Load profile from DB
+            if (window.loadUserProfile) {
+                window.loadUserProfile((profile) => {
+                    userProfileData = profile || {};
+                    populateProfileUI(user, userProfileData);
+                    loadUserOrders(user.uid);
+                    updateWishlistStats();
+                });
+            } else {
+                populateProfileUI(user, {});
+                loadUserOrders(user.uid);
+                updateWishlistStats();
+            }
         });
 
-        function updateUI(user, profile) {
-            // Sidebar & Header
-            const name = profile.name || user.displayName || 'المستخدم';
-            const email = user.email;
+        function populateProfileUI(user, profile) {
+            const name = profile.name || user.displayName || 'عميل New Desgin';
+            const email = user.email || '';
+            const phone = profile.phone || 'غير مسجل';
 
-            sidebarName.textContent = name;
-            sidebarEmail.textContent = email;
-            welcomeName.textContent = name;
+            // Hero
+            userHeroName.textContent = name;
+            userHeroEmail.textContent = email;
+            userHeroPhone.textContent = phone;
 
-            // Avatar
-            const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-            sidebarAvatar.textContent = initials;
+            const initials = name.trim().split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() || 'ND';
+            userHeroAvatar.textContent = initials;
 
-            // Form Fields
+            // Form
             pName.value = name;
             pEmail.value = email;
             pPhone.value = profile.phone || '';
@@ -104,260 +164,478 @@
             pAddress.value = profile.address || '';
             pNotes.value = profile.notes || '';
 
-            loadingOverlay.style.display = 'none';
+            // Preferences (No default auto-checks unless saved in DB)
+            if (profile.preferences) {
+                // Clothes size
+                if (profile.preferences.clothes_size) {
+                    const r = document.querySelector(`input[name="clothes_size"][value="${profile.preferences.clothes_size}"]`);
+                    if (r) r.checked = true;
+                }
+
+                // Shoe size
+                if (profile.preferences.shoe_size) {
+                    const standardSizes = ['39', '40', '41', '42', '43', '44', '45'];
+                    if (standardSizes.includes(profile.preferences.shoe_size)) {
+                        const r = document.querySelector(`input[name="shoe_size"][value="${profile.preferences.shoe_size}"]`);
+                        if (r) r.checked = true;
+                        if (customShoeContainer) customShoeContainer.style.display = 'none';
+                    } else {
+                        // Custom shoe size
+                        const otherRadio = document.getElementById('shoe-size-other-radio');
+                        if (otherRadio) otherRadio.checked = true;
+                        if (customShoeContainer) customShoeContainer.style.display = 'block';
+                        if (customShoeInput) customShoeInput.value = profile.preferences.shoe_size === 'other' ? '' : profile.preferences.shoe_size;
+                    }
+                }
+
+                // Fragrance notes
+                if (Array.isArray(profile.preferences.fragrance_notes)) {
+                    document.querySelectorAll('input[name="fragrance_notes"]').forEach(cb => {
+                        cb.checked = profile.preferences.fragrance_notes.includes(cb.value);
+                    });
+                }
+            }
+
+            if (loadingOverlay) loadingOverlay.style.display = 'none';
         }
 
-        // --- 3. Save Profile ---
-        profileForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // --- 3. Save Personal Info ---
+        if (personalForm) {
+            personalForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                btnSavePersonal.disabled = true;
+                btnSavePersonal.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
 
-            const originalText = saveBtn.innerHTML;
-            saveBtn.disabled = true;
-            saveBtn.innerHTML = '⏳ جاري الحفظ...';
+                const updatedData = {
+                    name: pName.value.trim(),
+                    phone: pPhone.value.trim(),
+                    city: pCity.value.trim(),
+                    address: pAddress.value.trim(),
+                    notes: pNotes.value.trim()
+                };
 
-            const data = {
-                name: pName.value.trim(),
-                phone: pPhone.value.trim(),
-                city: pCity.value.trim(),
-                address: pAddress.value.trim(),
-                notes: pNotes.value.trim()
-            };
+                try {
+                    if (window.saveUserProfile) {
+                        await window.saveUserProfile(updatedData);
+                    }
+                    userHeroName.textContent = updatedData.name;
+                    userHeroPhone.textContent = updatedData.phone || 'غير مسجل';
+                    const initials = updatedData.name.trim().split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() || 'ND';
+                    userHeroAvatar.textContent = initials;
 
-            try {
-                await saveUserProfile(data);
+                    showToast('✅ تم تحديث بياناتك بنجاح', 'success');
+                } catch (err) {
+                    console.error('Error saving profile:', err);
+                    showToast('❌ تعذر حفظ التغييرات', 'error');
+                } finally {
+                    btnSavePersonal.disabled = false;
+                    btnSavePersonal.innerHTML = '<i class="fas fa-save"></i> حفظ البيانات';
+                }
+            });
+        }
 
-                // Update specific UI parts
-                sidebarName.textContent = data.name;
-                welcomeName.textContent = data.name;
-                const initials = data.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                sidebarAvatar.textContent = initials;
+        // --- 4. Save Preferences ---
+        if (preferencesForm) {
+            preferencesForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                btnSavePref.disabled = true;
+                btnSavePref.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
 
-                if (window.showNotification) window.showNotification('✅ تم حفظ التغييرات');
-                else alert('✅ تم حفظ التغييرات');
+                const clothesSize = document.querySelector('input[name="clothes_size"]:checked')?.value || '';
+                
+                let shoeSize = document.querySelector('input[name="shoe_size"]:checked')?.value || '';
+                if (shoeSize === 'other') {
+                    const customVal = customShoeInput ? customShoeInput.value.trim() : '';
+                    shoeSize = customVal || 'other';
+                }
 
-            } catch (err) {
-                console.error(err);
-                alert('❌ حدث خطأ');
-            } finally {
-                saveBtn.disabled = false;
-                saveBtn.innerHTML = originalText;
-            }
-        });
+                const fragranceNotes = Array.from(document.querySelectorAll('input[name="fragrance_notes"]:checked')).map(cb => cb.value);
 
-        // --- 4. Load Orders & Stats ---
-        function loadOrders(uid) {
+                const prefData = {
+                    clothes_size: clothesSize,
+                    shoe_size: shoeSize,
+                    fragrance_notes: fragranceNotes
+                };
+
+                try {
+                    if (window.saveUserProfile) {
+                        await window.saveUserProfile({ preferences: prefData });
+                    }
+                    showToast('✨ تم حفظ تفضيلات المقاسات والعطور بنجاح', 'success');
+                } catch (err) {
+                    console.error('Error saving preferences:', err);
+                    showToast('❌ تعذر حفظ التفضيلات', 'error');
+                } finally {
+                    btnSavePref.disabled = false;
+                    btnSavePref.innerHTML = '<i class="fas fa-check"></i> حفظ التفضيلات';
+                }
+            });
+        }
+
+        // --- 5. Orders & Live Tracking ---
+        function loadUserOrders(uid) {
             const db = firebase.database();
+            db.ref('orders').orderByChild('userId').equalTo(uid).once('value').then(snapshot => {
+                const data = snapshot.val();
+                if (data) {
+                    userOrders = Object.entries(data).map(([key, val]) => ({
+                        id: key,
+                        ...val
+                    })).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                } else {
+                    userOrders = [];
+                }
 
-            // Query orders by userId
-            db.ref('orders').orderByChild('userId').equalTo(uid).once('value')
-                .then(snapshot => {
-                    const ordersObj = snapshot.val();
-                    if (ordersObj) {
-                        // Convert to array and sort desc
-                        userOrders = Object.entries(ordersObj).map(([key, val]) => ({
-                            id: key,
-                            ...val
-                        })).sort((a, b) => b.timestamp - a.timestamp);
+                updateOrdersAndStats();
+            }).catch(err => {
+                console.warn('Orders query error, trying email fallback:', err);
+                db.ref('orders').once('value').then(snapshot => {
+                    const data = snapshot.val();
+                    if (data && currentUser && currentUser.email) {
+                        userOrders = Object.entries(data)
+                            .map(([key, val]) => ({ id: key, ...val }))
+                            .filter(o => o.userId === uid || (o.customer && o.customer.email === currentUser.email) || o.email === currentUser.email)
+                            .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
                     } else {
                         userOrders = [];
                     }
-
-                    updateStats();
-                    renderOrders();
-                    renderLatestOrder();
+                    updateOrdersAndStats();
+                }).catch(() => {
+                    userOrders = [];
+                    updateOrdersAndStats();
                 });
+            });
         }
 
-        function updateStats() {
-            // 1. Total Count
-            navOrderCount.textContent = userOrders.length;
-            statTotalOrders.textContent = userOrders.length;
+        function updateOrdersAndStats() {
+            // Stats Calculations
+            const orderCount = userOrders.length;
+            const totalSpent = userOrders.reduce((sum, ord) => sum + (parseFloat(ord.total) || 0), 0);
 
-            // 2. Total Spent
-            const totalSpent = userOrders.reduce((sum, order) => sum + (parseFloat(order.total) || 0), 0);
-            statTotalSpent.textContent = '$' + totalSpent.toLocaleString();
+            heroStatOrders.textContent = orderCount;
+            heroStatSpent.textContent = totalSpent.toLocaleString() + ' د.ل';
+            kpiTotalSpent.textContent = totalSpent.toLocaleString() + ' د.ل';
+            kpiTotalOrders.textContent = orderCount;
+            badgeOrderCount.textContent = orderCount;
 
-            // 3. Wishlist Count
-            // Assuming 'wishlist' array is available globally (from app.js logic)
-            // But app.js might not expose it directly as a variable we can read instantly if it loads async.
-            // Let's try reading from localStorage directly for immediate stats
-            try {
-                const storedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-                statWishlistCount.textContent = storedWishlist.length;
-            } catch (e) {
-                statWishlistCount.textContent = '0';
-            }
+            // Render Orders Tab & Latest Order Widget
+            renderOrders();
+            renderLatestOrderPreview();
+            updateOrderCounts();
         }
+
+        function updateOrderCounts() {
+            const allCount = userOrders.length;
+            const pendingCount = userOrders.filter(o => !o.status || o.status === 'pending').length;
+            const shippedCount = userOrders.filter(o => o.status === 'shipped' || o.status === 'processing').length;
+            const completedCount = userOrders.filter(o => o.status === 'completed').length;
+
+            const cAll = document.getElementById('count-all');
+            const cPend = document.getElementById('count-pending');
+            const cShip = document.getElementById('count-shipped');
+            const cComp = document.getElementById('count-completed');
+
+            if (cAll) cAll.textContent = allCount;
+            if (cPend) cPend.textContent = pendingCount;
+            if (cShip) cShip.textContent = shippedCount;
+            if (cComp) cComp.textContent = completedCount;
+        }
+
+        // Filter button listeners
+        document.querySelectorAll('.order-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.order-filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentOrderFilter = btn.dataset.filter || 'all';
+                renderOrders();
+            });
+        });
 
         function renderOrders() {
-            const container = document.getElementById('orders-list-container');
-            if (userOrders.length === 0) {
+            const container = document.getElementById('orders-full-list');
+            if (!container) return;
+
+            let filtered = userOrders;
+            if (currentOrderFilter === 'pending') filtered = userOrders.filter(o => !o.status || o.status === 'pending');
+            else if (currentOrderFilter === 'shipped') filtered = userOrders.filter(o => o.status === 'shipped' || o.status === 'processing');
+            else if (currentOrderFilter === 'completed') filtered = userOrders.filter(o => o.status === 'completed');
+
+            if (filtered.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.5);">
-                        <div style="font-size: 3rem; margin-bottom: 10px;">📦</div>
-                        <p>لا توجد طلبات سابقة.</p>
-                        <a href="index.html" style="color: var(--primary); text-decoration: none; margin-top: 10px; display: inline-block;">تصفح المنتجات</a>
+                    <div style="text-align: center; padding: 50px 20px; color: #94a3b8;">
+                        <i class="fas fa-box-open" style="font-size: 3rem; color: rgba(56,189,248,0.3); margin-bottom: 15px;"></i>
+                        <h3>لا توجد طلبات في هذا القسم</h3>
+                        <p style="margin: 10px 0 20px;">تسوق أرقى الملابس والعطور الحصرية وأطلب الآن بكل سهولة.</p>
+                        <a href="products.html" class="btn btn-primary"><i class="fas fa-shopping-bag"></i> تصفح المنتجات</a>
                     </div>
                 `;
                 return;
             }
 
             let html = '';
-            userOrders.forEach(order => {
-                const date = new Date(order.timestamp).toLocaleDateString('ar-LY', {
+            filtered.forEach(order => {
+                const dateStr = order.timestamp ? new Date(order.timestamp).toLocaleDateString('ar-LY', {
                     year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
-                });
+                }) : 'تاريخ غير محدد';
 
-                let statusClass = 'status-pending';
-                let statusText = 'قيد المعالجة';
-                if (order.status === 'completed') { statusClass = 'status-completed'; statusText = 'مكتمل'; }
-                if (order.status === 'cancelled') { statusClass = 'status-cancelled'; statusText = 'ملغى'; }
+                const status = (order.status || 'pending').toLowerCase();
+                let statusLabel = 'قيد المعالجة';
+                let statusTagClass = 'status-pending';
+                let step = 1;
 
-                // Items list summary
-                const items = order.items || order.cart;
-                const itemsSummary = items ? items.map(i => `${i.name} (x${i.quantity || 1})`).join(', ') : 'تفاصيل غير متوفرة';
+                if (status === 'processing') {
+                    statusLabel = 'جاري التجهيز';
+                    statusTagClass = 'status-processing';
+                    step = 2;
+                } else if (status === 'shipped') {
+                    statusLabel = 'قيد الشحن والتوصيل';
+                    statusTagClass = 'status-shipped';
+                    step = 3;
+                } else if (status === 'completed') {
+                    statusLabel = 'تم التسليم بنجاح';
+                    statusTagClass = 'status-completed';
+                    step = 4;
+                } else if (status === 'cancelled') {
+                    statusLabel = 'ملغي';
+                    statusTagClass = 'status-cancelled';
+                    step = 0;
+                }
+
+                // Items preview
+                const items = order.items || order.cart || [];
+                const itemsText = items.length > 0
+                    ? items.map(it => `<strong>${it.name || 'منتج'}</strong> (x${it.quantity || 1})`).join(' ، ')
+                    : (order.productName ? `<strong>${order.productName}</strong>` : 'تفاصيل المنتجات');
+
+                const totalFormatted = order.currency === 'LYD' || !order.currency
+                    ? `${(parseFloat(order.total) || 0).toLocaleString()} د.ل`
+                    : `$${(parseFloat(order.total) || 0).toLocaleString()}`;
 
                 html += `
-                    <div class="order-card">
-                        <div class="order-header">
-                            <div class="order-id">
-                                <span>#${order.id.substring(order.id.length - 6).toUpperCase()}</span>
-                                <span class="order-status ${statusClass}">${statusText}</span>
+                    <div class="luxury-order-card">
+                        <div class="order-top-bar">
+                            <div class="order-ref">
+                                <i class="fas fa-receipt" style="color: #38bdf8;"></i>
+                                <span>طلب #${(order.id || '').substring(order.id ? order.id.length - 6 : 0).toUpperCase()}</span>
+                                <span class="order-status-tag ${statusTagClass}">${statusLabel}</span>
                             </div>
-                            <div class="order-date">${date}</div>
+                            <div style="font-size: 0.85rem; color: #94a3b8;">
+                                <i class="far fa-calendar-alt"></i> ${dateStr}
+                            </div>
                         </div>
-                        <div class="order-items">
-                            <p style="color: rgba(255,255,255,0.7); line-height: 1.5;">${itemsSummary}</p>
+
+                        <!-- Stepper Tracker -->
+                        ${status !== 'cancelled' ? `
+                            <div class="order-track-stepper">
+                                <div class="step-item ${step >= 1 ? 'active' : ''}">
+                                    <div class="step-bullet"><i class="fas fa-check"></i></div>
+                                    <div class="step-label">تم الاستلام</div>
+                                </div>
+                                <div class="step-item ${step >= 2 ? 'active' : ''}">
+                                    <div class="step-bullet"><i class="fas fa-box"></i></div>
+                                    <div class="step-label">التجهيز</div>
+                                </div>
+                                <div class="step-item ${step >= 3 ? 'active' : ''}">
+                                    <div class="step-bullet"><i class="fas fa-truck"></i></div>
+                                    <div class="step-label">الشحن</div>
+                                </div>
+                                <div class="step-item ${step >= 4 ? 'active' : ''}">
+                                    <div class="step-bullet"><i class="fas fa-home"></i></div>
+                                    <div class="step-label">التسليم</div>
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <div class="order-items-preview">
+                            <i class="fas fa-tshirt" style="color: #38bdf8; margin-left: 6px;"></i> ${itemsText}
                         </div>
-                        <div class="order-footer">
-                            <div class="order-total">${order.currency === 'LYD' ? parseFloat(order.total).toLocaleString() + ' د.ل' : '$' + parseFloat(order.total).toLocaleString()}</div>
-                            <button class="invoice-btn" onclick="generateInvoice('${order.id}')">
-                                <span>📄</span> الفاتورة
+
+                        <div class="order-bottom-actions">
+                            <div class="order-price-total">
+                                <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 500;">الإجمالي: </span>
+                                ${totalFormatted}
+                            </div>
+                            <div class="order-action-btns">
+                                <a href="track-order.html?orderId=${encodeURIComponent(order.id)}" class="btn-track">
+                                    <i class="fas fa-location-arrow"></i> تتبع الشحنة
+                                </a>
+                                <button type="button" class="btn-invoice-user" onclick="if(window.generateInvoice) window.generateInvoice('${order.id}'); else alert('جاري تجهيز الفاتورة');">
+                                    <i class="fas fa-file-invoice"></i> الفاتورة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function renderLatestOrderPreview() {
+            const container = document.getElementById('latest-order-container');
+            if (!container) return;
+
+            if (userOrders.length === 0) {
+                container.innerHTML = `
+                    <div style="background: rgba(11, 19, 43, 0.6); border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 14px; padding: 35px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;">
+                        <div style="font-size: 2.2rem; color: rgba(56, 189, 248, 0.5);"><i class="fas fa-box-open"></i></div>
+                        <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">لا توجد لديك طلبات سابقة حتى الآن.</p>
+                        <a href="products.html" class="btn btn-primary" style="margin-top: 6px; font-size: 0.95rem; padding: 10px 24px;">
+                            <i class="fas fa-shopping-bag"></i> ابدأ التسوق الآن
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            const latest = userOrders[0];
+            const items = latest.items || latest.cart || [];
+            const itemsSummary = items.length > 0
+                ? items.map(i => `${i.name} (x${i.quantity || 1})`).join(', ')
+                : 'طلب New Desgin';
+
+            const totalFormatted = latest.currency === 'LYD' || !latest.currency
+                ? `${(parseFloat(latest.total) || 0).toLocaleString()} د.ل`
+                : `$${(parseFloat(latest.total) || 0).toLocaleString()}`;
+
+            container.innerHTML = `
+                <div style="background: rgba(11, 19, 43, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 14px; padding: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <div style="font-weight: 700; color: #ffffff; font-size: 1.05rem; margin-bottom: 4px;">
+                            طلب #${(latest.id || '').substring(latest.id ? latest.id.length - 6 : 0).toUpperCase()}
+                        </div>
+                        <div style="color: #cbd5e1; font-size: 0.88rem;">${itemsSummary}</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="font-size: 1.25rem; font-weight: 700; color: #38bdf8;">${totalFormatted}</div>
+                        <a href="track-order.html?orderId=${encodeURIComponent(latest.id)}" class="btn-track" style="padding: 8px 16px; font-size: 0.85rem;">
+                            <i class="fas fa-location-arrow"></i> تتبع
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- 6. Wishlist Management ---
+        function updateWishlistStats() {
+            let wishlist = [];
+            try {
+                wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            } catch (e) {
+                wishlist = [];
+            }
+
+            const count = wishlist.length;
+            heroStatWishlist.textContent = count;
+            kpiWishlistCount.textContent = count;
+            badgeWishlistCount.textContent = count;
+        }
+
+        function renderWishlist() {
+            const container = document.getElementById('wishlist-grid-container');
+            const emptyMsg = document.getElementById('wishlist-empty-msg');
+            if (!container) return;
+
+            let wishlist = [];
+            try {
+                wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            } catch (e) {
+                wishlist = [];
+            }
+
+            updateWishlistStats();
+
+            if (wishlist.length === 0) {
+                container.innerHTML = '';
+                if (emptyMsg) emptyMsg.style.display = 'block';
+                return;
+            }
+
+            if (emptyMsg) emptyMsg.style.display = 'none';
+
+            let html = '';
+            wishlist.forEach(item => {
+                const img = item.image || item.image1 || 'Images/Logo-noBG.png';
+                const priceFormatted = item.currency === 'USD' ? `$${item.price}` : `${item.price} د.ل`;
+
+                html += `
+                    <div class="wishlist-item-card">
+                        <img src="${img}" alt="${item.name || 'منتج'}" class="wishlist-img" onerror="this.src='Images/Logo-noBG.png'">
+                        <div class="wishlist-info">
+                            <h4>${item.name || 'منتج فاخر'}</h4>
+                            <div class="wishlist-price">${priceFormatted}</div>
+                        </div>
+                        <div class="wishlist-actions">
+                            <button type="button" class="btn btn-primary" style="flex: 1; padding: 8px; font-size: 0.85rem;" onclick="addToCartFromWishlist('${item.id || item.name}')">
+                                <i class="fas fa-cart-plus"></i> أضف للسلة
+                            </button>
+                            <button type="button" class="btn btn-secondary" style="padding: 8px 12px; color: #f87171;" onclick="removeFromWishlist('${item.id || item.name}')" title="حذف من المفضلة">
+                                <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
                     </div>
                 `;
             });
+
             container.innerHTML = html;
         }
 
-        function renderLatestOrder() {
-            const container = document.getElementById('latest-order-preview');
-            if (userOrders.length === 0) {
-                container.innerHTML = '<p style="color: rgba(255,255,255,0.5);">لا توجد طلبات حديثة.</p>';
-                return;
+        window.removeFromWishlist = function (itemId) {
+            try {
+                let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+                wishlist = wishlist.filter(it => (it.id !== itemId && it.name !== itemId));
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                renderWishlist();
+                showToast('🗑️ تم الحذف من المفضلة', 'info');
+            } catch (e) {
+                console.error(e);
             }
-
-            const order = userOrders[0];
-            const date = new Date(order.timestamp).toLocaleDateString('ar-LY');
-            let statusText = 'قيد المعالجة';
-            if (order.status === 'completed') statusText = 'مكتمل';
-
-            container.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span style="font-weight: bold; color: white;">#${order.id.substring(order.id.length - 6).toUpperCase()}</span>
-                    <span style="font-size: 0.85rem; padding: 4px 10px; background: rgba(255,255,255,0.1); border-radius: 12px; color: rgba(255,255,255,0.8);">${statusText}</span>
-                </div>
-                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 15px;">
-                    ${date} • ${order.currency === 'LYD' ? parseFloat(order.total).toLocaleString() + ' د.ل' : '$' + parseFloat(order.total).toLocaleString()}
-                </div>
-                <button onclick="document.querySelector('[data-tab=\\'orders\\']').click()" style="width: 100%; padding: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; border-radius: 8px; cursor: pointer;">
-                    عرض التفاصيل
-                </button>
-            `;
-        }
-
-        // --- 5. Render Wishlist ---
-        function renderWishlist() {
-            const container = document.getElementById('wishlist-container');
-            const emptyState = document.getElementById('wishlist-empty');
-
-            // Re-read from storage to ensure fresh data
-            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-
-            if (wishlist.length === 0) {
-                container.innerHTML = '';
-                emptyState.style.display = 'block';
-                return;
-            }
-
-            emptyState.style.display = 'none';
-            let html = '';
-
-            wishlist.forEach(item => {
-                // Determine price display (reusing logic or simplified)
-                // For simplicity in this bespoke view:
-                const price = parseFloat(item.price).toLocaleString();
-
-                html += `
-                    <div class="wishlist-card">
-                        <div class="wishlist-remove" onclick="removeWishlistItem('${item.id}')">✕</div>
-                        <img src="${item.image}" class="wishlist-img" alt="${item.name}">
-                        <div class="wishlist-info">
-                            <div class="wishlist-title">${item.name}</div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                                <div class="wishlist-price">$${price}</div>
-                                <a href="index.html?product=${item.id}" style="font-size: 0.8rem; padding: 4px 8px; background: var(--primary); color: white; border-radius: 6px; text-decoration: none;">عرض</a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        // Global function for removing wishlist item
-        window.removeWishlistItem = function (id) {
-            let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-            wishlist = wishlist.filter(item => item.id !== id);
-            localStorage.setItem('wishlist', JSON.stringify(wishlist));
-
-            // Trigger refresh
-            renderWishlist();
-            updateStats();
-
-            // Also notify app.js to update header badge potentially? 
-            // Better to dispatch event
-            // But simplest is to just show notification
-            if (window.showNotification) window.showNotification('تم الحذف من القائمة');
         };
 
-        // --- 6. Change Password (Reused) ---
-        if (changePassBtn) {
-            changePassBtn.addEventListener('click', () => {
-                const modal = document.getElementById('custom-confirm-modal');
-                const yesBtn = document.getElementById('confirm-yes-btn');
-                const noBtn = document.getElementById('confirm-no-btn');
-
-                if (modal && yesBtn) {
-                    modal.style.display = 'flex';
-                    // Clone to remove old listeners
-                    const newYes = yesBtn.cloneNode(true);
-                    const newNo = noBtn.cloneNode(true);
-                    yesBtn.parentNode.replaceChild(newYes, yesBtn);
-                    noBtn.parentNode.replaceChild(newNo, noBtn);
-
-                    newYes.onclick = () => {
-                        newYes.textContent = "جاري الإرسال...";
-                        newYes.disabled = true;
-                        firebase.auth().sendPasswordResetEmail(currentUser.email)
-                            .then(() => {
-                                modal.style.display = 'none';
-                                alert("✅ تم إرسال رابط التعيين إلى بريدك");
-                            })
-                            .catch(err => {
-                                modal.style.display = 'none';
-                                alert("❌ " + err.message);
-                            })
-                            .finally(() => {
-                                newYes.textContent = "نعم، أرسل الرابط";
-                                newYes.disabled = false;
-                            });
-                    };
-                    newNo.onclick = () => modal.style.display = 'none';
-                    modal.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+        window.addToCartFromWishlist = function (itemId) {
+            try {
+                const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+                const item = wishlist.find(it => (it.id === itemId || it.name === itemId));
+                if (item && window.Cart) {
+                    window.Cart.addItem({
+                        id: item.id || 'w_' + Date.now(),
+                        name: item.name,
+                        price: item.price,
+                        image: item.image || item.image1 || 'Images/Logo-noBG.png',
+                        category: item.category || 'clothes'
+                    });
+                    showToast('🛒 تمت إضافة ' + item.name + ' إلى السلة', 'success');
+                } else {
+                    showToast('🛒 تمت الإضافة إلى سلة التسوق', 'success');
                 }
-            });
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        // --- Toast Notification Helper ---
+        function showToast(message, type = 'info') {
+            if (window.showNotification) {
+                window.showNotification(message);
+                return;
+            }
+
+            let toast = document.getElementById('profile-global-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'profile-global-toast';
+                toast.style.cssText = 'position: fixed; bottom: 25px; left: 25px; z-index: 100000; background: #0f172a; border: 1px solid #38bdf8; color: #ffffff; padding: 12px 24px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: Cairo, sans-serif; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; transform: translateY(100px); opacity: 0;';
+                document.body.appendChild(toast);
+            }
+
+            toast.textContent = message;
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+
+            setTimeout(() => {
+                toast.style.transform = 'translateY(100px)';
+                toast.style.opacity = '0';
+            }, 3500);
         }
 
     });

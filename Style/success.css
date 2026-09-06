@@ -1,174 +1,245 @@
+/* =========================================================
+   New Desgin - Success Page Styles
+   Theme: Luxury Light Blue & Dark Blue with Metallic Sheen
+   ========================================================= */
+
 .success-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    padding: 2rem;
+    background: radial-gradient(circle at 50% 15%, #0b132b 0%, #070b14 60%, #030712 100%);
+    padding: 2.5rem 1.5rem;
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .success-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 3rem;
-    max-width: 500px;
+    background: rgba(15, 23, 42, 0.88);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 28px;
+    padding: 3rem 2.5rem;
+    max-width: 520px;
     width: 100%;
-    backdrop-filter: blur(10px);
-    animation: slideInUp 0.5s ease-out;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(14, 165, 233, 0.22);
+    animation: slideInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
 }
 
-.success-icon {
-    font-size: 5rem;
-    margin-bottom: 1.5rem;
+.success-icon-badge {
+    font-size: 3.5rem;
+    color: #38bdf8;
+    margin-bottom: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.6));
     animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    font-family: 'Cairo', 'Outfit', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 50%, #38bdf8 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 p {
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
+    color: #cbd5e1;
+    margin-bottom: 1.75rem;
+    font-size: 1rem;
     line-height: 1.6;
 }
 
 .order-id-box {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    border: 1px dashed rgba(255, 255, 255, 0.2);
+    background: rgba(7, 11, 20, 0.7);
+    padding: 1.1rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(56, 189, 248, 0.2);
 }
 
 .order-label {
     display: block;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 0.4rem;
 }
 
 .order-value {
-    font-family: monospace;
-    font-size: 1.2rem;
-    color: #667eea;
-    font-weight: bold;
-    letter-spacing: 1px;
+    font-family: 'Outfit', monospace;
+    font-size: 1.25rem;
+    color: #38bdf8;
+    font-weight: 700;
+    letter-spacing: 1.5px;
 }
 
 .order-id-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .copy-btn {
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.6);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #38bdf8;
     cursor: pointer;
-    padding: 5px;
-    border-radius: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.9rem;
 }
 
 .copy-btn:hover {
     color: white;
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(1.1);
+    background: rgba(14, 165, 233, 0.3);
+    transform: scale(1.08);
 }
 
 .copy-btn.copied {
-    color: #4cd137;
-    background: rgba(76, 209, 55, 0.1);
+    color: #34d399;
+    border-color: #34d399;
+    background: rgba(52, 211, 153, 0.15);
 }
 
 .btn-whatsapp {
-    background: #25D366;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 1rem 2rem;
-    border-radius: 12px;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 0.95rem 1.75rem;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
 }
 
 .btn-whatsapp:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.account-upsell {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.15) 0%, rgba(14, 165, 233, 0.05) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 18px;
+    text-align: center;
+}
+
+.account-upsell h3 {
+    margin-bottom: 6px;
+    font-size: 1.05rem;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.account-upsell p {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.btn-upsell-acc {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-upsell-acc:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.5);
+}
+
+.btn-upsell-track {
+    display: inline-block;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
+}
+
+.btn-upsell-track:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
 }
 
 .btn-home {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
     text-decoration: none;
-    display: inline-block;
-    padding: 0.8rem 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.85rem 2rem;
     border-radius: 12px;
-    transition: background 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
 .btn-home:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(56, 189, 248, 0.15);
+    color: #ffffff;
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+.mobile-home-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 12px;
+    border-radius: 12px;
+    color: #38bdf8;
+    text-decoration: none;
+    display: none;
+    font-size: 1.1rem;
 }
 
 @keyframes bounceIn {
-    0% {
-        transform: scale(0);
-    }
-
-    60% {
-        transform: scale(1.1);
-    }
-
-    100% {
-        transform: scale(1);
-    }
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
 }
 
-/* Responsive Design */
-@media (max-width: 480px) {
-    .success-card {
-        padding: 2rem 1.5rem;
-    }
-
-    .success-icon {
-        font-size: 3.5rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    p {
-        font-size: 1rem;
-    }
-
-    .btn-whatsapp {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.95rem;
-    }
+@keyframes slideInUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-/* Background Animation */
 #success-bg-animation {
     position: fixed;
     top: 0;
@@ -177,35 +248,27 @@ p {
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    overflow: hidden;
 }
 
-.floating-logo {
-    position: absolute;
-    opacity: 0.1;
-    filter: grayscale(100%) brightness(200%);
-    animation: floatUp 15s linear infinite;
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-
-@keyframes floatUp {
-    0% {
-        transform: translateY(110vh) rotate(0deg) scale(0.8);
-        opacity: 0;
+@media (max-width: 480px) {
+    .mobile-home-btn {
+        display: flex;
     }
 
-    10% {
-        opacity: 0.1;
+    .success-card {
+        padding: 2.2rem 1.4rem;
     }
 
-    90% {
-        opacity: 0.1;
+    h1 {
+        font-size: 1.45rem;
     }
 
-    100% {
-        transform: translateY(-10vh) rotate(360deg) scale(1.2);
-        opacity: 0;
+    p {
+        font-size: 0.95rem;
+    }
+
+    .btn-whatsapp {
+        padding: 0.85rem 1.25rem;
+        font-size: 0.95rem;
     }
 }

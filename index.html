@@ -131,11 +131,11 @@
                         <span class="search-icon">🔍</span>
                     </div>
 
-                    <!-- Categories Tabs -->
+                    <!-- Categories Tabs (Loaded Dynamically from Database) -->
                     <div class="categories-tabs" id="categories-tabs">
-                        <button class="category-tab active" data-category="all">الكل</button>
-                        <button class="category-tab" data-category="clothes">ملابس</button>
-                        <button class="category-tab" data-category="perfumes">عطور</button>
+                        <div class="categories-loading" style="display: flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.6); padding: 8px 14px; font-size: 0.9rem;">
+                            <span>⏳</span> جاري تحميل الأقسام...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -241,20 +241,6 @@
         </div>
     </section>
 
-    <!-- Newsletter Section -->
-    <section class="newsletter">
-        <div class="container">
-            <div class="newsletter-content">
-                <h2 data-i18n="newsletter-title">كن أول من يعلم بجديدنا</h2>
-                <p data-i18n="newsletter-desc">اشترك للحصول على إشعارات التشكيلات الجديدة وكوبونات الخصم الحصرية.</p>
-                <form class="newsletter-form">
-                    <input type="email" data-i18n="newsletter-placeholder" placeholder="أدخل بريدك الإلكتروني" required>
-                    <button type="submit" class="btn btn-primary" data-i18n="newsletter-submit">اشتراك</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer Container -->
     <div id="main-footer"></div>
     <script src="Scripts/footer.js"></script>
@@ -288,7 +274,6 @@
     <script src="Scripts/app.js?v=3.0"></script>
     <script src="Scripts/instant-page.js" type="module"></script>
     <script src="Scripts/smart-search.js"></script>
-    <script src="Scripts/newsletter.js?v=1.0"></script>
     <script src="Scripts/pwa.js"></script>
 </body>
 

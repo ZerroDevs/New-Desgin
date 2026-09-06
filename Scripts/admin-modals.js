@@ -24,34 +24,34 @@ function showConfirmModal(title, message, onConfirm, confirmText = 'نعم، ت�
     }
 
     const modalHtml = `
-        <div id="${modalId}" style="
+        <div id="${modalId}" class="custom-modal" style="
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 10000;
+            background: rgba(7, 11, 20, 0.85); z-index: 10000;
             display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
-            backdrop-filter: blur(5px);
+            opacity: 0; transition: opacity 0.25s ease;
+            backdrop-filter: blur(10px);
         ">
             <div style="
-                background: #1a1a2e; padding: 2rem; border-radius: 16px; 
-                width: 90%; max-width: 450px; text-align: center;
-                border: 1px solid rgba(255,255,255,0.1);
-                box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-                transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                background: rgba(15, 23, 42, 0.98); padding: 1.75rem; border-radius: 18px; 
+                width: 90%; max-width: 440px; text-align: center;
+                border: 1px solid rgba(56, 189, 248, 0.35);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 25px rgba(14, 165, 233, 0.2);
+                transform: scale(0.92); transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             ">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
-                <h2 style="color: white; margin-bottom: 10px; font-size: 1.5rem;">${title}</h2>
-                <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem; line-height: 1.6;">${message}</p>
+                <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">⚠️</div>
+                <h2 style="color: white; margin-bottom: 8px; font-size: 1.35rem; font-weight: 700;">${title}</h2>
+                <p style="color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.6; font-size: 0.92rem;">${message}</p>
                 
                 <div style="display: flex; gap: 10px; justify-content: center;">
                     <button id="btn-cancel-${modalId}" style="
-                        padding: 10px 20px; border-radius: 8px; cursor: pointer;
-                        background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);
-                        font-family: inherit; font-size: 1rem;
+                        padding: 9px 20px; border-radius: 9px; cursor: pointer;
+                        background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.15);
+                        font-family: inherit; font-size: 0.92rem; font-weight: 600;
                     ">إلغاء</button>
                     <button id="btn-confirm-${modalId}" style="
-                        padding: 10px 20px; border-radius: 8px; cursor: pointer;
+                        padding: 9px 20px; border-radius: 9px; cursor: pointer;
                         ${btnStyle}
-                        font-family: inherit; font-size: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        font-family: inherit; font-size: 0.92rem; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
                     ">${confirmText}</button>
                 </div>
             </div>
@@ -169,28 +169,29 @@ function showCustomModal(contentHtml, options = {}) {
     const width = options.width || '500px';
 
     const modalHtml = `
-        <div id="${modalId}" style="
+        <div id="${modalId}" class="custom-modal" style="
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 10000;
+            background: rgba(7, 11, 20, 0.85); z-index: 10000;
             display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
-            backdrop-filter: blur(5px);
+            opacity: 0; transition: opacity 0.25s ease;
+            backdrop-filter: blur(10px);
         ">
             <div style="
-                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-                padding: 2rem; border-radius: 16px; 
+                background: rgba(15, 23, 42, 0.98); 
+                padding: 1.5rem; border-radius: 18px; 
                 width: 90%; max-width: ${width}; 
-                max-height: 90vh; overflow-y: auto;
+                max-height: 85vh; overflow-y: auto;
                 position: relative; color: white;
-                border: 1px solid rgba(255,255,255,0.1);
-                box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-                transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                border: 1px solid rgba(56, 189, 248, 0.35);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 25px rgba(14, 165, 233, 0.2);
+                transform: scale(0.92); transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             ">
                 <button id="btn-close-${modalId}" style="
-                    position: absolute; top: 15px; left: 20px; 
-                    background: none; border: none; color: white; 
-                    font-size: 28px; cursor: pointer; opacity: 0.7;
-                    transition: opacity 0.2s;
+                    position: absolute; top: 12px; left: 15px; 
+                    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); 
+                    color: rgba(255,255,255,0.6); width: 30px; height: 30px; border-radius: 8px;
+                    font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+                    transition: all 0.2s; line-height: 1;
                 ">&times;</button>
                 
                 <div id="modal-content-${modalId}">

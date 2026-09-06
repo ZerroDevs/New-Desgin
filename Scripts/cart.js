@@ -47,7 +47,8 @@ function updateCartCount() {
             position: 'absolute',
             top: '-5px',
             right: '-5px',
-            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            background: 'linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%)',
+            boxShadow: '0 2px 8px rgba(14, 165, 233, 0.4)',
             color: 'white',
             borderRadius: '50%',
             width: '20px',
@@ -218,69 +219,54 @@ function initCartButton() {
 window.initAddToCartButtons = function () {
     const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
     addToCartBtns.forEach(btn => {
-        // Use a flag to prevent multiple bindings if called multiple times?
-        // Better: use event delegation or removeListener. For simplicity, we assume this runs once per page load/render.
-        // Actually app.js calls this. We should replace the old one.
+        if (btn.dataset.cartInitialized === 'true') return;
+        btn.dataset.cartInitialized = 'true';
 
-        // Remove old listener effectively by cloning
-        // But cloning might break other things attached. 
-        // Let's rely on app.js NOT calling it if we remove it from there.
-
-        btn.onclick = (e) => {
+        btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
 
-            // Get data from dataset
             const productId = btn.dataset.productId;
-
-            // If it's a card button without direct data (like in index.html static cards), we might need to parse DOM.
-            // But checking index.html, the cards have data attributes or structure.
-
             if (productId) {
-                // Configured button
-                const productName = btn.dataset.productName;
-                const productPrice = parseFloat(btn.dataset.productPrice);
-                const image = btn.dataset.productImage;
-                const description = btn.dataset.productDesc;
+                const productName = btn.dataset.productName || 'منتج';
+                const productPrice = parseFloat(btn.dataset.productPrice) || 0;
+                const image = btn.dataset.productImage || 'Images/Logo-noBG.png';
+                const description = btn.dataset.productDesc || '';
 
                 addToCart(productName, productPrice, image, description, productId);
             } else {
-                // Fallback for static cards in index.html if they don't have dataset
                 const productCard = btn.closest('.product-card');
                 if (productCard) {
-                    const productName = productCard.querySelector('.product-name').textContent;
-                    const priceElement = productCard.querySelector('.product-price');
-                    const usdPrice = parseFloat(priceElement.dataset.usd);
-                    // Warning: EXCHANGE_RATE is in app.js. access via window or pass it?
-                    // We need EXCHANGE_RATE. It's global in app.js. 
-                    // To be safe, we should probably move EXCHANGE_RATE to a shared config or just rely on it being global (window.EXCHANGE_RATE)
-                    const pPrice = window.EXCHANGE_RATE ? usdPrice : usdPrice; // If exchanged logic is needed. 
-                    // app.js logic was: const price = currentCurrency === 'USD' ? usdPrice : usdPrice * EXCHANGE_RATE;
-                    // BUT addToCart stores BASE PRICE usually? 
-                    // Looking at app.js: "ALWAYS store the base USD price in the cart."
+                    const nameEl = productCard.querySelector('.product-name');
+                    const priceEl = productCard.querySelector('.product-price');
+                    const imgEl = productCard.querySelector('img');
+                    const descEl = productCard.querySelector('.product-description');
 
-                    addToCart(productName, usdPrice,
-                        productCard.querySelector('img').src,
-                        productCard.querySelector('.product-description').textContent,
-                        'static-' + Date.now()); // Generate ID for static items
+                    const productName = nameEl ? nameEl.textContent.trim() : 'منتج';
+                    const rawPrice = priceEl ? (priceEl.dataset.usd || priceEl.textContent) : '0';
+                    const usdPrice = parseFloat(String(rawPrice).replace(/[^0-9.]/g, '')) || 0;
+                    const cardImg = imgEl ? imgEl.src : 'Images/Logo-noBG.png';
+                    const cardDesc = descEl ? descEl.textContent.trim() : '';
+
+                    addToCart(productName, usdPrice, cardImg, cardDesc, 'p_' + Date.now());
                 }
             }
 
-            // Animation for button
             btn.classList.add('added');
             setTimeout(() => {
                 btn.classList.remove('added');
             }, 1000);
-        };
+        });
     });
-}
-
+};
 
 // Cart modal
 function showCartModal() {
     // Prevent multiple instances
     const existing = document.querySelector('.cart-modal-overlay');
     if (existing) existing.remove();
+
+    ensureCartStyles();
 
     // Create modal overlay
     const overlay = document.createElement('div');
@@ -290,64 +276,30 @@ function showCartModal() {
     const modal = document.createElement('div');
     modal.className = 'cart-modal';
 
-    // Add styles (moved from app.js)
-    Object.assign(overlay.style, {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        right: '0',
-        bottom: '0',
-        background: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(10px)',
-        zIndex: '9999',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        animation: 'fadeIn 0.3s ease-out'
-    });
-
-    Object.assign(modal.style, {
-        background: 'linear-gradient(145deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.98))',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        borderRadius: '24px',
-        padding: '2rem',
-        maxWidth: '480px',
-        width: '95%',
-        maxHeight: '85vh',
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        boxShadow: '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(102, 126, 234, 0.15)',
-        backdropFilter: 'blur(12px)',
-        webkitBackdropFilter: 'blur(12px)',
-        animation: 'modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-        direction: 'rtl',
-        color: '#fff'
-    });
-
     let contentHTML = '';
 
     if (cart.length === 0) {
         contentHTML = `
-            <span class="close-modal-btn">&times;</span>
-            <div class="empty-cart" style="text-align: center; padding: 4rem 1rem;">
-                <div style="font-size: 5rem; margin-bottom: 1.5rem; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));">🛒</div>
-                <h3 style="font-size: 1.6rem; margin-bottom: 0.5rem; background: linear-gradient(to right, #fff, #a5a5a5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">السلة فارغة حالياً</h3>
-                <p style="color: rgba(255,255,255,0.6); margin-bottom: 2.5rem; font-size: 0.95rem; line-height: 1.6;">لم تقم بإضافة أي منتجات بعد.<br>تصفح المتجر واكتشف عروضنا المميزة!</p>
-                <button class="btn btn-primary" onclick="document.querySelector('.cart-modal-overlay').remove()" style="padding: 14px 35px; border-radius: 50px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); font-weight: 600; letter-spacing: 0.5px; transition: transform 0.2s;">
-                    تصفح المنتجات 🛍️
+            <div class="cart-modal-header">
+                <h2>🛒 سلة المشتريات</h2>
+                <button class="close-modal-btn" aria-label="إغلاق">&times;</button>
+            </div>
+            <div class="empty-cart" style="text-align: center; padding: 3rem 1rem;">
+                <div style="font-size: 4.5rem; margin-bottom: 1.25rem; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.35));">🛒</div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">السلة فارغة حالياً</h3>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6;">لم تقم بإضافة أي منتجات بعد.<br>تصفح المتجر واكتشف تشكيلاتنا وعروضنا الحصرية!</p>
+                <button class="btn btn-primary" onclick="document.querySelector('.cart-modal-overlay').remove()" style="padding: 12px 32px; border-radius: 50px; background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4); font-weight: 600;">
+                    تصفح التشكيلات 🛍️
                 </button>
             </div>
         `;
     } else {
         let cartHTML = '';
-
-        // Need to access currentCurrency and EXCHANGE_RATE from global scope (app.js)
         const currentCurrency = window.currentCurrency || 'USD';
         const EXCHANGE_RATE = window.EXCHANGE_RATE || 1;
 
         cart.forEach((item, index) => {
-            // Convert price for display
-            const itemPriceUSD = item.price;
+            const itemPriceUSD = item.price || 0;
             const itemPriceDisplay = currentCurrency === 'USD' ? itemPriceUSD : (itemPriceUSD * EXCHANGE_RATE);
             const itemQuantity = item.quantity || 1;
             const itemSubtotal = itemPriceDisplay * itemQuantity;
@@ -355,27 +307,29 @@ function showCartModal() {
             cartHTML += `
                 <div class="cart-item">
                     <div class="cart-item-image">
-                        <img src="${item.image}" alt="${item.name}">
+                        <img src="${item.image || 'Images/Logo-noBG.png'}" alt="${item.name}" onerror="this.src='Images/Logo-noBG.png'">
                     </div>
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-desc">${item.description}</div>
-                        <div class="cart-item-price">${formatCurrency(itemPriceDisplay, currentCurrency)}</div>
-                        <div class="quantity-controls">
-                            <button class="qty-btn qty-decrease" data-product-id="${item.id}">−</button>
-                            <span class="qty-value">${itemQuantity}</span>
-                            <button class="qty-btn qty-increase" data-product-id="${item.id}">+</button>
+                        ${item.description ? `<div class="cart-item-desc">${item.description}</div>` : ''}
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+                            <div class="cart-item-price">${formatCurrency(itemPriceDisplay, currentCurrency)}</div>
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-decrease" data-product-id="${item.id}">−</button>
+                                <span class="qty-value">${itemQuantity}</span>
+                                <button class="qty-btn qty-increase" data-product-id="${item.id}">+</button>
+                            </div>
                         </div>
-                        <div class="cart-item-subtotal" style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-top: 0.25rem;">
-                            المجموع: ${formatCurrency(itemSubtotal, currentCurrency)}
+                        <div class="cart-item-subtotal">
+                            المجموع: <strong>${formatCurrency(itemSubtotal, currentCurrency)}</strong>
                         </div>
                     </div>
-                     <button class="remove-item-btn" data-index="${index}" style="opacity: 1; transform: scale(1); top: -8px; left: -8px;">×</button>
+                    <button class="remove-item-btn" data-index="${index}" title="حذف من السلة">✕</button>
                 </div>
             `;
         });
 
-        const totalUSD = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+        const totalUSD = cart.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 1)), 0);
         const totalCurrent = currentCurrency === 'USD' ? totalUSD : (totalUSD * EXCHANGE_RATE);
         const displayTotal = activeDiscount ? (totalCurrent * (1 - activeDiscount.value / 100)) : totalCurrent;
         const totalFormatted = formatCurrency(totalCurrent, currentCurrency);
@@ -385,48 +339,62 @@ function showCartModal() {
         if (activeDiscount) {
             priceHtml = `
                 <div class="cart-total-value" style="display:flex; flex-direction:column; align-items:flex-end;">
-                    <span style="text-decoration:line-through; font-size:0.9rem; opacity:0.7;">${totalFormatted}</span>
-                    <span style="color:#00b894;">${displayTotalFormatted} (${activeDiscount.code})</span>
+                    <span style="text-decoration:line-through; font-size:0.9rem; opacity:0.6;">${totalFormatted}</span>
+                    <span style="color:#38bdf8;">${displayTotalFormatted} (${activeDiscount.code})</span>
                 </div>
             `;
         }
 
         contentHTML = `
-            <span class="close-modal-btn" style="position:absolute; top:10px; right:20px; font-size:28px; cursor:pointer;">&times;</span>
-            <h2 style="margin-top:0;">سلة المشتريات</h2>
+            <div class="cart-modal-header">
+                <h2>🛒 سلة المشتريات</h2>
+                <button class="close-modal-btn" aria-label="إغلاق">&times;</button>
+            </div>
+
             <div class="cart-items">
                 ${cartHTML}
             </div>
 
-             <!-- Promo Code Section -->
-            <div class="promo-section" style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="cart-promo-input" placeholder="هل لديك كود خصم؟" style="flex:1; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.2); color:white;">
-                    <button onclick="applyPromoCode()" style="padding:0 20px; background:#6c5ce7; border:none; border-radius:8px; color:white; cursor:pointer;">تطبيق</button>
+            <!-- Promo Code Section -->
+            <div class="promo-section">
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="cart-promo-input" placeholder="هل لديك كود خصم؟" style="flex:1; padding:10px 14px; border-radius:10px; border:1px solid rgba(56,189,248,0.25); background:rgba(15,23,42,0.8); color:white; font-size:0.9rem; outline:none;">
+                    <button onclick="applyPromoCode()" style="padding:0 22px; background:linear-gradient(135deg, #0284c7, #0ea5e9); border:none; border-radius:10px; color:white; font-weight:700; cursor:pointer; font-size:0.9rem;">تطبيق</button>
                 </div>
-                <div id="promo-message" style="margin-top:5px; font-size:0.9rem;"></div>
+                <div id="promo-message" style="margin-top:6px; font-size:0.85rem;"></div>
             </div>
 
             <div class="cart-total">
-                <span>المجموع:</span>
+                <span>المجموع الإجمالي:</span>
                 ${priceHtml}
             </div>
 
-            <div class="name-input-section" style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
-                <input type="text" id="customer-name" placeholder="👤 الاسم الكامل " 
-                       style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+            <div class="customer-info-section" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.65rem;">
+                <div>
+                    <label style="display:block; font-size:0.82rem; color:#94a3b8; margin-bottom:4px; font-weight:600;">الاسم الكامل <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="customer-name" placeholder="أدخل اسمك الكامل" required
+                           style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid rgba(56,189,248,0.25); background: rgba(15,23,42,0.85); color: white; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.2s;">
+                </div>
+
+                <div>
+                    <label style="display:block; font-size:0.82rem; color:#94a3b8; margin-bottom:4px; font-weight:600;">رقم الهاتف <span style="color:#ef4444;">*</span></label>
+                    <input type="tel" id="customer-phone" placeholder="مثال: 0912345678" required
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                           inputmode="numeric"
+                           style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid rgba(56,189,248,0.25); background: rgba(15,23,42,0.85); color: white; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.2s;">
+                </div>
+
+                <div>
+                    <label style="display:block; font-size:0.82rem; color:#94a3b8; margin-bottom:4px; font-weight:600;">عنوان وتفاصيل التوصيل <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="customer-address" placeholder="مثال: طرابلس - النوفليين بالقرب من..." required
+                           style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid rgba(56,189,248,0.25); background: rgba(15,23,42,0.85); color: white; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.2s;">
+                </div>
+                <small style="color: rgba(148, 163, 184, 0.7); font-size: 0.78rem;">* جميع الحقول إجبارية لتأكيد الطلب وشحنه عبر الواتساب فوراً</small>
             </div>
 
-            <div class="phone-input-section" style="margin-top: 1rem; padding-top: 0;">
-                <input type="tel" id="customer-phone" placeholder="📞 رقم الهاتف (اختياري)" 
-                       oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
-                       inputmode="numeric"
-                       style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white; margin-bottom: 5px;">
-                <small style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">أضف رقمك لتسهيل التواصل بخصوص الطلب</small>
-            </div>
             <div class="cart-actions">
                 <button class="btn btn-secondary clear-cart-btn">مسح السلة</button>
-                <button class="btn btn-primary" onclick="completeOrder()">إتمام الطلب (واتساب)</button>
+                <button class="btn btn-primary" onclick="completeOrder()" style="background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);">إتمام الطلب (واتساب) 💬</button>
             </div>
         `;
     }
@@ -443,7 +411,7 @@ function showCartModal() {
             const msg = document.getElementById('promo-message');
             if (msg) {
                 msg.textContent = `تم تطبيق خصم ${activeDiscount.value}% بنجاح! ✅`;
-                msg.style.color = '#00b894';
+                msg.style.color = '#38bdf8';
             }
         }
 
@@ -516,77 +484,265 @@ function ensureCartStyles() {
     style.id = 'cart-dynamic-styles';
     style.textContent = `
         @keyframes modalSlideUp {
-            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            from { opacity: 0; transform: translateY(25px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
             100% { transform: translateY(0px); }
         }
-        .cart-modal-overlay { transition: opacity 0.3s ease; }
+        .cart-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.25s ease-out;
+            box-sizing: border-box;
+        }
+        .cart-modal {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(7, 11, 20, 0.98));
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 20px;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 500px;
+            max-height: 88vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 30px rgba(14, 165, 233, 0.2);
+            animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            direction: rtl;
+            color: #fff;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .cart-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+        }
+        .cart-modal-header h2 {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .close-modal-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.4rem;
+            cursor: pointer;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            line-height: 1;
+            padding: 0;
+        }
+        .close-modal-btn:hover {
+            background: rgba(255, 59, 48, 0.2);
+            border-color: rgba(255, 59, 48, 0.4);
+            color: #ff4d4d;
+            transform: rotate(90deg);
+        }
+        .cart-items {
+            max-height: 320px;
+            overflow-y: auto;
+            padding-left: 4px;
+            margin-bottom: 1rem;
+        }
         .cart-item { 
-            display: flex; align-items: center; gap: 1rem; padding: 1rem; 
-            background: rgba(255, 255, 255, 0.03); 
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px; margin-bottom: 1rem; position: relative; 
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.85rem;
+            background: rgba(15, 23, 42, 0.75); 
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            border-radius: 14px;
+            margin-bottom: 0.75rem;
+            position: relative; 
+            transition: all 0.2s ease;
         }
         .cart-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(14, 165, 233, 0.08);
+            border-color: rgba(56, 189, 248, 0.35);
         }
         .cart-item-image { 
-            width: 70px; height: 70px; flex-shrink: 0; border-radius: 12px; 
-            overflow: hidden; background: rgba(255,255,255,0.05); 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            width: 65px;
+            height: 65px;
+            flex-shrink: 0;
+            border-radius: 10px; 
+            overflow: hidden;
+            background: rgba(255,255,255,0.04); 
+            border: 1px solid rgba(255,255,255,0.08);
         }
         .cart-item-image img { width: 100%; height: 100%; object-fit: contain; }
-        .cart-item-details { flex: 1; display: flex; flex-direction: column; gap: 0.3rem; }
-        .cart-item-name { font-weight: 700; font-size: 1.05rem; color: #fff; }
-        .cart-item-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); }
+        .cart-item-details { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+        .cart-item-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cart-item-desc {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .cart-item-price { 
-            color: #f093fb; font-weight: 700; font-size: 1rem; 
-            background: rgba(240, 147, 251, 0.1); padding: 2px 8px; 
-            border-radius: 6px; width: fit-content; margin-top: 2px;
+            color: #38bdf8;
+            font-weight: 700;
+            font-size: 0.95rem; 
+            background: rgba(14, 165, 233, 0.15);
+            padding: 2px 8px; 
+            border-radius: 6px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            display: inline-block;
         }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2px 4px;
+        }
+        .qty-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.15s;
+        }
+        .qty-btn:hover { background: rgba(56, 189, 248, 0.3); color: #38bdf8; }
+        .qty-value { font-weight: 700; font-size: 0.85rem; min-width: 18px; text-align: center; }
+        .cart-item-subtotal { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+        .cart-item-subtotal strong { color: #38bdf8; }
+
         .remove-item-btn { 
-            width: 32px; height: 32px; border-radius: 50%; 
-            background: rgba(255, 59, 48, 0.1); color: #ff3b30; border: none; 
-            display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; position: absolute; top: -10px; left: -10px; 
-            font-size: 1rem; transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            /* opacity: 0; transform: scale(0.8); */ 
-            /* Make it always visible on mobile/touch, or handle hover for desktop. */
-            /* Using CSS media query for hover if possible, but JS generated styles. */
+            width: 28px;
+            height: 28px;
+            border-radius: 8px; 
+            background: rgba(255, 59, 48, 0.12);
+            color: #ff4d4d;
+            border: 1px solid rgba(255, 59, 48, 0.25); 
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
         }
-        .remove-item-btn:hover { background: #ff3b30; color: white; transform: scale(1.1) !important; box-shadow: 0 4px 12px rgba(255, 59, 48, 0.4); }
-        
-        .close-modal-btn {
-            position: absolute; top: 15px; right: 20px; 
-            font-size: 24px; color: rgba(255,255,255,0.5); 
-            cursor: pointer; transition: 0.2s;
-            width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; background: rgba(255,255,255,0.05);
+        .remove-item-btn:hover {
+            background: #ff3b30;
+            color: white;
+            border-color: #ff3b30;
+            transform: scale(1.05);
         }
-        .close-modal-btn:hover { background: rgba(255,255,255,0.1); color: white; transform: rotate(90deg); }
         
+        .promo-section {
+            margin-top: 1rem;
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
+            padding-top: 1rem;
+        }
+
         .cart-total {
-            background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1.2rem;
-            margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(11, 19, 43, 0.85);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(56, 189, 248, 0.2);
         }
-        .cart-total span:first-child { font-size: 1.1rem; color: rgba(255,255,255,0.8); }
-        .cart-total-value { font-size: 1.5rem; font-weight: 800; color: #fff; text-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
+        .cart-total span:first-child { font-size: 1rem; color: rgba(255,255,255,0.8); }
+        .cart-total-value { font-size: 1.4rem; font-weight: 800; color: #38bdf8; text-shadow: 0 0 20px rgba(14, 165, 233, 0.4); }
+
+        .cart-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.25rem;
+        }
+        .cart-actions .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .clear-cart-btn {
+            background: rgba(255, 255, 255, 0.08) !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+        .clear-cart-btn:hover {
+            background: rgba(255, 59, 48, 0.15) !important;
+            color: #ff4d4d !important;
+            border-color: rgba(255, 59, 48, 0.3) !important;
+        }
 
         /* Scrollbar */
-        .cart-modal::-webkit-scrollbar { width: 6px; }
-        .cart-modal::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-        .cart-modal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-        .cart-modal::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        .cart-modal::-webkit-scrollbar, .cart-items::-webkit-scrollbar { width: 5px; }
+        .cart-modal::-webkit-scrollbar-track, .cart-items::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        .cart-modal::-webkit-scrollbar-thumb, .cart-items::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.2); border-radius: 10px; }
+        .cart-modal::-webkit-scrollbar-thumb:hover, .cart-items::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.4); }
+
+        @media (max-width: 576px) {
+            .cart-modal {
+                padding: 1.25rem 1rem;
+                max-height: 90vh;
+                border-radius: 16px;
+            }
+            .cart-item {
+                padding: 0.75rem 0.6rem;
+                gap: 0.65rem;
+            }
+            .cart-item-image {
+                width: 52px;
+                height: 52px;
+            }
+            .cart-actions {
+                flex-direction: column-reverse;
+            }
+        }
     `;
     document.head.appendChild(style);
 }
@@ -679,8 +835,46 @@ window.completeOrder = function () {
     const orderId = `ORDER_${dateStr}_${randomNum}`;
 
     // Get customer info
-    const customerName = document.getElementById('customer-name') ? document.getElementById('customer-name').value.trim() : '';
-    const customerPhone = document.getElementById('customer-phone') ? document.getElementById('customer-phone').value.trim() : '';
+    const nameInput = document.getElementById('customer-name');
+    const phoneInput = document.getElementById('customer-phone');
+    const addressInput = document.getElementById('customer-address');
+
+    const customerName = nameInput ? nameInput.value.trim() : '';
+    const customerPhone = phoneInput ? phoneInput.value.trim() : '';
+    const customerAddress = addressInput ? addressInput.value.trim() : '';
+
+    // Reset styles
+    [nameInput, phoneInput, addressInput].forEach(input => {
+        if (input) input.style.borderColor = 'rgba(56,189,248,0.25)';
+    });
+
+    // Validation: Name, Phone, and Address are required
+    const missingFields = [];
+    if (!customerName) {
+        missingFields.push('الاسم الكامل');
+        if (nameInput) nameInput.style.borderColor = '#ef4444';
+    }
+    if (!customerPhone) {
+        missingFields.push('رقم الهاتف');
+        if (phoneInput) phoneInput.style.borderColor = '#ef4444';
+    }
+    if (!customerAddress) {
+        missingFields.push('عنوان التوصيل');
+        if (addressInput) addressInput.style.borderColor = '#ef4444';
+    }
+
+    if (missingFields.length > 0) {
+        const errorMsg = `يرجى إدخال الحقول المطلوبة: ${missingFields.join('، ')} ⚠️`;
+        if (typeof showNotification === 'function') {
+            showNotification(errorMsg, 'warning');
+        } else {
+            alert(errorMsg);
+        }
+        if (!customerName && nameInput) nameInput.focus();
+        else if (!customerPhone && phoneInput) phoneInput.focus();
+        else if (!customerAddress && addressInput) addressInput.focus();
+        return;
+    }
 
     // Get User ID if logged in
     const user = firebase.auth().currentUser;
@@ -689,10 +883,9 @@ window.completeOrder = function () {
     // Prepare order data for Firebase
     const orderData = {
         orderId: orderId,
-        userId: userId, // Link order to user
+        userId: userId,
         currency: currentCurrency,
         items: cart.map(item => {
-            // Save item price in the CURRENCY USED for the order
             const itemPrice = currentCurrency === 'USD' ? item.price : (item.price * EXCHANGE_RATE);
             return {
                 name: item.name,
@@ -708,9 +901,9 @@ window.completeOrder = function () {
             value: activeDiscount.value
         } : null,
         status: 'pending',
-        currency: currentCurrency,
         customerName: customerName,
         customerPhone: customerPhone,
+        customerAddress: customerAddress,
         timestamp: timestamp,
         lastUpdated: timestamp
     };
@@ -725,25 +918,32 @@ window.completeOrder = function () {
         });
 
     // Build WhatsApp message
-    let message = `مرحباً، أود إتمام الطلب التالي:\n\n📋 *رقم الطلب:* ${orderId}\n\n`;
+    let message = `مرحباً، أود إتمام طلب جديد من متجر *New Desgin* 🛍️\n\n`;
+    message += `📋 *رقم الطلب:* ${orderId}\n`;
+    message += `👤 *الاسم:* ${customerName}\n`;
+    message += `📱 *رقم الهاتف:* ${customerPhone}\n`;
+    message += `📍 *عنوان التوصيل:* ${customerAddress}\n\n`;
+    message += `🛒 *المنتجات المطلوبة:*\n`;
+    message += `──────────────────────\n`;
 
-    if (customerPhone) {
-        message += `📱 *رقم الهاتف:* ${customerPhone}\n\n`;
-    }
-
-    cart.forEach(item => {
+    cart.forEach((item, idx) => {
         const itemPrice = currentCurrency === 'USD' ? item.price : (item.price * EXCHANGE_RATE);
         const itemQty = item.quantity || 1;
         const itemSubtotal = itemPrice * itemQty;
-        message += `📦 *${item.name}* x${itemQty}\nالسعر: ${formatCurrency(itemSubtotal, currentCurrency)}\n\n`;
+        message += `${idx + 1}. *${item.name}*\n`;
+        message += `   • الكمية: *${itemQty}*\n`;
+        message += `   • السعر: ${formatCurrency(itemSubtotal, currentCurrency)}\n\n`;
     });
 
+    message += `──────────────────────\n`;
     if (activeDiscount) {
-        message += `🎟️ *كود خصم:* ${activeDiscount.code} (${activeDiscount.value}%)\n`;
+        message += `🎟️ *كود الخصم:* ${activeDiscount.code} (${activeDiscount.value}%)\n`;
         message += `💰 *المجموع قبل الخصم:* ${formatCurrency(total, currentCurrency)}\n`;
     }
 
-    message += `\n*المجموع النهائي:* ${totalFormatted}`;
+    message += `💵 *المجموع الإجمالي:* *${totalFormatted}*\n`;
+    message += `🚚 *طريقة الدفع:* كاش عند الاستلام / حوالة\n\n`;
+    message += `يرجى تأكيد استلام الطلب وبدء التجهيز. شكراً جزيلاً! ✨`;
 
     // Increment Promo Usage if used
     if (activeDiscount) {
@@ -770,24 +970,45 @@ window.completeOrder = function () {
     // Send to Discord
     sendToDiscord(orderData);
 
+    // Fetch store WhatsApp Phone
+    let storePhone = '218916808225';
+    if (firebase.database) {
+        firebase.database().ref('settings/phone').once('value', snap => {
+            if (snap.exists() && snap.val()) {
+                storePhone = String(snap.val()).replace(/[^0-9]/g, '');
+            }
+            openWhatsAppAndFinish(storePhone, message, orderId);
+        }).catch(() => {
+            openWhatsAppAndFinish(storePhone, message, orderId);
+        });
+    } else {
+        openWhatsAppAndFinish(storePhone, message, orderId);
+    }
+}
+
+function openWhatsAppAndFinish(phone, message, orderId) {
+    const encodedMessage = encodeURIComponent(message);
+    const waUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+
+    // Open WhatsApp
+    window.open(waUrl, '_blank');
+
     activeDiscount = null;
     cart = [];
     saveCart();
     updateCartCount();
-    document.querySelector('.cart-modal-overlay').remove();
+
+    const overlay = document.querySelector('.cart-modal-overlay');
+    if (overlay) overlay.remove();
+
+    if (typeof showNotification === 'function') {
+        showNotification('تم إرسال الطلب، جارِ نقلك للمحادثة عبر الواتساب... 💬', 'success');
+    }
 
     // Redirect to success page
     setTimeout(() => {
         window.location.href = `success.html?orderId=${orderId}`;
-    }, 1000);
-
-    // Open WhatsApp (Optional, usually on success page or here? User flow suggests rewrite)
-    // The original code didn't actually open WA effectively if it redirects immediately.
-    // Usually successful sites redirect to success, which then opens WA or shows the WA button.
-    // The previous implementation had: // Open WhatsApp comment, then redirect.
-
-    // Let's assume the success page helps manual WA click, OR we open it here.
-    // window.open(`https://wa.me/${CONTACT_NUMBER}?text=${encodedMessage}`, '_blank');
+    }, 1200);
 }
 
 // Send Order to Discord Webhook

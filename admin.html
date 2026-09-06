@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - متجر زيرونكس</title>
-    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+    <title>لوحة التحكم - New Desgin</title>
+    <link rel="icon" type="image/png" href="Images/Logo-noBG.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#667eea">
+    <meta name="theme-color" content="#0ea5e9">
     <link rel="stylesheet" href="Style/admin.css">
     <style>
         body {
@@ -25,7 +25,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #1a1a2e;
+            background: #070b14;
             z-index: 9999;
             flex-direction: column;
             justify-content: center;
@@ -55,7 +55,7 @@
         }
 
         .back-home-btn {
-            background: #667eea;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -64,11 +64,13 @@
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
         }
 
         .back-home-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
         }
 
         @keyframes pulse {
@@ -105,8 +107,11 @@
     <!-- Login Screen -->
     <div id="login-screen" class="login-container">
         <div class="login-box">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <img src="Images/Logo-noBG.png" alt="New Desgin" style="height: 60px; object-fit: contain;">
+            </div>
             <h1>🔐 لوحة التحكم</h1>
-            <p>متجر زيرونكس - إدارة المنتجات</p>
+            <p>New Desgin - إدارة المتجر والمنتجات</p>
             <form id="login-form">
                 <div class="form-group">
                     <input type="email" id="admin-email" placeholder="البريد الإلكتروني" required>
@@ -125,7 +130,10 @@
         <!-- Header -->
         <header class="admin-header">
             <div class="header-content">
-                <h1>لوحة التحكم - متجر زيرونكس</h1>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="Images/Logo-noBG.png" alt="New Desgin" style="height: 48px; object-fit: contain;">
+                    <h1 style="font-size: 1.3rem; margin: 0; font-weight: 700;">New Desgin | لوحة الإدارة</h1>
+                </div>
                 <div class="header-actions">
                     <a href="index.html" class="btn btn-secondary" target="_blank">عرض المتجر</a>
                     <button id="logout-btn" class="btn btn-danger">تسجيل الخروج</button>
@@ -140,6 +148,9 @@
                 <button class="tab-btn active" onclick="switchTab('dashboard')">
                     <span>📊</span> الرئيسية
                 </button>
+                <button class="tab-btn" onclick="switchTab('homepage')">
+                    <span>🎨</span> واجهة المتجر
+                </button>
                 <button class="tab-btn" onclick="switchTab('orders')">
                     <span>📋</span> الطلبات
                 </button>
@@ -149,7 +160,6 @@
                 <button class="tab-btn" onclick="switchTab('coupons')">
                     <span>🎫</span> الكوبونات
                 </button>
-
                 <button class="tab-btn" onclick="switchTab('settings')">
                     <span>⚙️</span> الإعدادات
                 </button>
@@ -311,7 +321,16 @@
                             <div class="form-group">
                                 <label>التصنيف</label>
                                 <select id="product-category" required>
-                                    <option value="general">عام</option>
+                                    <option value="ملابس وأزياء">👕 ملابس وأزياء</option>
+                                    <option value="عطور وبخور">🌸 عطور وبخور</option>
+                                    <option value="جينزات وسراويل">👖 جينزات وسراويل</option>
+                                    <option value="قمصان وتيشيرتات">👔 قمصان وتيشيرتات</option>
+                                    <option value="أطقم فاخرة">✨ أطقم فاخرة</option>
+                                    <option value="عطور شرقية">🕌 عطور شرقية</option>
+                                    <option value="عطور فرنسية">🗼 عطور فرنسية</option>
+                                    <option value="إكسسوارات وهدايا">🎁 إكسسوارات وهدايا</option>
+                                    <option value="أحذية">👟 أحذية</option>
+                                    <option value="عام">عام</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -471,6 +490,190 @@
 
 
 
+            <!-- Homepage Customization Tab -->
+            <div id="tab-homepage" class="tab-content">
+                <section class="form-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                                <span>🎨</span> واجهة المتجر والصفحة الرئيسية
+                            </h2>
+                            <p style="color: rgba(255,255,255,0.6); margin: 5px 0 0 0; font-size: 0.9rem;">
+                                تحكم في كافة عناصر ونصوص وصور وبطاقات ومميزات الصفحة الرئيسية
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="saveHomepageSettings()" style="padding: 10px 24px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <span>💾</span> حفظ تعديلات الواجهة
+                        </button>
+                    </div>
+
+                    <!-- 1. Hero Section -->
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 14px; padding: 20px; margin-bottom: 2rem;">
+                        <h3 style="color: #38bdf8; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                            <span>🖼️</span> قسم الترويسة والترحيب (Hero Section)
+                        </h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>العنوان الرئيسي (Hero Title)</label>
+                                <input type="text" id="hero-title" placeholder="New Desgin - فخامة الأزياء والعطور">
+                            </div>
+                            <div class="form-group">
+                                <label>العنوان الفرعي (Hero Subtitle)</label>
+                                <input type="text" id="hero-subtitle" placeholder="مرحباً بك في عالم الفخامة">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>الوصف الترحيبي</label>
+                            <textarea id="hero-description" rows="3"
+                                placeholder="اكتشف تشكيلات الملابس العصرية والجينزات الفاخرة وأرقى العطور الشرقية والفرنسية الأصلية..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>رابط صورة الخلفية (اختياري)</label>
+                            <input type="url" id="hero-image" placeholder="https://example.com/hero.jpg">
+                            <small>يفضل صورة عرضية عالية الدقة ومتناسقة مع الألوان الداكنة</small>
+                        </div>
+                    </div>
+
+                    <!-- 2. Store Categories Tags -->
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 14px; padding: 20px; margin-bottom: 2rem;">
+                        <h3 style="color: #38bdf8; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                            <span>🏷️</span> تصنيفات وأقسام المتجر (Store Categories)
+                        </h3>
+                        <div class="form-group">
+                            <label>قائمة التصنيفات (مفصولة بفاصلة)</label>
+                            <input type="text" id="store-categories" placeholder="ملابس وأزياء, عطور وبخور, جينزات وسراويل, قمصان وتيشيرتات, أطقم فاخرة, عطور شرقية, عطور فرنسية, إكسسوارات وهدايا, أحذية, عام"
+                                value="ملابس وأزياء, عطور وبخور, جينزات وسراويل, قمصان وتيشيرتات, أطقم فاخرة, عطور شرقية, عطور فرنسية, إكسسوارات وهدايا, أحذية, عام">
+                            <small>هذه التصنيفات ستظهر في قوائم إضافة المنتجات والفلاتر في المتجر</small>
+                        </div>
+
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center;">
+                            <span style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">إضافة سريعة:</span>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('ملابس وأزياء')">+ ملابس وأزياء</button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('عطور وبخور')">+ عطور وبخور</button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('جينزات وسراويل')">+ جينزات وسراويل</button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('قمصان وتيشيرتات')">+ قمصان وتيشيرتات</button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('أطقم فاخرة')">+ أطقم فاخرة</button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('عطور شرقية')">+ عطور شرقية</button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('عطور فرنسية')">+ عطور فرنسية</button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('إكسسوارات وهدايا')">+ إكسسوارات وهدايا</button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="appendCategoryTag('أحذية')">+ أحذية</button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Category Showcase Cards Manager -->
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 14px; padding: 20px; margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                            <div>
+                                <h3 style="color: #38bdf8; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                    <span>🎴</span> مدير بطاقات الأقسام الرئيسية (Category Showcase Cards)
+                                </h3>
+                                <p style="color: rgba(255,255,255,0.6); margin: 4px 0 0 0; font-size: 0.85rem;">
+                                    البطاقات الكبيرة في الصفحة الرئيسية (قسم الملابس وقسم العطور، وإمكانية إضافة أقسام أخرى)
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="openCategoryCardModal()" style="display: flex; align-items: center; gap: 6px;">
+                                <span>➕</span> إضافة بطاقة قسم
+                            </button>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="category-showcase-enabled" checked style="width: auto; transform: scale(1.2);">
+                                <strong>تفعيل وإظهار قسم بطاقات الأقسام في الصفحة الرئيسية</strong>
+                            </label>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>عنوان القسم</label>
+                                <input type="text" id="category-showcase-title" placeholder="الأقسام الرئيسية" value="الأقسام الرئيسية">
+                            </div>
+                            <div class="form-group">
+                                <label>الوصف التوضيحي للقسم</label>
+                                <input type="text" id="category-showcase-subtitle" placeholder="تصفح تصنيفاتنا الحصرية لتجد ما يناسب ذوقك الراقي" value="تصفح تصنيفاتنا الحصرية لتجد ما يناسب ذوقك الراقي">
+                            </div>
+                        </div>
+
+                        <div id="category-cards-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 15px;">
+                            <!-- Dynamic Category Cards List -->
+                        </div>
+                    </div>
+
+                    <!-- 4. Trust & Highlights Section Manager -->
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 14px; padding: 20px; margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                            <div>
+                                <h3 style="color: #38bdf8; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                    <span>✨</span> مدير مميزات المتجر والضمان (Trust & Highlights)
+                                </h3>
+                                <p style="color: rgba(255,255,255,0.6); margin: 4px 0 0 0; font-size: 0.85rem;">
+                                    بطاقات الثقة الأربعة (أصلي 100%، شحن وتوصيل سريع، تغليف فاخر، خدمة عملاء راقية)
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="openTrustCardModal()" style="display: flex; align-items: center; gap: 6px;">
+                                <span>➕</span> إضافة ميزة جديدة
+                            </button>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="trust-section-enabled" checked style="width: auto; transform: scale(1.2);">
+                                <strong>تفعيل وإظهار قسم المميزات والضمان في الصفحة الرئيسية</strong>
+                            </label>
+                        </div>
+
+                        <div id="trust-cards-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 15px;">
+                            <!-- Dynamic Trust Cards List -->
+                        </div>
+                    </div>
+
+                    <!-- 5. Announcement Bar Manager -->
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 14px; padding: 20px; margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                            <div>
+                                <h3 style="color: #38bdf8; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                    <span>📢</span> مدير شريط الإعلانات العلوي (Announcement Bar)
+                                </h3>
+                                <p style="color: rgba(255,255,255,0.6); margin: 4px 0 0 0; font-size: 0.85rem;">
+                                    رسائل وعروض الخصم المتحركة في أعلى الموقع
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="openAnnouncementModal()" style="display: flex; align-items: center; gap: 6px;">
+                                <span>➕</span> إضافة إعلان
+                            </button>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="checkbox" id="announcement-enabled" style="width: auto; transform: scale(1.2);">
+                                    <strong>تفعيل شريط الإعلانات</strong>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>مدة التبديل بين الإعلانات (ثواني)</label>
+                                <input type="number" id="announcement-interval" min="2" max="60" value="5">
+                            </div>
+                        </div>
+
+                        <div id="announcements-list" class="announcements-list"
+                            style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                            <div style="text-align: center; color: rgba(255,255,255,0.5); padding: 10px;">
+                                لا توجد إعلانات حالياً
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; padding: 1rem 0;">
+                        <button type="button" class="btn btn-primary" onclick="saveHomepageSettings()" style="padding: 14px 40px; font-size: 1.05rem; font-weight: 700; border-radius: 12px; box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);">
+                            💾 حفظ كافة تعديلات واجهة المتجر والصفحة الرئيسية
+                        </button>
+                    </div>
+                </section>
+            </div>
+
             <!-- Settings Tab -->
             <div id="tab-settings" class="tab-content">
                 <section class="form-section">
@@ -482,16 +685,12 @@
                             <button type="button" class="btn-tab active" onclick="switchSettingsTab('general')"
                                 style="background: none; border: none; color: rgba(255,255,255,0.6); padding: 8px 16px; cursor: pointer; border-bottom: 2px solid transparent; font-weight: 600;">⚙️
                                 عام (General)</button>
-                            <button type="button" class="btn-tab" onclick="switchSettingsTab('home')"
-                                style="background: none; border: none; color: rgba(255,255,255,0.6); padding: 8px 16px; cursor: pointer; border-bottom: 2px solid transparent; font-weight: 600;">🏠
-                                الرئيسية (Home)</button>
                             <button type="button" class="btn-tab" onclick="switchSettingsTab('appearance')"
                                 style="background: none; border: none; color: rgba(255,255,255,0.6); padding: 8px 16px; cursor: pointer; border-bottom: 2px solid transparent; font-weight: 600;">🎨
                                 المظهر (Appearance)</button>
                             <button type="button" class="btn-tab" onclick="switchSettingsTab('maintenance')"
                                 style="background: none; border: none; color: rgba(255,255,255,0.6); padding: 8px 16px; cursor: pointer; border-bottom: 2px solid transparent; font-weight: 600;">🔧
                                 الصيانة (Maintenance)</button>
-
                         </div>
 
                         <!-- 1. General Tab -->
@@ -523,6 +722,16 @@
                                     <input type="email" id="contact-email" placeholder="support@example.com" required>
                                     <small>البريد الذي سيظهر في تذييل الصفحة</small>
                                 </div>
+                                <div class="form-group">
+                                    <label>الموقع والعنوان</label>
+                                    <input type="text" id="contact-location" placeholder="ليبيا - طرابلس (شحن وتوصيل لجميع المدن)">
+                                    <small>عنوان وموقع المتجر في الفوتر</small>
+                                </div>
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label>نبذة ووصف المتجر في الفوتر (Footer Description)</label>
+                                    <textarea id="footer-description" rows="2" placeholder="وجهتك الأولى لأرقى الملابس العصرية والعطور الفاخرة الأصلية في ليبيا. أناقة لا مثيل لها وجودة استثنائية."></textarea>
+                                    <small>النص التعريفي الذي يظهر تحت شعار New Desgin في تذييل كافة الصفحات</small>
+                                </div>
                             </div>
 
                             <hr style="border-color: rgba(255,255,255,0.1); margin: 2rem 0;">
@@ -541,133 +750,6 @@
                                 <div id="admin-emails-list"
                                     style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; min-height: 50px;">
                                     <p style="color: rgba(255,255,255,0.5); text-align: center;">جاري التحميل...</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 2. Home Tab -->
-                        <div id="settings-tab-home" class="settings-subtab-content" style="display: none;">
-                            <h3>🖼️ تخصيص الواجهة (Hero Section)</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>العنوان الرئيسي</label>
-                                    <input type="text" id="hero-title" placeholder="متجر زيرونكس">
-                                </div>
-                                <div class="form-group">
-                                    <label>العنوان الفرعي</label>
-                                    <input type="text" id="hero-subtitle" placeholder="مرحباً بك في">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>الوصف الترحيبي</label>
-                                <textarea id="hero-description" rows="3"
-                                    placeholder="اكتشف منتجات عالية الجودة..."></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>رابط صورة الخلفية</label>
-                                <input type="url" id="hero-image" placeholder="https://example.com/hero.jpg">
-                                <small>يفضل صورة عرضية عالية الدقة (1920x1080)</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label>تصنيفات المتجر</label>
-                                <input type="text" id="store-categories" placeholder="برامج, ألعاب, اشتراكات"
-                                    value="برامج, ألعاب, اشتراكات">
-                                <small>اكتب التصنيفات مفصول بينها بفاصلة (,)</small>
-                            </div>
-
-                            <hr style="border-color: rgba(255,255,255,0.1); margin: 2rem 0;">
-
-                            <hr style="border-color: rgba(255,255,255,0.1); margin: 2rem 0;">
-
-                            <h3>📢 مدير شريط الإعلانات</h3>
-                            <div class="form-group">
-                                <label style="display: flex; align-items: center; gap: 10px;">
-                                    <input type="checkbox" id="announcement-enabled" style="width: auto;">
-                                    تفعيل شريط الإعلانات
-                                </label>
-                            </div>
-
-                            <div class="form-group">
-                                <label>مدة العرض (ثواني)</label>
-                                <input type="number" id="announcement-interval" min="2" max="60" value="5">
-                                <small>الوقت الذي سيظهر فيه كل إعلان قبل الانتقال للتالي</small>
-                            </div>
-
-                            <div class="announcements-manager"
-                                style="margin-top: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-                                <div
-                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                                    <h4 style="margin: 0;">الإعلانات النشطة</h4>
-                                    <button type="button" class="btn btn-sm btn-primary"
-                                        onclick="openAnnouncementModal()">
-                                        ➕ إضافة إعلان
-                                    </button>
-                                </div>
-
-                                <div id="announcements-list" class="announcements-list"
-                                    style="display: flex; flex-direction: column; gap: 10px;">
-                                    <!-- Announcements will be loaded here -->
-                                    <div style="text-align: center; color: rgba(255,255,255,0.5); padding: 10px;">
-                                        لا توجد إعلانات حالياً
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Announcement Modal (Hidden) -->
-                            <div id="announcement-modal" class="custom-modal" style="display: none;">
-                                <div class="modal-content" style="max-width: 500px;">
-                                    <div class="modal-header">
-                                        <h3>تعديل الإعلان</h3>
-                                    </div>
-                                    <div class="modal-body" style="text-align: right;">
-                                        <input type="hidden" id="edit-announcement-id">
-                                        <div class="form-group">
-                                            <label>نص الإعلان</label>
-                                            <input type="text" id="edit-announcement-text"
-                                                placeholder="اكتب نص الإعلان هنا...">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>رابط (اختياري)</label>
-                                            <input type="url" id="edit-announcement-link" placeholder="https://...">
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group">
-                                                <label>لون الخلفية</label>
-                                                <div style="display: flex; align-items: center; gap: 10px;">
-                                                    <input type="color" id="edit-announcement-bg" value="#667eea"
-                                                        style="height: 40px; width: 60px; padding: 0; border: none;">
-                                                    <span id="bg-color-val"
-                                                        style="font-family: monospace; opacity: 0.7;">#667eea</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>لون النص</label>
-                                                <div style="display: flex; align-items: center; gap: 10px;">
-                                                    <input type="color" id="edit-announcement-color" value="#ffffff"
-                                                        style="height: 40px; width: 60px; padding: 0; border: none;">
-                                                    <span id="text-color-val"
-                                                        style="font-family: monospace; opacity: 0.7;">#ffffff</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group"
-                                            style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
-                                            <label>معاينة حيّة:</label>
-                                            <div id="announcement-preview"
-                                                style="padding: 10px; text-align: center; border-radius: 4px; transition: all 0.3s;">
-                                                نص الإعلان التجريبي
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary"
-                                            onclick="saveAnnouncement()">حفظ</button>
-                                        <button type="button" class="btn btn-secondary"
-                                            onclick="closeAnnouncementModal()">إلغاء</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -713,14 +795,8 @@
                                 <div class="theme-presets"
                                     style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
                                     <button type="button" class="btn"
-                                        style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: 2px solid white;"
-                                        onclick="applyThemePreset('purple')">الأساسي (Purple)</button>
-                                    <button type="button" class="btn"
-                                        style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; opacity: 0.8;"
-                                        onclick="applyThemePreset('red')">أحمر (Red)</button>
-                                    <button type="button" class="btn"
-                                        style="background: linear-gradient(135deg, #2193b0, #6dd5ed); color: white; opacity: 0.8;"
-                                        onclick="applyThemePreset('blue')">أزرق (Blue)</button>
+                                        style="background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; border: 2px solid white;"
+                                        onclick="applyThemePreset('newdesgin')">الرسمي New Desgin (أزرق ملكي)</button>
                                     <button type="button" class="btn"
                                         style="background: #000000; color: white; border: 1px solid #333;"
                                         onclick="applyThemePreset('pitchblack')">داكن جداً (Pitch Black)</button>
@@ -733,17 +809,17 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label>اللون الأساسي (Primary)</label>
-                                    <input type="color" id="theme-primary" value="#667eea"
+                                    <input type="color" id="theme-primary" value="#0ea5e9"
                                         style="height: 50px; cursor: pointer;">
                                 </div>
                                 <div class="form-group">
                                     <label>اللون الثانوي (Secondary)</label>
-                                    <input type="color" id="theme-secondary" value="#f5576c"
+                                    <input type="color" id="theme-secondary" value="#0284c7"
                                         style="height: 50px; cursor: pointer;">
                                 </div>
                                 <div class="form-group">
                                     <label>لون التمييز (Accent)</label>
-                                    <input type="color" id="theme-accent" value="#4facfe"
+                                    <input type="color" id="theme-accent" value="#38bdf8"
                                         style="height: 50px; cursor: pointer;">
                                 </div>
                             </div>
@@ -895,8 +971,167 @@
                     </div>
                 </section>
             </div>
-
         </main>
+    </div>
+
+    <!-- Modals for Homepage & Announcements -->
+    <!-- Category Card Modal (Hidden) -->
+    <div id="category-card-modal" class="custom-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="category-card-modal-title">تعديل بطاقة القسم</h3>
+                <button type="button" class="modal-close-btn" onclick="closeCategoryCardModal()" title="إغلاق">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: right;">
+                <input type="hidden" id="edit-cat-card-index">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>شارة القسم (Tag)</label>
+                        <input type="text" id="edit-cat-card-tag" placeholder="أزياء & جينز أصلية">
+                    </div>
+                    <div class="form-group">
+                        <label>عنوان القسم</label>
+                        <input type="text" id="edit-cat-card-title" placeholder="تشكيلة الملابس العصرية" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>الوصف</label>
+                    <textarea id="edit-cat-card-desc" rows="2" placeholder="جينزات فاخرة وتصاميم حديثة..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>نص الزر</label>
+                        <input type="text" id="edit-cat-card-btn-text" placeholder="استكشف تشكيلة الملابس ←">
+                    </div>
+                    <div class="form-group">
+                        <label>رابط التوجيه (Link)</label>
+                        <input type="text" id="edit-cat-card-link" placeholder="products.html?category=clothes">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>رابط الصورة الخلفية</label>
+                    <input type="text" id="edit-cat-card-image" placeholder="Images/Lee Jeans 2.png أو رابط ويب">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>طريقة ملاءمة الصورة (Object Fit)</label>
+                        <select id="edit-cat-card-fit">
+                            <option value="cover">ملء البطاقة بالكامل (Cover)</option>
+                            <option value="contain">احتواء الصورة بالكامل مع خلفية (Contain)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>لون خلفية الصورة (إذا كانت Contain)</label>
+                        <input type="text" id="edit-cat-card-bg" placeholder="#0b132b أو transparent" value="transparent">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="edit-cat-card-enabled" checked style="width: auto;">
+                        إظهار هذه البطاقة للزوار
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveCategoryCard()">حفظ البطاقة</button>
+                <button type="button" class="btn btn-secondary" onclick="closeCategoryCardModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trust Card Modal (Hidden) -->
+    <div id="trust-card-modal" class="custom-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 480px;">
+            <div class="modal-header">
+                <h3 id="trust-card-modal-title">تعديل ميزة المتجر</h3>
+                <button type="button" class="modal-close-btn" onclick="closeTrustCardModal()" title="إغلاق">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: right;">
+                <input type="hidden" id="edit-trust-card-index">
+                
+                <div class="form-row">
+                    <div class="form-group" style="flex: 0 0 90px;">
+                        <label>الأيقونة / الإيموجي</label>
+                        <input type="text" id="edit-trust-card-icon" placeholder="💎" style="font-size: 1.3rem; text-align: center;">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>عنوان الميزة</label>
+                        <input type="text" id="edit-trust-card-title" placeholder="أصلي 100% ومضمون" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>وصف الميزة</label>
+                    <textarea id="edit-trust-card-desc" rows="3" placeholder="نضمن لك أصالة جميع المنتجات والخامات..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="edit-trust-card-enabled" checked style="width: auto;">
+                        تفعيل وإظهار هذه الميزة
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveTrustCard()">حفظ الميزة</button>
+                <button type="button" class="btn btn-secondary" onclick="closeTrustCardModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Announcement Modal (Hidden) -->
+    <div id="announcement-modal" class="custom-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 480px;">
+            <div class="modal-header">
+                <h3 id="announcement-modal-title">تعديل الإعلان</h3>
+                <button type="button" class="modal-close-btn" onclick="closeAnnouncementModal()" title="إغلاق">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: right;">
+                <input type="hidden" id="edit-announcement-id">
+                <div class="form-group">
+                    <label>نص الإعلان</label>
+                    <input type="text" id="edit-announcement-text" placeholder="اكتب نص الإعلان هنا...">
+                </div>
+                <div class="form-group">
+                    <label>رابط (اختياري)</label>
+                    <input type="url" id="edit-announcement-link" placeholder="https://...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>لون الخلفية</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="color" id="edit-announcement-bg" value="#0ea5e9"
+                                style="height: 40px; width: 60px; padding: 0; border: none;">
+                            <span id="bg-color-val" style="font-family: monospace; opacity: 0.7;">#0ea5e9</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>لون النص</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="color" id="edit-announcement-color" value="#ffffff"
+                                style="height: 40px; width: 60px; padding: 0; border: none;">
+                            <span id="text-color-val" style="font-family: monospace; opacity: 0.7;">#ffffff</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
+                    <label>معاينة حيّة:</label>
+                    <div id="announcement-preview" style="padding: 10px; text-align: center; border-radius: 4px; transition: all 0.3s;">
+                        نص الإعلان التجريبي
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveAnnouncement()">حفظ</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAnnouncementModal()">إلغاء</button>
+            </div>
+        </div>
     </div>
 
     <!-- Firebase SDKs -->
@@ -925,7 +1160,6 @@
     <script src="Scripts/admin-image-manager.js"></script>
     <script src="Scripts/admin-invoice.js"></script>
     <script src="Scripts/admin-seo.js"></script>
-    <script src="Scripts/admin-newsletter.js"></script>
     <script src="Scripts/admin-support.js"></script>
     <script src="Scripts/admin-reviews.js"></script>
     <script src="Scripts/instant-page.js" type="module"></script>

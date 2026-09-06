@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حسابي - New Desgin</title>
+    <title>حسابي ولوحة التحكم - New Desgin</title>
     <link rel="icon" type="image/png" href="Images/Logo-noBG.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="Style/index.css">
@@ -22,174 +21,329 @@
 
 <body>
 
-    <!-- Loading -->
-    <div id="loading-overlay">
-        <div class="spinner"
-            style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;">
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" style="position: fixed; inset: 0; background: #070b14; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="spinner" style="width: 50px; height: 50px; border: 3px solid rgba(56,189,248,0.2); border-top-color: #38bdf8; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p style="color: #94a3b8; margin-top: 20px; font-family: 'Cairo', sans-serif; font-weight: 600;">جاري تحميل حسابك في New Desgin...</p>
+    </div>
+
+    <!-- Header will be injected by header.js -->
+
+    <!-- Main Profile Page Container -->
+    <div class="profile-page-wrapper">
+
+        <!-- 1. User Header Hero -->
+        <div class="user-hero-card">
+            <div class="user-hero-content">
+                <div class="user-hero-main">
+                    <div class="user-avatar-vip" id="user-hero-avatar">ND</div>
+                    <div class="user-hero-info">
+                        <h1>
+                            <span id="user-hero-name">جاري التحميل...</span>
+                        </h1>
+                        <p>
+                            <span><i class="fas fa-envelope"></i> <span id="user-hero-email">...</span></span>
+                            <span><i class="fas fa-phone"></i> <span id="user-hero-phone">غير محدد</span></span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="user-hero-stats">
+                    <div class="hero-stat-pill">
+                        <span>إجمالي الطلبات</span>
+                        <strong id="hero-stat-orders">0</strong>
+                    </div>
+                    <div class="hero-stat-pill">
+                        <span>المشتريات</span>
+                        <strong id="hero-stat-spent">0 د.ل</strong>
+                    </div>
+                    <div class="hero-stat-pill">
+                        <span>المفضلة</span>
+                        <strong id="hero-stat-wishlist">0</strong>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p style="color: rgba(255,255,255,0.6); margin-top: 20px;">جاري تحميل حسابك...</p>
+
+        <!-- 2. Dashboard Layout Grid -->
+        <div class="dashboard-layout">
+
+            <!-- Sidebar Tabs -->
+            <aside class="profile-sidebar">
+                <nav class="nav-menu">
+                    <div class="nav-item active" data-tab="overview">
+                        <i class="fas fa-chart-pie"></i> نظرة عامة
+                    </div>
+                    <div class="nav-item" data-tab="personal">
+                        <i class="fas fa-user-circle"></i> الملف الشخصي
+                    </div>
+                    <div class="nav-item" data-tab="preferences">
+                        <i class="fas fa-tshirt"></i> المقاسات والعطور
+                    </div>
+                    <div class="nav-item" data-tab="orders">
+                        <i class="fas fa-box-open"></i> طلباتي وتتبعها <span class="nav-badge" id="badge-order-count">0</span>
+                    </div>
+                    <div class="nav-item" data-tab="wishlist">
+                        <i class="fas fa-heart"></i> المفضلة <span class="nav-badge" id="badge-wishlist-count">0</span>
+                    </div>
+                    <div class="nav-item" data-tab="security">
+                        <i class="fas fa-shield-alt"></i> الأمان وكلمة المرور
+                    </div>
+                    <div class="nav-item logout-item" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- Main Panels -->
+            <main class="dashboard-main">
+
+                <!-- TAB 1: OVERVIEW -->
+                <div class="tab-panel active" id="tab-overview">
+                    
+                    <!-- KPI Cards (3 Metrics) -->
+                    <div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                        <div class="kpi-card">
+                            <div class="kpi-icon" style="color: #38bdf8;"><i class="fas fa-wallet"></i></div>
+                            <div class="kpi-data">
+                                <h3 id="kpi-total-spent">0 د.ل</h3>
+                                <p>إجمالي المشتريات</p>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon" style="color: #0ea5e9;"><i class="fas fa-shopping-bag"></i></div>
+                            <div class="kpi-data">
+                                <h3 id="kpi-total-orders">0</h3>
+                                <p>الطلبات المكتملة</p>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon" style="color: #f43f5e;"><i class="fas fa-heart"></i></div>
+                            <div class="kpi-data">
+                                <h3 id="kpi-wishlist-count">0</h3>
+                                <p>المنتجات بالمفضلة</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Order Widget -->
+                    <div class="profile-card">
+                        <div class="card-title-row">
+                            <h2><i class="fas fa-shipping-fast" style="color: #38bdf8;"></i> أحدث طلباتك</h2>
+                            <button class="btn btn-secondary" onclick="switchProfileTab('orders')" style="padding: 6px 14px; font-size: 0.85rem;">عرض كل الطلبات</button>
+                        </div>
+                        <div id="latest-order-container">
+                            <p style="color: #94a3b8; text-align: center; padding: 20px;">جاري تحميل أحدث طلب...</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TAB 2: PERSONAL INFO -->
+                <div class="tab-panel" id="tab-personal">
+                    <div class="profile-card">
+                        <div class="card-title-row">
+                            <h2><i class="fas fa-id-card" style="color: #38bdf8;"></i> البيانات الشخصية والتوصيل</h2>
+                        </div>
+                        <form id="personal-form">
+                            <div class="form-grid-2">
+                                <div class="profile-form-group">
+                                    <label><i class="fas fa-user"></i> الاسم الكامل</label>
+                                    <input type="text" id="p-name" placeholder="أدخل اسمك الكامل" required>
+                                </div>
+                                <div class="profile-form-group">
+                                    <label><i class="fas fa-phone"></i> رقم الهاتف (واتساب والتوصيل)</label>
+                                    <input type="tel" id="p-phone" placeholder="مثال: 0912345678" required>
+                                </div>
+                            </div>
+
+                            <div class="form-grid-2">
+                                <div class="profile-form-group">
+                                    <label><i class="fas fa-city"></i> المدينة / المنطقة</label>
+                                    <input type="text" id="p-city" placeholder="مثال: طرابلس، بنغازي، مصراتة...">
+                                </div>
+                                <div class="profile-form-group">
+                                    <label><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل</label>
+                                    <input type="text" id="p-address" placeholder="الشارع، رقم المبنى أو أقرب معلم">
+                                </div>
+                            </div>
+
+                            <div class="profile-form-group">
+                                <label><i class="fas fa-envelope"></i> البريد الإلكتروني (مسجل في الحساب)</label>
+                                <input type="email" id="p-email" disabled style="opacity: 0.7; cursor: not-allowed;">
+                            </div>
+
+                            <div class="profile-form-group">
+                                <label><i class="fas fa-sticky-note"></i> ملاحظات خاصة للتوصيل والمندوب</label>
+                                <textarea id="p-notes" rows="3" placeholder="أي تعليمات إضافية لتسليم شحنات الملابس والعطور..."></textarea>
+                            </div>
+
+                            <div style="margin-top: 25px;">
+                                <button type="submit" class="save-profile-btn" id="btn-save-personal">
+                                    <i class="fas fa-save"></i> حفظ البيانات
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- TAB 3: PREFERENCES -->
+                <div class="tab-panel" id="tab-preferences">
+                    <div class="profile-card">
+                        <div class="card-title-row">
+                            <h2><i class="fas fa-sliders-h" style="color: #38bdf8;"></i> تفضيلات المقاسات ونوتات العطور</h2>
+                        </div>
+                        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px;">
+                            حدد مقاساتك وذوقك العطري المفضل لنقدم لك تجربة مخصصة وسريعة.
+                        </p>
+                        
+                        <form id="preferences-form">
+                            <!-- Clothes Size -->
+                            <div class="profile-form-group">
+                                <label><i class="fas fa-tshirt"></i> مقاس الملابس المفضل</label>
+                                <div class="pref-options-grid" id="pref-clothes-grid">
+                                    <label class="pref-pill-check"><input type="radio" name="clothes_size" value="S"><span>S (صغير)</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="clothes_size" value="M"><span>M (وسط)</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="clothes_size" value="L"><span>L (كبير)</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="clothes_size" value="XL"><span>XL</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="clothes_size" value="XXL"><span>XXL</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="clothes_size" value="3XL"><span>3XL</span></label>
+                                </div>
+                            </div>
+
+                            <!-- Shoe Size -->
+                            <div class="profile-form-group" style="margin-top: 25px;">
+                                <label><i class="fas fa-shoe-prints"></i> مقاس الحذاء المفضل</label>
+                                <div class="pref-options-grid" id="pref-shoe-grid">
+                                    <label class="pref-pill-check"><input type="radio" name="shoe_size" value="39"><span>39</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="shoe_size" value="40"><span>40</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="shoe_size" value="41"><span>41</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="shoe_size" value="42"><span>42</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="shoe_size" value="43"><span>43</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="shoe_size" value="44"><span>44</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="shoe_size" value="45"><span>45</span></label>
+                                    <label class="pref-pill-check"><input type="radio" name="shoe_size" value="other" id="shoe-size-other-radio"><span>أخرى (مقاس مخصص)...</span></label>
+                                </div>
+                                <div id="custom-shoe-size-container" style="display: none; margin-top: 12px;">
+                                    <input type="text" id="custom-shoe-size" placeholder="اكتب مقاسك المخصص هنا (مثلاً: 46 أو 38)..." style="max-width: 320px;">
+                                </div>
+                            </div>
+
+                            <!-- Fragrance Notes -->
+                            <div class="profile-form-group" style="margin-top: 25px;">
+                                <label><i class="fas fa-spray-can"></i> النوتات العطرية المفضلة لديك</label>
+                                <div class="pref-options-grid" id="pref-fragrance-grid">
+                                    <label class="pref-pill-check"><input type="checkbox" name="fragrance_notes" value="oud"><span>🪵 عود وشرقي فاخر</span></label>
+                                    <label class="pref-pill-check"><input type="checkbox" name="fragrance_notes" value="woods"><span>🌲 أخشاب وصندل</span></label>
+                                    <label class="pref-pill-check"><input type="checkbox" name="fragrance_notes" value="fresh"><span>🌊 منعش وحمضيات وبحري</span></label>
+                                    <label class="pref-pill-check"><input type="checkbox" name="fragrance_notes" value="floral"><span>🌸 زهور وفواكه</span></label>
+                                    <label class="pref-pill-check"><input type="checkbox" name="fragrance_notes" value="amber"><span>✨ عنبر وفانيليا وسويت</span></label>
+                                    <label class="pref-pill-check"><input type="checkbox" name="fragrance_notes" value="leather"><span>💼 جلود وتبغ ملكي</span></label>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 30px;">
+                                <button type="submit" class="save-profile-btn" id="btn-save-pref">
+                                    <i class="fas fa-check"></i> حفظ التفضيلات
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- TAB 4: ORDERS & TRACKING -->
+                <div class="tab-panel" id="tab-orders">
+                    <div class="profile-card">
+                        <div class="card-title-row">
+                            <h2><i class="fas fa-boxes" style="color: #38bdf8;"></i> سجل الطلبات وتتبع الشحنات</h2>
+                        </div>
+
+                        <!-- Filter Tabs -->
+                        <div class="orders-filter-bar">
+                            <button class="order-filter-btn active" data-filter="all">جميع الطلبات (<span id="count-all">0</span>)</button>
+                            <button class="order-filter-btn" data-filter="pending">قيد المعالجة (<span id="count-pending">0</span>)</button>
+                            <button class="order-filter-btn" data-filter="shipped">قيد الشحن (<span id="count-shipped">0</span>)</button>
+                            <button class="order-filter-btn" data-filter="completed">مكتملة (<span id="count-completed">0</span>)</button>
+                        </div>
+
+                        <!-- Orders List Container -->
+                        <div id="orders-full-list">
+                            <div style="text-align: center; padding: 40px; color: #94a3b8;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #38bdf8;"></i>
+                                <p style="margin-top: 15px;">جاري تحميل سجل طلباتك...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: WISHLIST -->
+                <div class="tab-panel" id="tab-wishlist">
+                    <div class="profile-card">
+                        <div class="card-title-row">
+                            <h2><i class="fas fa-heart" style="color: #f43f5e;"></i> قائمة المنتجات المفضلة</h2>
+                            <a href="products.html" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">تصفح المزيد</a>
+                        </div>
+
+                        <div id="wishlist-grid-container" class="wishlist-grid">
+                            <!-- Wishlist items injected by JS -->
+                        </div>
+                        <div id="wishlist-empty-msg" style="display: none; text-align: center; padding: 60px 20px; color: #94a3b8;">
+                            <i class="fas fa-heart-broken" style="font-size: 3rem; color: rgba(244,63,94,0.4); margin-bottom: 15px;"></i>
+                            <h3>قائمتك المفضلة فارغة حالياً</h3>
+                            <p style="margin: 10px 0 20px;">استكشف تشكيلات الملابس والعطور الفاخرة وأضف ما يعجبك للمفضلة.</p>
+                            <a href="products.html" class="btn btn-primary">تصفح المنتجات الآن</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 6: SECURITY & PASSWORD -->
+                <div class="tab-panel" id="tab-security">
+                    <div class="profile-card">
+                        <div class="card-title-row">
+                            <h2><i class="fas fa-lock" style="color: #38bdf8;"></i> أمان الحساب وكلمة المرور</h2>
+                        </div>
+
+                        <div style="background: rgba(7, 11, 20, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 25px; margin-bottom: 25px;">
+                            <h3 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 10px;">إعادة تعيين كلمة المرور</h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+                                سنرسل رابطاً آمناً إلى بريدك الإلكتروني لتعيين كلمة مرور جديدة لحسابك.
+                            </p>
+                            <button type="button" class="btn btn-secondary" id="btn-reset-password">
+                                <i class="fas fa-key"></i> إرسال رابط تغيير كلمة المرور
+                            </button>
+                        </div>
+
+                        <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 16px; padding: 25px;">
+                            <h3 style="color: #f87171; font-size: 1.1rem; margin-bottom: 10px;">تسجيل الخروج من الحساب</h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px;">
+                                سيتم إنهاء جلستك على هذا الجهاز بأمان.
+                            </p>
+                            <button type="button" class="btn btn-danger" id="btn-logout-sec">
+                                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج الآن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
     </div>
 
-    <!-- Header -->
-
-    <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="dashboard-sidebar">
-            <div class="user-mini-profile">
-                <div class="user-avatar-large" id="sidebar-avatar">?</div>
-                <h3 class="user-name" id="sidebar-name">...</h3>
-                <p class="user-email" id="sidebar-email">...</p>
-            </div>
-
-            <nav class="dashboard-nav">
-                <div class="nav-item active" data-tab="overview">
-                    <span>📊</span> نظرة عامة
-                </div>
-                <div class="nav-item" data-tab="profile">
-                    <span>👤</span> الملف الشخصي
-                </div>
-                <div class="nav-item" data-tab="orders">
-                    <span>📦</span> طلباتي <span id="nav-order-count"
-                        style="margin-right: auto; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;">0</span>
-                </div>
-                <div class="nav-item" data-tab="wishlist">
-                    <span>❤️</span> القائمة المفضلة
-                </div>
-                <div class="nav-item" id="logout-btn-sidebar" style="color: #ff4444;">
-                    <span>🚪</span> تسجيل الخروج
-                </div>
-            </nav>
-        </aside>
-
-        <!-- Content -->
-        <main class="dashboard-content">
-
-            <!-- 1. Overview Tab -->
-            <div class="tab-panel active" id="tab-overview">
-                <h2 style="color: white; margin-bottom: 25px;">👋 مرحباً، <span id="welcome-name"></span></h2>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon" style="color: #4caf50;">💰</div>
-                        <div class="stat-info">
-                            <h3 id="stat-total-spent">0 د.ل</h3>
-                            <p>مجموع المشتريات</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon" style="color: #2196f3;">📦</div>
-                        <div class="stat-info">
-                            <h3 id="stat-total-orders">0</h3>
-                            <p>إجمالي الطلبات</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon" style="color: #f5576c;">❤️</div>
-                        <div class="stat-info">
-                            <h3 id="stat-wishlist-count">0</h3>
-                            <p>في المفضلة</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    style="background: rgba(30,30,50,0.6); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
-                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.1rem;">📝 آخر طلب</h3>
-                    <div id="latest-order-preview">
-                        <p style="color: rgba(255,255,255,0.5);">لا توجد طلبات حديثة.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. Profile Tab -->
-            <div class="tab-panel" id="tab-profile">
-                <h2 style="color: white; margin-bottom: 25px;">👤 تعديل الملف الشخصي</h2>
-                <div class="profile-form-card">
-                    <form id="profile-form">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>الاسم الكامل</label>
-                                <input type="text" id="p-name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>رقم الهاتف</label>
-                                <input type="tel" id="p-phone" required>
-                            </div>
-                            <div class="form-group">
-                                <label>المدينة</label>
-                                <input type="text" id="p-city">
-                            </div>
-                            <div class="form-group">
-                                <label>العنوان بالتفصيل</label>
-                                <input type="text" id="p-address">
-                            </div>
-                        </div>
-
-                        <div class="form-group" style="margin-top: 25px;">
-                            <label>البريد الإلكتروني</label>
-                            <input type="email" id="p-email" disabled>
-                        </div>
-
-                        <div class="form-group" style="margin-top: 25px;">
-                            <label>ملاحظات التوصيل</label>
-                            <textarea id="p-notes" rows="3"></textarea>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button type="submit" class="save-btn" id="save-btn">💾 حفظ التغييرات</button>
-                        </div>
-
-                        <div class="password-section">
-                            <div>
-                                <h3 style="color: white; font-size: 1.1rem; margin-bottom: 5px;">🔒 كلمة المرور</h3>
-                                <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">إعادة تعيين كلمة المرور عبر
-                                    البريد</p>
-                            </div>
-                            <button type="button" id="change-pass-btn" class="invoice-btn">تغيير كلمة المرور</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- 3. Orders Tab -->
-            <div class="tab-panel" id="tab-orders">
-                <h2 style="color: white; margin-bottom: 25px;">📦 سجل الطلبات</h2>
-                <div id="orders-list-container">
-                    <div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.5);">
-                        <p>جاري تحميل الطلبات...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. Wishlist Tab -->
-            <div class="tab-panel" id="tab-wishlist">
-                <h2 style="color: white; margin-bottom: 25px;">❤️ المنتجات المفضلة</h2>
-                <div id="wishlist-container" class="wishlist-grid">
-                    <!-- Wishlist items injected here -->
-                </div>
-                <div id="wishlist-empty"
-                    style="display: none; text-align: center; padding: 50px; color: rgba(255,255,255,0.5);">
-                    <p>القائمة المفضلة فارغة 🍂</p>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
+    <!-- Main Footer Container -->
     <div id="main-footer"></div>
 
-    <!-- Scripts -->
+    <!-- Firebase Compat SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
+    <!-- App Scripts -->
     <script src="Scripts/firebase-config.js"></script>
     <script src="Scripts/header.js"></script>
     <script src="Scripts/footer.js"></script>
     <script src="Scripts/admin-invoice.js"></script>
     <script src="Scripts/seasonal-effects.js"></script>
-
-    <!-- App Logic -->
     <script src="Scripts/user-profile.js"></script>
     <script src="Scripts/cart.js"></script>
     <script src="Scripts/app.js"></script>

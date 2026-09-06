@@ -67,18 +67,12 @@
                     </select>
                 </div>
 
-                <!-- Categories Tabs -->
+                <!-- Categories Tabs (Loaded Dynamically from Database) -->
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                     <div class="catalog-filter-tabs" id="categories-tabs">
-                        <button class="catalog-filter-btn active" data-category="all">
-                            <span>✨</span> الكل
-                        </button>
-                        <button class="catalog-filter-btn" data-category="clothes">
-                            <span>👕</span> ملابس وجينز
-                        </button>
-                        <button class="catalog-filter-btn" data-category="perfumes">
-                            <span>🌸</span> عطور وبخور
-                        </button>
+                        <div class="categories-loading" style="display: flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.6); padding: 8px 14px; font-size: 0.9rem;">
+                            <span>⏳</span> جاري تحميل الأقسام...
+                        </div>
                     </div>
 
                     <!-- In Stock Filter Toggle -->
@@ -135,7 +129,6 @@
     <script src="Scripts/app.js?v=3.0"></script>
     <script src="Scripts/instant-page.js" type="module"></script>
     <script src="Scripts/smart-search.js"></script>
-    <script src="Scripts/newsletter.js?v=1.0"></script>
     <script src="Scripts/pwa.js"></script>
 </body>
 

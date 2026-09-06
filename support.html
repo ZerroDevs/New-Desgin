@@ -40,9 +40,9 @@
         }
 
         .support-tab-btn.active {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-            border-color: rgba(102, 126, 234, 0.4);
-            color: #a5b4fc;
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.25), rgba(56, 189, 248, 0.15));
+            border-color: rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
         }
 
         /* Ticket Form */
@@ -96,8 +96,8 @@
         }
 
         .ticket-card:hover {
-            background: rgba(102, 126, 234, 0.08);
-            border-color: rgba(102, 126, 234, 0.3);
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(56, 189, 248, 0.35);
             transform: translateY(-2px);
         }
 
@@ -109,14 +109,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .ticket-card-id {
-            font-family: monospace;
-            font-size: 0.8rem;
-            color: #667eea;
-            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 0.5px;
         }
 
         .ticket-status {
@@ -252,8 +252,8 @@
 
         .chat-msg-admin {
             align-self: flex-end;
-            background: rgba(102, 126, 234, 0.2);
-            color: #c5ceff;
+            background: rgba(14, 165, 233, 0.2);
+            color: #bae6fd;
             border-bottom-left-radius: 4px;
         }
 
@@ -265,7 +265,7 @@
         }
 
         .chat-msg-admin .chat-msg-sender {
-            color: #667eea;
+            color: #38bdf8;
         }
 
         .chat-msg-text {
@@ -297,7 +297,7 @@
 
         .chat-input-area textarea:focus {
             outline: none;
-            border-color: rgba(102, 126, 234, 0.4);
+            border-color: rgba(56, 189, 248, 0.4);
         }
 
         .chat-send-btn {
@@ -342,15 +342,15 @@
     <main class="secondary-container">
         <!-- Support Grid (Quick Links) -->
         <div class="support-grid">
-            <a href="https://wa.me/218916808225" target="_blank" class="support-card">
+            <a href="https://wa.me/218924295050" target="_blank" class="support-card" id="support-whatsapp-card">
                 <span class="support-icon">💬</span>
                 <h3>واتساب</h3>
-                <p>تواصل مباشر وسريع</p>
+                <p id="support-whatsapp-text">تواصل مباشر وسريع</p>
             </a>
-            <a href="mailto:support@zeronux.store" class="support-card">
+            <a href="mailto:altasmemaljaded@gmail.com" class="support-card" id="support-email-card">
                 <span class="support-icon">📧</span>
                 <h3>البريد الإلكتروني</h3>
-                <p>support@zeronux.store</p>
+                <p id="support-email-text">altasmemaljaded@gmail.com</p>
             </a>
             <a href="faq.html" class="support-card">
                 <span class="support-icon">❓</span>
