@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="Images/Logo-noBG.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كافة المنتجات | New Desgin - ملابس وعطور فاخرة</title>
+    <meta name="description"
+        content="تصفح تشكيلة New Desgin الكاملة من الملابس العصرية، الجينز الفاخر، وأرقى العطور الشرقية والفرنسية الأصلية.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://newdesgin.store/products.html">
+    <meta property="og:title" content="كتالوج المنتجات | New Desgin">
+    <meta property="og:description" content="تسوق أحدث صيحات الملابس وأفخم العطور بأسعار مميزة وجودة أصلية 100%.">
+    <meta property="og:image" content="Images/Logo-text.png">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="Style/index.css?v=3.0">
+    <link rel="stylesheet" href="Style/secondary.css?v=3.0">
+</head>
+
+<body>
+    <!-- Header -->
+    <div id="main-header"></div>
+    <script src="Scripts/header.js"></script>
+    <script src="Scripts/global-search.js"></script>
+
+    <!-- Catalog Page Header -->
+    <header class="catalog-header">
+        <div class="container">
+            <div style="margin-bottom: 0.5rem; color: var(--primary-light); font-size: 0.9rem; font-weight: 600;">
+                <a href="index.html" style="color: inherit; text-decoration: none;">الرئيسية</a> / <span>كافة المنتجات</span>
+            </div>
+            <h1 class="page-title" style="font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 0.5rem;">كتالوج الأزياء والعطور</h1>
+            <p class="page-subtitle">استكشف جميع منتجاتنا الفاخرة، اختر ما يناسبك وتمتع بإطلالة وعطر لا يُنسى</p>
+        </div>
+    </header>
+
+    <!-- Main Products Section -->
+    <main class="products" style="padding-top: 1rem;">
+        <div class="container">
+            <!-- Catalog Filter & Search Controls Bar -->
+            <div class="catalog-controls">
+                <div class="catalog-search-row">
+                    <!-- Search Input -->
+                    <div class="catalog-search-input-wrap">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="product-search" placeholder="ابحث باسم المنتج، الخامة، أو نوع العطر..." autocomplete="off">
+                    </div>
+
+                    <!-- Sort Select -->
+                    <select id="catalog-sort-select" class="catalog-sort-select" aria-label="ترتيب المنتجات">
+                        <option value="featured">✨ المميز والأحدث</option>
+                        <option value="price-asc">💰 السعر: من الأقل للأعلى</option>
+                        <option value="price-desc">💎 السعر: من الأعلى للأقل</option>
+                        <option value="name-asc">🔤 الاسم: أ - ي</option>
+                    </select>
+                </div>
+
+                <!-- Categories Tabs -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div class="catalog-filter-tabs" id="categories-tabs">
+                        <button class="catalog-filter-btn active" data-category="all">
+                            <span>✨</span> الكل
+                        </button>
+                        <button class="catalog-filter-btn" data-category="clothes">
+                            <span>👕</span> ملابس وجينز
+                        </button>
+                        <button class="catalog-filter-btn" data-category="perfumes">
+                            <span>🌸</span> عطور وبخور
+                        </button>
+                    </div>
+
+                    <!-- In Stock Filter Toggle -->
+                    <label class="catalog-stock-toggle" style="color: var(--text-secondary); font-size: 0.85rem;">
+                        <input type="checkbox" id="in-stock-only-toggle" style="accent-color: var(--primary); cursor: pointer; transform: scale(1.15);">
+                        <span>المتوفر في المخزون فقط</span>
+                    </label>
+                </div>
+
+                <!-- Meta Results Bar -->
+                <div class="catalog-meta-bar">
+                    <span id="catalog-count-label">جاري تحميل المنتجات...</span>
+                    <span id="catalog-active-filter-label" style="color: var(--primary-light);"></span>
+                </div>
+            </div>
+
+            <!-- Products Grid Container (Loaded from Firebase) -->
+            <div class="products-grid" id="products-container">
+                <!-- Skeletons will be populated by skeleton-loader.js / app.js -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="main-footer"></div>
+    <script src="Scripts/footer.js"></script>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/218916808225" target="_blank" class="whatsapp-float" id="whatsapp-button">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path
+                d="M16 0C7.164 0 0 7.164 0 16c0 2.828.744 5.484 2.04 7.788L0 32l8.408-2.02A15.925 15.925 0 0016 32c8.836 0 16-7.164 16-16S24.836 0 16 0z"
+                fill="#25D366" />
+            <path
+                d="M25.36 22.88c-.36 1.02-2.12 1.88-2.92 2-.78.12-1.8.16-2.9-.18-.68-.2-1.56-.48-2.68-.94-4.68-1.96-7.72-6.68-7.96-6.98-.24-.3-1.92-2.56-1.92-4.88 0-2.32 1.22-3.46 1.64-3.94.44-.48.96-.6 1.28-.6.32 0 .64.02.92.02.3 0 .68-.12 1.08.82.4 1 1.36 3.32 1.48 3.56.12.24.2.52.04.84-.16.32-.24.52-.48.8-.24.28-.5.62-.72.84-.24.24-.48.5-.2.98.28.48 1.24 2.04 2.66 3.3 1.84 1.62 3.38 2.12 3.86 2.36.48.24.76.2 1.04-.12.28-.32 1.2-1.4 1.52-1.88.32-.48.64-.4 1.08-.24.44.16 2.8 1.32 3.28 1.56.48.24.8.36.92.56.12.2.12 1.16-.24 2.28z"
+                fill="white" />
+        </svg>
+        <span class="whatsapp-tooltip">تواصل معنا</span>
+    </a>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="Scripts/firebase-config.js"></script>
+    <script src="Scripts/seo-loader.js"></script>
+
+    <script src="Scripts/cart.js"></script>
+    <script src="Scripts/user-profile.js"></script>
+    <script src="Scripts/reviews.js"></script>
+    <script src="Scripts/lazy-load.js"></script>
+    <script src="Scripts/skeleton-loader.js"></script>
+    <script src="Scripts/seasonal-effects.js"></script>
+    <script src="Scripts/app.js?v=3.0"></script>
+    <script src="Scripts/instant-page.js" type="module"></script>
+    <script src="Scripts/smart-search.js"></script>
+    <script src="Scripts/newsletter.js?v=1.0"></script>
+    <script src="Scripts/pwa.js"></script>
+</body>
+
+</html>

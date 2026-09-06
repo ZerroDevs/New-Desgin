@@ -3,62 +3,41 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+    <link rel="icon" type="image/png" href="Images/Logo-noBG.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر زيرونكس - ZeroNux Store</title>
+    <title>New Desgin | متجر الأزياء الراقية والعطور الفاخرة</title>
     <meta name="description"
-        content="متجر زيرونكس - وجهتك الأولى للتسوق الإلكتروني في ليبيا. تسوق أحدث المنتجات والخدمات الرقمية بأسعار منافسة ودفع آمن.">
+        content="New Desgin - وجهتك الأولى في ليبيا لأرقى الملابس العصرية والجينز الأصلي وأفخم العطور الشرقية والفرنسية بأسعار مميزة وتوصيل لكافة المدن.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://zeronux.store/">
-    <meta property="og:title" content="متجر زيرونكس - ZeroNux Store">
+    <meta property="og:url" content="https://newdesgin.store/">
+    <meta property="og:title" content="New Desgin | متجر الأزياء والعطور الفاخرة">
     <meta property="og:description"
-        content="متجر زيرونكس - وجهتك الأولى للتسوق الإلكتروني في ليبيا. أفضل العروض على البرامج، الألعاب، والاشتراكات الرقمية.">
-    <meta property="og:image" content="https://assets.zeronux.store/Logo.png">
+        content="اكتشف تشكيلة 2026 الحصرية من الملابس الفاخرة وأرقى العطور العالمية لدى متجر New Desgin.">
+    <meta property="og:image" content="Images/Logo-text.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://zeronux.store/">
-    <meta property="twitter:title" content="متجر زيرونكس - ZeroNux Store">
-    <meta property="twitter:description" content="متجر زيرونكس - وجهتك الأولى للتسوق الإلكتروني في ليبيا.">
-    <meta property="twitter:image" content="https://assets.zeronux.store/Logo.png">
+    <meta property="twitter:title" content="New Desgin | متجر الأزياء والعطور الفاخرة">
+    <meta property="twitter:description" content="تسوق أفخم الملابس وأرقى العطور بأسعار مميزة وجودة أصلية 100%.">
+    <meta property="twitter:image" content="Images/Logo-text.png">
 
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#667eea">
+    <meta name="theme-color" content="#0ea5e9">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="Style/index.css?v=2.5">
-    <link rel="stylesheet" href="Style/secondary.css?v=2.5">
+    <link rel="stylesheet" href="Style/index.css?v=3.0">
+    <link rel="stylesheet" href="Style/secondary.css?v=3.0">
 </head>
 
 <body>
-    <script>
-        // التحقق مما إذا كان المستخدم على رابط Dev أو Preview
-        const isDevOrPreview = window.location.hostname.includes('dev.') ||
-            window.location.hostname.includes('preview.');
-
-        if (isDevOrPreview) {
-            // 1. تغيير عنوان الصفحة (Title)
-            document.title = "[TEST SITE] " + document.title;
-
-            // 2. تغيير نص الـ Footer
-            const footerElement = document.querySelector('[data-i18n="footer-copyright"]');
-            if (footerElement) {
-                footerElement.innerHTML = "هذه نسخة تجريبية لمتجر زيرونكس - Dev 2026 ©";
-                footerElement.style.color = "#ff4444"; // تلوينه بالأحمر لتمييزه
-            }
-
-            // يمكنك إضافة تنبيه بسيط في أعلى الصفحة لتعرف أنك في بيئة الاختبار
-            console.log("نتواصل الآن من بيئة الاختبار: " + window.location.hostname);
-        }
-    </script>
-    <!-- Header -->
+    <!-- Header Container -->
     <div id="main-header"></div>
     <script src="Scripts/header.js"></script>
     <script src="Scripts/global-search.js"></script>
@@ -66,70 +45,197 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-background">
-            <img src="https://assets.zeronux.store/Storefull.png" alt="ZeroNux Store" class="hero-image">
+            <img src="Images/Lee Jeans.png" alt="New Desgin Luxury Collection" class="hero-image" style="opacity: 0.25; filter: blur(2px);">
             <div class="hero-overlay"></div>
         </div>
         <div class="container">
             <div class="hero-content">
+                <div class="hero-brand-badge">
+                    <span class="pulse-dot"></span>
+                    <span>تشكيلة 2026 الحصرية • ملابس & عطور فاخرة</span>
+                </div>
                 <h1 class="hero-title">
-                    <span class="hero-subtitle" id="hero-subtitle-text" data-i18n="hero-welcome">مرحباً بك في</span>
-                    <span id="hero-title-text" data-i18n="hero-title">متجر زيرونكس</span>
+                    <span class="hero-subtitle" id="hero-subtitle-text">مرحباً بك في New Desgin</span>
+                    <span id="hero-title-text">أناقة لا مثيل لها و<span class="hero-highlight">عطور تأسر الحواس</span></span>
                 </h1>
-                <p class="hero-description" id="hero-desc-text" data-i18n="hero-description">اكتشف منتجات عالية الجودة
-                    بأسعار لا تُقاوم.
-                    تسوق بثقة واستمتع بتوصيل سريع في جميع أنحاء ليبيا.</p>
+                <p class="hero-description" id="hero-desc-text">
+                    اكتشف مجموعتنا المختارة بعناية من أرقى صيحات الملابس العصرية، الجينز الفاخر، وأفخم العطور الأصلية بثبات يدوم طويلاً. تميز بإطلالة تليق بذوقك الرفيع مع خدمة توصيل سريعة لكافة مدن ليبيا.
+                </p>
                 <div class="hero-buttons">
-                    <a href="#products" class="btn btn-primary hero-shop-now" data-i18n="hero-shop-now">تسوق الآن</a>
+                    <a href="products.html" class="btn btn-primary hero-shop-now">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-left: 6px;">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                        تسوق كافة المنتجات
+                    </a>
+                    <a href="products.html?category=clothes" class="btn btn-secondary">قسم الملابس</a>
+                    <a href="products.html?category=perfumes" class="btn btn-secondary">قسم العطور</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Products Section -->
+    <!-- Categories Showcase Cards Section -->
+    <section class="categories-showcase" id="categories-showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">الأقسام الرئيسية</h2>
+                <p class="section-subtitle">تصفح تصنيفاتنا الحصرية لتجد ما يناسب ذوقك الراقي</p>
+            </div>
+
+            <div class="category-showcase-grid">
+                <!-- Clothes Category Card -->
+                <a href="products.html?category=clothes" class="category-card">
+                    <img src="Images/Lee Jeans 2.png" alt="قسم الملابس والجينز" class="category-card-bg">
+                    <div class="category-card-overlay"></div>
+                    <div class="category-card-content">
+                        <span class="category-card-tag">أزياء & جينز أصلية</span>
+                        <h3 class="category-card-title">تشكيلة الملابس العصرية</h3>
+                        <p class="category-card-desc">جينزات فاخرة وتصاميم حديثة تجمع بين الراحة المطلقة والأناقة الفائقة.</p>
+                        <span class="category-card-btn">
+                            استكشف تشكيلة الملابس ←
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Perfumes Category Card -->
+                <a href="products.html?category=perfumes" class="category-card">
+                    <img src="Images/Logo-text.png" alt="قسم العطور الفاخرة" class="category-card-bg" style="object-fit: contain; background: #0b132b; padding: 2rem;">
+                    <div class="category-card-overlay"></div>
+                    <div class="category-card-content">
+                        <span class="category-card-tag">عطور نادرة & بخور</span>
+                        <h3 class="category-card-title">عطور شرقية وفرنسية</h3>
+                        <p class="category-card-desc">نوتات عطرية ساحرة بتركيز عالي وثبات يدوم لأيام لتعكس حضورك المميز.</p>
+                        <span class="category-card-btn">
+                            استكشف تشكيلة العطور ←
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
     <section class="products" id="products">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title" data-i18n="products-title">المنتجات المميزة</h2>
-                <p class="section-subtitle" data-i18n="products-subtitle">استكشف مجموعتنا المختارة من المنتجات الفاخرة
-                </p>
+                <p class="section-subtitle" data-i18n="products-subtitle">استكشف نخبة المنتجات الأكثر طلباً في متجرنا</p>
 
-                <!-- Search & Filter -->
+                <!-- Search & Categories Filter -->
                 <div class="search-container">
                     <div class="search-box">
-                        <input type="text" id="product-search" placeholder="ابحث عن منتج..." autocomplete="off">
+                        <input type="text" id="product-search" placeholder="ابحث في الملابس والعطور..." autocomplete="off">
                         <span class="search-icon">🔍</span>
                     </div>
 
                     <!-- Categories Tabs -->
                     <div class="categories-tabs" id="categories-tabs">
-                        <!-- Loaded dynamically -->
                         <button class="category-tab active" data-category="all">الكل</button>
+                        <button class="category-tab" data-category="clothes">ملابس</button>
+                        <button class="category-tab" data-category="perfumes">عطور</button>
                     </div>
                 </div>
             </div>
 
+            <!-- Products Grid (Dynamically rendered from Firebase) -->
             <div class="products-grid" id="products-container">
-                <!-- Google Ai Pro Product -->
+                <!-- Initial / Skeleton fallback cards -->
                 <div class="product-card">
                     <div class="product-badge" data-badge="New">جديد</div>
                     <div class="product-image">
-                        <img src="https://assets.zeronux.store/GoogleAiPro.png" alt="Google Ai Pro" class="product-img">
+                        <img src="Images/Lee Jeans the legend.png" alt="Lee Jeans" class="product-img">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name" data-i18n="product-googleaipro-name">جوجل اي برو</h3>
-                        <p class="product-description" data-i18n="product-googleaipro-desc">حلول الذكاء الاصطناعي
-                            المتقدمة لأعمالك</p>
+                        <h3 class="product-name">Lee Jeans The Legend</h3>
+                        <p class="product-description">بنطال جينز أصلي بقصة كلاسيكية ومريحة وأعلى درجات المتانة</p>
                         <div class="product-footer">
-                            <span class="product-price" data-usd="5">$5.00</span>
-                            <button class="add-to-cart-btn" data-i18n="add-to-cart">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
+                            <span class="product-price" data-usd="45">$45.00</span>
+                            <button class="add-to-cart-btn" data-product-name="Lee Jeans The Legend" data-product-price="45" data-product-image="Images/Lee Jeans the legend.png">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M9 2L6 6M18 6L15 2M6 6h12l1 14H5L6 6z" />
                                 </svg>
                                 إضافة للسلة
                             </button>
                         </div>
                     </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-badge" data-badge="hot">الأكثر طلباً</div>
+                    <div class="product-image">
+                        <img src="Images/Levis Jeans 4 original.png" alt="Levi's Jeans" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Levi's Original Denim</h3>
+                        <p class="product-description">جينز ليفايز الشهير بخامات قطنية نقية 100% ومظهر عصري جذاب</p>
+                        <div class="product-footer">
+                            <span class="product-price" data-usd="50">$50.00</span>
+                            <button class="add-to-cart-btn" data-product-name="Levi's Original Denim" data-product-price="50" data-product-image="Images/Levis Jeans 4 original.png">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 2L6 6M18 6L15 2M6 6h12l1 14H5L6 6z" />
+                                </svg>
+                                إضافة للسلة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All Link -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="products.html" class="btn btn-secondary" style="padding: 1rem 3rem; font-size: 1.1rem; border-radius: 50px;">
+                    عرض كافة المنتجات في الكتالوج 🛍️
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lookbook / Signature Banner Section -->
+    <div class="container">
+        <div class="lookbook-banner">
+            <div class="lookbook-content">
+                <span class="category-card-tag" style="margin-bottom: 1rem;">تجربة تسوق فريدة</span>
+                <h2 class="lookbook-title">تألق بأفخم التصاميم وانفرد بعطر يترك بصمتك</h2>
+                <p class="lookbook-desc">
+                    في New Desgin، نختار لك أرقى الخامات وأندر التراكيب العطرية لنضمن لك دائماً التميز والجاذبية في كل مناسبة.
+                </p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="products.html" class="btn btn-primary" style="border-radius: 50px;">تصفح الكتالوج بالكامل</a>
+                    <a href="track-order.html" class="btn btn-secondary" style="border-radius: 50px;">تتبع شحنتك</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trust & Highlights Section -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="trust-icon-wrap">💎</div>
+                    <h3 class="trust-title">أصلي 100% ومضمون</h3>
+                    <p class="trust-desc">نضمن لك أصالة جميع المنتجات والخامات وأعلى درجات الثبات للعطور.</p>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-icon-wrap">🚚</div>
+                    <h3 class="trust-title">شحن وتوصيل سريع</h3>
+                    <p class="trust-desc">خدمة توصيل آمنة وموثوقة تغطي كافة المدن والمناطق في ليبيا.</p>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-icon-wrap">🎁</div>
+                    <h3 class="trust-title">تغليف فاخر للهدايا</h3>
+                    <p class="trust-desc">تغليف أنيق ومميز يحافظ على المنتجات ويكون جاهزاً للإهداء فوراً.</p>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-icon-wrap">💬</div>
+                    <h3 class="trust-title">خدمة عملاء راقية</h3>
+                    <p class="trust-desc">فريق دعم متواجد على مدار الساعة لمساعدتك والإجابة عن استفساراتك.</p>
                 </div>
             </div>
         </div>
@@ -139,18 +245,17 @@
     <section class="newsletter">
         <div class="container">
             <div class="newsletter-content">
-                <h2 data-i18n="newsletter-title">ابق على اطلاع</h2>
-                <p data-i18n="newsletter-desc">اشترك للحصول على عروض خاصة وهدايا مجانية وصفقات حصرية.</p>
+                <h2 data-i18n="newsletter-title">كن أول من يعلم بجديدنا</h2>
+                <p data-i18n="newsletter-desc">اشترك للحصول على إشعارات التشكيلات الجديدة وكوبونات الخصم الحصرية.</p>
                 <form class="newsletter-form">
                     <input type="email" data-i18n="newsletter-placeholder" placeholder="أدخل بريدك الإلكتروني" required>
-                    <button type="submit" class="btn btn-primary" data-i18n="newsletter-submit">اشترك</button>
+                    <button type="submit" class="btn btn-primary" data-i18n="newsletter-submit">اشتراك</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <!-- Footer -->
+    <!-- Footer Container -->
     <div id="main-footer"></div>
     <script src="Scripts/footer.js"></script>
 
@@ -170,10 +275,6 @@
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-    <!-- Mobile Bottom Navigation Bar: Injected by header.js -->
-
-    <!-- Shared Firebase Config -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="Scripts/firebase-config.js"></script>
     <script src="Scripts/seo-loader.js"></script>
@@ -184,7 +285,7 @@
     <script src="Scripts/lazy-load.js"></script>
     <script src="Scripts/skeleton-loader.js"></script>
     <script src="Scripts/seasonal-effects.js"></script>
-    <script src="Scripts/app.js?v=2.7"></script>
+    <script src="Scripts/app.js?v=3.0"></script>
     <script src="Scripts/instant-page.js" type="module"></script>
     <script src="Scripts/smart-search.js"></script>
     <script src="Scripts/newsletter.js?v=1.0"></script>

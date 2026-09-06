@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="container">
             <div class="nav-content">
                 <div class="logo">
-                     <a href="index.html">
-                        <img src="https://assets.zeronux.store/Logo.png" alt="ZeroNux Store Logo">
+                     <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                        <img src="Images/Logo-noBG.png" alt="New Desgin Logo" style="height: 52px; width: auto; object-fit: contain;">
                     </a>
                 </div>
 
@@ -31,8 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
 
                 <div class="nav-links">
-                    <a href="index.html#home" class="nav-link ${currentPage === 'index.html' || currentPage === '' ? 'active' : ''}" data-i18n="nav-home">الرئيسية</a>
-                    <a href="index.html#products" class="nav-link" data-i18n="nav-products">المنتجات</a>
+                    <a href="index.html" class="nav-link ${currentPage === 'index.html' || currentPage === '' ? 'active' : ''}">الرئيسية</a>
+                    <a href="products.html" class="nav-link ${currentPage === 'products.html' ? 'active' : ''}">كافة المنتجات</a>
+                    <a href="products.html?category=clothes" class="nav-link">ملابس</a>
+                    <a href="products.html?category=perfumes" class="nav-link">عطور</a>
+                    <a href="track-order.html" class="nav-link ${currentPage === 'track-order.html' ? 'active' : ''}">تتبع طلبك</a>
                     
                     <!-- Mobile Quick Actions (icon row) -->
                     <div class="mobile-quick-actions">
@@ -49,15 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="quick-icon">🛒</span>
                             <span class="quick-label">السلة</span>
                         </button>
-                        <a href="#about" class="mobile-quick-btn" title="من نحن"
-                            style="text-decoration: none; color: inherit;">
-                            <span class="quick-icon">ℹ️</span>
-                            <span class="quick-label">من نحن</span>
-                        </a>
-                        <a href="#contact" class="mobile-quick-btn" title="اتصل بنا"
+                        <a href="support.html" class="mobile-quick-btn" title="الدعم"
                             style="text-decoration: none; color: inherit;">
                             <span class="quick-icon">📞</span>
-                            <span class="quick-label">اتصل بنا</span>
+                            <span class="quick-label">الدعم</span>
                         </a>
                     </div>
                 </div>
@@ -113,9 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="mobile-nav-toggle" aria-label="Toggle Navigation">
             <span class="toggle-icon">▼</span>
         </button>
-        <a href="index.html#home" class="mobile-nav-item ${currentPage === 'index.html' || currentPage === '' ? 'active' : ''}" id="mobile-nav-home">
+        <a href="index.html" class="mobile-nav-item ${currentPage === 'index.html' || currentPage === '' ? 'active' : ''}" id="mobile-nav-home">
             <span class="nav-icon">🏠</span>
             <span class="nav-label">الرئيسية</span>
+        </a>
+        <a href="products.html" class="mobile-nav-item ${currentPage === 'products.html' ? 'active' : ''}" id="mobile-nav-catalog">
+            <span class="nav-icon">🛍️</span>
+            <span class="nav-label">المنتجات</span>
         </a>
         <div class="mobile-nav-item" id="mobile-nav-search">
             <span class="nav-icon">🔍</span>
