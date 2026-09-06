@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأسئلة الشائعة - متجر زيرونكس</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cairo:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="Style/secondary.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div id="main-header"></div>
+    <script src="Scripts/header.js"></script>
+    <script src="Scripts/global-search.js"></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <!-- Shared Firebase Config -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="Scripts/firebase-config.js"></script>
+    <script src="Scripts/cart.js"></script>
+    <!-- Main App Script -->
+    <script src="Scripts/app.js"></script>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">📝 الأسئلة الشائعة</h1>
+            <p class="page-subtitle">إجابات سريعة على معظم استفساراتكم لتجربة تسوق أسهل</p>
+        </div>
+    </header>
+
+    <main class="secondary-container">
+        <!-- Delivery Section -->
+        <h2 style="color: #fff; margin: 1.5rem 0 1rem; font-size: 1.4rem;">📦 التوصيل والطلبات</h2>
+        <div class="faq-item">
+            <div class="faq-question">كم تستغرق عملية التوصيل؟</div>
+            <div class="faq-answer">
+                يتم تسليم المنتجات الرقمية (الأكواد والاشتراكات) فوراً أو خلال دقائق من الدفع.
+                أما المنتجات المادية، فتستغرق 24-48 ساعة داخل طرابلس، ومن 2-4 أيام لباقي المدن الليبية.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">كيف أستلم المنتج الرقمي؟</div>
+            <div class="faq-answer">
+                بعد إتمام الطلب، سيصلك الكود عبر رسالة واتساب على الرقم المسجل، وأيضاً عبر البريد الإلكتروني.
+                تأكد من صحة رقم هاتفك عند الطلب لضمان الوصول السريع.
+            </div>
+        </div>
+
+        <!-- Payment Section -->
+        <h2 style="color: #fff; margin: 2.5rem 0 1rem; font-size: 1.4rem;">💳 الدفع والاسترجاع</h2>
+        <div class="faq-item">
+            <div class="faq-question">ما هي طرق الدفع المتوفرة؟</div>
+            <div class="faq-answer">
+                ندعم حالياً الدفع المحلي عبر (خدمة سداد - خدمة تداول) أو الدفع النقدي عند الاستلام (للمنتجات المادية
+                فقط).
+                قريباً سنضيف الدفع الإلكتروني المباشر.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">هل يمكن استرجاع المنتج؟</div>
+            <div class="faq-answer">
+                المنتجات الرقمية (الأكواد) غير قابلة للاسترداد بعد التسليم إلا في حال ثبت أن الكود لا يعمل.
+                المنتجات المادية يمكن استرجاعها خلال 3 أيام بشرط أن تكون بحالتها الأصلية.
+            </div>
+        </div>
+
+        <!-- Support Box -->
+        <div class="glass-card" style="margin-top: 3rem; text-align: center; border-color: var(--primary);">
+            <h3 style="color: var(--primary); margin-bottom: 0.5rem;">لم تجد إجابتك؟</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">فريق الدعم الفني جاهز لمساعدتك في أي وقت</p>
+            <a href="https://wa.me/218916808225" target="_blank" class="btn btn-primary"
+                style="padding: 10px 30px;">تواصل معنا عبر واتساب</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <div id="main-footer"></div>
+    <script src="Scripts/footer.js"></script>
+    <script src="Scripts/app.js?v=2.5"></script>
+
+    <script>
+        // Simple FAQ Accordion Logic
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+    <script src="Scripts/instant-page.js" type="module"></script>
+    <script src="Scripts/smart-search.js"></script>
+    <script src="Scripts/pwa.js"></script>
+    <script src="Scripts/seasonal-effects.js"></script>
+</body>
+
+</html>

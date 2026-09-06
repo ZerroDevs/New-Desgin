@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة غير موجودة - متجر زيرونكس</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cairo:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="Style/404.css">
+</head>
+
+<body>
+    <div class="error-page">
+        <style>
+            .mobile-home-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 10px;
+                border-radius: 8px;
+                color: white;
+                text-decoration: none;
+                display: none;
+            }
+
+            @media (max-width: 768px) {
+                .mobile-home-btn {
+                    display: block;
+                }
+            }
+        </style>
+        <a href="index.html" class="mobile-home-btn">🏠</a>
+
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1>عذراً، الصفحة غير موجودة</h1>
+            <p>يبدو أن الرابط الذي حاولت الوصول إليه غير صحيح أو تم نقله.</p>
+            <a href="index.html" class="btn-home">
+                🏠 العودة للرئيسية
+            </a>
+        </div>
+    </div>
+    <script src="Scripts/instant-page.js" type="module"></script>
+    <script src="Scripts/smart-search.js"></script>
+    <script src="Scripts/pwa.js"></script>
+</body>
+
+</html>

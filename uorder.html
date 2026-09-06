@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلباتي - متجر زيرونكس</title>
+    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="Style/secondary.css">
+    <style>
+        /* Orders Page Specific Styles */
+        .orders-container {
+            max-width: 1000px;
+            margin: 120px auto 60px;
+            padding: 0 20px;
+            min-height: 60vh;
+        }
+
+        .page-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #a5a5a5 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        /* Order Card */
+        .order-card {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(108, 92, 231, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .order-id {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .order-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .order-status {
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: rgba(253, 203, 110, 0.15);
+            color: #fdcb6e;
+            border: 1px solid rgba(253, 203, 110, 0.3);
+        }
+
+        .status-completed {
+            background: rgba(0, 184, 148, 0.15);
+            color: #00b894;
+            border: 1px solid rgba(0, 184, 148, 0.3);
+        }
+
+        .status-cancelled {
+            background: rgba(255, 118, 117, 0.15);
+            color: #ff7675;
+            border: 1px solid rgba(255, 118, 117, 0.3);
+        }
+
+        .status-processing {
+            background: rgba(9, 132, 227, 0.15);
+            color: #74b9ff;
+            border: 1px solid rgba(9, 132, 227, 0.3);
+        }
+
+        /* Order Items */
+        .order-items {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .item-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .item-meta {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Order Footer & Actions */
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .order-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .action-btn {
+            padding: 8px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-invoice {
+            background: rgba(108, 92, 231, 0.1);
+            color: #a29bfe;
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-invoice:hover {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .btn-track {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+        }
+
+        .btn-track:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(118, 75, 162, 0.5);
+        }
+
+        /* Loading & Empty States */
+        #orders-loader {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .empty-orders {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Invoice Modal */
+        .invoice-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .invoice-content {
+            background: white;
+            color: #333;
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 5px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: left;
+            /* Invoice usually LTR or specific layout */
+        }
+
+        /* Simple print styles for invoice */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .invoice-content,
+            .invoice-content * {
+                visibility: visible;
+            }
+
+            .invoice-content {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header will be injected by header.js -->
+    <header id="main-header"></header>
+
+    <div class="orders-container">
+        <div class="page-header">
+            <h1 class="page-title">طلباتي</h1>
+            <p style="color: rgba(255,255,255,0.6);">تابع حالة طلباتك واستعرض مشترياتك السابقة</p>
+        </div>
+
+        <div id="orders-list">
+            <!-- Orders will be loaded here -->
+            <div id="orders-loader">
+                <div class="spinner"></div>
+                <p>جاري تحميل الطلبات...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer will be injected by footer.js -->
+    <div id="main-footer"></div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script src="Scripts/firebase-config.js"></script>
+    <script src="Scripts/header.js"></script>
+    <script src="Scripts/footer.js"></script>
+    <script src="Scripts/admin-invoice.js"></script>
+
+    <!-- App Logic (Cart, Wishlist, Recent, Search) -->
+    <script src="Scripts/cart.js"></script>
+    <script src="Scripts/user-profile.js"></script>
+    <script src="Scripts/lazy-load.js"></script>
+    <script src="Scripts/app.js?v=2.6"></script>
+    <script src="Scripts/smart-search.js"></script>
+    <script src="Scripts/global-search.js"></script>
+
+    <script src="Scripts/uorder.js"></script>
+
+</body>
+
+</html>

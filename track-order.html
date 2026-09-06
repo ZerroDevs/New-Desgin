@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تتبع طلبك - متجر زيرونكس</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cairo:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="Style/track-order.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div id="main-header"></div>
+    <script src="Scripts/header.js"></script>
+    <script src="Scripts/global-search.js"></script>
+
+    <header class="page-header">
+        <div class="container">
+            <div style="font-size: 4rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite;">📦</div>
+            <h1 class="page-title">تتبع طلبك</h1>
+            <p>أدخل رقم الطلب لمعرفة حالته الحالية</p>
+        </div>
+    </header>
+
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+
+    <main class="container track-section">
+        <div class="search-box">
+            <input type="text" id="order-input" class="search-input" placeholder="#ORDER_..." dir="ltr">
+            <button onclick="trackOrder()" class="search-btn">تتبع الآن</button>
+        </div>
+
+        <div id="error-msg" class="error-message"></div>
+
+        <div id="order-result">
+            <div class="order-card">
+                <div class="status-timeline">
+                    <!-- Pending -->
+                    <div class="status-step" id="step-pending">
+                        <div class="status-icon">🕒</div>
+                        <div class="status-label">قيد الانتظار</div>
+                    </div>
+                    <!-- Processing -->
+                    <div class="status-step" id="step-processing">
+                        <div class="status-icon">⚙️</div>
+                        <div class="status-label">قيد التنفيذ</div>
+                    </div>
+                    <!-- Shipped -->
+                    <div class="status-step" id="step-shipped">
+                        <div class="status-icon">🚚</div>
+                        <div class="status-label">تم الشحن</div>
+                    </div>
+                    <!-- Completed -->
+                    <div class="status-step" id="step-completed">
+                        <div class="status-icon">✅</div>
+                        <div class="status-label">مكتمل</div>
+                    </div>
+                </div>
+
+                <div class="order-info-grid">
+                    <div class="info-item">
+                        <label>تاريخ الطلب</label>
+                        <span id="order-date">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>الإجمالي</label>
+                        <span id="order-total" dir="ltr">-</span>
+                    </div>
+                    <div class="info-item" style="grid-column: 1 / -1;">
+                        <label>المنتجات</label>
+                        <span id="order-items">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <div id="main-footer"></div>
+    <script src="Scripts/footer.js"></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <!-- Config from app.js (In production, load app.js or separate config file) -->
+    <!-- Ideally we should look at app.js to see if it exposes config globally, or just copy it here for this standalone page execution context -->
+    <!-- Assuming app.js is not loaded here to keep it light, we need init firebase. -->
+
+    <script>
+        // Retrieve config from localStorage or just try to load app.js for config? 
+        // Better: Include app.js but only use its config/init, or copy config.
+        // User didn't ask to refactor config. Let's include app.js but verify if it runs UI logic that might conflict.
+        // app.js has DOMContentLoaded listeners that look for elements on index.html. They might fail silently or error.
+        // Let's just create a script that loads Firebase Config from app.js by viewing it first?
+        // No, I can't see the config in app.js (it was truncated in previous turns or I missed it).
+        // Actually, app.js initializes firebase at the top.
+        // Let's just load app.js. It's safer to ensure connection sharing.
+    </script>
+    <!-- Shared Firebase Config -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="Scripts/firebase-config.js"></script>
+
+    <script src="Scripts/cart.js"></script>
+
+    <script src="Scripts/app.js"></script>
+
+    <script>
+        // Override or Add Tracking Logic
+
+        async function trackOrder() {
+            const input = document.getElementById('order-input');
+            const resultDiv = document.getElementById('order-result');
+            const errorDiv = document.getElementById('error-msg');
+            const orderId = input.value.trim();
+
+            if (!orderId) return;
+
+            // Reset UI
+            resultDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+
+            try {
+                const orderRef = firebase.database().ref('orders/' + orderId);
+                const snapshot = await orderRef.once('value');
+
+                if (snapshot.exists()) {
+                    const order = snapshot.val();
+                    displayOrder(order);
+                } else {
+                    errorDiv.textContent = 'رقم الطلب غير صحيح أو لم يتم العثور عليه.';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error(error);
+                errorDiv.textContent = 'حدث خطأ في الاتصال. حاول مرة أخرى.';
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function displayOrder(order) {
+            const resultDiv = document.getElementById('order-result');
+
+            // Update Text Info
+            const date = new Date(order.timestamp);
+            document.getElementById('order-date').textContent = date.toLocaleDateString('ar-LY');
+
+            // Currency Logic
+            const total = parseFloat(order.total || 0).toLocaleString();
+            const currencySymbol = order.currency === 'LYD' ? 'د.ل' : '$';
+            const displayTotal = order.currency === 'LYD' ? `${total} ${currencySymbol}` : `${currencySymbol}${total}`;
+            document.getElementById('order-total').textContent = displayTotal;
+
+            // Items text
+            const items = order.items || order.cart || [];
+            const itemsText = items.map(i => `${i.name} (x${i.quantity || 1})`).join(', ');
+            document.getElementById('order-items').textContent = itemsText;
+
+            // Update Status Timeline
+            const statuses = ['pending', 'processing', 'shipped', 'completed'];
+            const currentStatus = order.status || 'pending';
+
+            // Reset classes
+            document.querySelectorAll('.status-step').forEach(s => s.classList.remove('completed'));
+            resultDiv.querySelectorAll('.status-step').forEach(s => s.classList.remove('active')); // Also remove active if used
+
+            if (currentStatus === 'cancelled') {
+                document.getElementById('error-msg').textContent = 'عذراً، هذا الطلب تم إلغاؤه.';
+                document.getElementById('error-msg').style.display = 'block';
+                return;
+            }
+
+            // Highlight steps up to current
+            let activeIndex = statuses.indexOf(currentStatus);
+            if (activeIndex === -1) activeIndex = 0;
+
+            if (activeIndex >= 0) document.getElementById('step-pending').classList.add('completed');
+            if (activeIndex >= 1) document.getElementById('step-processing').classList.add('completed');
+            if (activeIndex >= 2) document.getElementById('step-shipped').classList.add('completed');
+            if (activeIndex >= 3) document.getElementById('step-completed').classList.add('completed');
+
+            resultDiv.style.display = 'block';
+        }
+
+        // Auto-track if URL has ID
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) {
+                document.getElementById('order-input').value = id;
+                // Add small delay to ensure Firebase is ready if needed, or just call
+                setTimeout(trackOrder, 500);
+            }
+        });
+    </script>
+    <script src="Scripts/instant-page.js" type="module"></script>
+    <script src="Scripts/smart-search.js"></script>
+    <script src="Scripts/pwa.js"></script>
+    <script src="Scripts/seasonal-effects.js"></script>
+</body>
+
+</html>

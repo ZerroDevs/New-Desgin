@@ -1,0 +1,457 @@
+/* file:///c:/Users/START/Desktop/Projects/ZeroNux Store/Style/auth.css */
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --accent-color: #4facfe;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --bg-color: #1a1a2e;
+    --card-bg: #16213e;
+    --input-bg: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+body {
+    background: #1a1a2e;
+    background-image:
+        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+        radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+    font-family: 'Outfit', 'Cairo', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+/* Background Particles/Animation Effect (Optional - keeping it clean for now) */
+
+.auth-container {
+    background: rgba(22, 33, 62, 0.8);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ... existing styles ... */
+
+@media (max-width: 768px) {
+    body {
+        /* Ensure scrolling works on small screens */
+        align-items: flex-start;
+        /* Prevent top cut-off */
+        padding-top: 20px;
+        padding-bottom: 20px;
+        height: auto;
+    }
+
+    .auth-container {
+        margin: auto;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 16px;
+        padding: 30px 20px;
+        /* Reduced padding for mobile */
+    }
+
+    .auth-header img {
+        width: 60px;
+        /* Smaller logo on mobile */
+        height: 60px;
+    }
+
+    .auth-header h2 {
+        font-size: 22px;
+        /* Smaller title */
+    }
+
+    .input-group input {
+        font-size: 16px;
+        /* Prevent zoom on iOS */
+    }
+}
+
+.auth-header {
+    margin-bottom: 30px;
+}
+
+.auth-header img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+}
+
+.auth-header h2 {
+    color: var(--text-primary);
+    font-size: 26px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.auth-header p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+/* Error Message Styling */
+.auth-error {
+    display: none;
+    background: rgba(255, 68, 68, 0.15);
+    /* Slightly more visible background */
+    color: #ff4444;
+    /* Bright Red */
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    /* Make it bold */
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    text-align: right;
+    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+}
+
+.social-btn img {
+    width: 22px;
+    height: 22px;
+}
+
+.social-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.divider span {
+    padding: 0 15px;
+}
+
+.email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    /* Crucial: White text */
+    font-size: 15px;
+    transition: all 0.3s ease;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    opacity: 0.95;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.toggle-auth {
+    margin-top: 25px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.toggle-auth a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.toggle-auth a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-container {
+    animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Password Toggle */
+.toggle-password {
+    position: absolute;
+    left: 15px;
+    /* Arabic RTL flip check: usually right, but for RTL it should be on LEFT */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    user-select: none;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+/* Password Strength Styles */
+.strength-weak .bar:nth-child(1) {
+    background: #ff4444 !important;
+}
+
+.strength-medium .bar:nth-child(1),
+.strength-medium .bar:nth-child(2) {
+    background: #ffbb33 !important;
+}
+
+.strength-strong .bar:nth-child(1),
+.strength-strong .bar:nth-child(2),
+.strength-strong .bar:nth-child(3) {
+    background: #00C851 !important;
+}
+
+/* Custom Checkbox Styling */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 20px !important;
+    height: 20px !important;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    top: 5px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+input[type="checkbox"]:checked::before {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input[type="checkbox"]:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.remember-group,
+.terms-group {
+    display: flex;
+    align-items: center;
+    gap: 12px !important;
+    margin: 15px 0;
+}
+
+.remember-group label,
+.terms-group label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.5;
+}
+
+#signup-confirm-password.error {
+    border-color: #ff4444;
+    box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.2);
+}
+
+.back-home {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Reduced gap */
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    /* Reduced font size */
+    font-weight: 500;
+    transition: all 0.3s ease;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 16px;
+    /* Reduced padding */
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.back-home svg {
+    width: 16px;
+    /* Reduce icon size */
+    height: 16px;
+}
+
+.back-home:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    .back-home {
+        top: 15px;
+        left: 15px;
+        padding: 6px 12px;
+        /* Even smaller for mobile */
+        font-size: 12px;
+        gap: 6px;
+    }
+
+    .back-home svg {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    body {
+        /* Ensure scrolling works on small screens */
+        align-items: flex-start;
+        /* Prevent top cut-off */
+        padding-top: 40px;
+        padding-bottom: 40px;
+        height: auto;
+    }
+
+    .auth-container {
+        margin: auto;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 16px;
+    }
+}
+
+/* Login Animation Canvas */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    /* Let clicks pass through if needed, but we track mouse */
+}
+
+.auth-container {
+    z-index: 1;
+    /* Ensure it's above canvas */
+}

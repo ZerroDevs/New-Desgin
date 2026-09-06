@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد البريد الإلكتروني - متجر زيرونكس</title>
+    <link rel="icon" type="image/png" href="https://assets.zeronux.store/Logo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="Style/auth.css">
+
+    <style>
+        /* Specific overrides for verification page if needed */
+        .verification-message {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            font-size: 32px;
+        }
+
+        .resend-link {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            text-decoration: underline;
+            cursor: pointer;
+            font-family: inherit;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        .resend-link:disabled {
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <!-- Logo Header -->
+        <div class="auth-header">
+            <a href="index.html">
+                <img src="https://assets.zeronux.store/Logo.png" alt="ZeroNux Store">
+            </a>
+            <h2>تحقق من صندوق الوارد 📩</h2>
+        </div>
+
+        <div id="login-box"> <!-- Reusing login-box container style -->
+            <div class="input-group" style="text-align: center;">
+                <p class="verification-message">
+                    لقد أرسلنا رابط تفعيل إلى بريدك الإلكتروني.<br>
+                    يرجى النقر على الرابط لتفعيل حسابك والمتابعة.
+                </p>
+
+                <div
+                    style="background: rgba(255, 187, 51, 0.1); border: 1px solid rgba(255, 187, 51, 0.2); padding: 12px; border-radius: 12px; font-size: 13px; color: #ffbb33; margin-bottom: 20px; text-align: right;">
+                    ⚠️ لم يصلك البريد؟ تحقق من مجلد "الرسائل غير المرغوب فيها" (Spam).
+                </div>
+
+                <div id="status-message" class="auth-error" style="display: none;"></div>
+                <div id="success-message" class="auth-error"
+                    style="display: none; background: rgba(0, 200, 81, 0.1); color: #00C851; border-color: #00C851;">
+                </div>
+
+                <button id="resend-btn" class="submit-btn" style="margin-bottom: 15px;">
+                    إعادة إرسال الرابط <span id="timer"></span>
+                </button>
+
+                <div class="toggle-auth">
+                    <a href="login.html">العودة لتسجيل الدخول</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="Scripts/firebase-config.js"></script>
+
+    <!-- Page Logic -->
+    <script src="Scripts/verify-email.js"></script>
+
+</body>
+
+</html>
