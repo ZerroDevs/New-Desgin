@@ -138,6 +138,26 @@ document.addEventListener('DOMContentLoaded', () => {
         headerContainer.innerHTML = headerHTML;
     }
 
+    // Ensure ambient luxury background layer is present
+    if (!document.querySelector('.ambient-bg-layer')) {
+        const bgLayer = document.createElement('div');
+        bgLayer.className = 'ambient-bg-layer';
+        bgLayer.setAttribute('aria-hidden', 'true');
+        bgLayer.innerHTML = `
+            <div class="ambient-grid-overlay"></div>
+            <div class="ambient-glow-shape ambient-glow-1"></div>
+            <div class="ambient-glow-shape ambient-glow-2"></div>
+            <div class="ambient-glow-shape ambient-glow-3"></div>
+            <div class="ambient-glow-shape ambient-glow-4"></div>
+            <div class="ambient-particle p-1"></div>
+            <div class="ambient-particle p-2"></div>
+            <div class="ambient-particle p-3"></div>
+            <div class="ambient-particle p-4"></div>
+            <div class="ambient-particle p-5"></div>
+            <div class="ambient-particle p-6"></div>
+        `;
+        document.body.insertBefore(bgLayer, document.body.firstChild);
+    }
 
     // Initialize Mobile Menu and Bottom Nav immediately
     initMobileMenuLogic();
