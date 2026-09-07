@@ -2492,22 +2492,28 @@ document.getElementById('image-file').addEventListener('change', function (e) {
     handleImageUpload(e.target.files[0], 'product-image', 'image-file');
 });
 
+// Additional Images State
+let currentAdditionalImages = [];
+
 // Additional Images Handling with Compression
-document.getElementById('additional-images-file').addEventListener('change', function (e) {
-    const files = Array.from(e.target.files);
+const addImgInput = document.getElementById('additional-images-file');
+if (addImgInput) {
+    addImgInput.addEventListener('change', function (e) {
+        const files = Array.from(e.target.files);
 
-    if (currentAdditionalImages.length + files.length > 5) {
-        showNotification('لا يمكن إضافة أكثر من 5 صور إضافية.', 'error');
+        if (currentAdditionalImages.length + files.length > 5) {
+            showNotification('لا يمكن إضافة أكثر من 5 صور إضافية.', 'error');
+            this.value = '';
+            return;
+        }
+
+        files.forEach(file => {
+            handleImageUpload(file, null, null, true);
+        });
+
         this.value = '';
-        return;
-    }
-
-    files.forEach(file => {
-        handleImageUpload(file, null, null, true);
     });
-
-    this.value = '';
-});
+}
 
 // Generic Image Handler
 function handleImageUpload(file, inputId, fileInputId, isAdditional = false) {
@@ -2597,36 +2603,7 @@ function compressImage(file, maxWidth, quality) {
     });
 }
 
-// Additional Images Handling
-let currentAdditionalImages = [];
 
-document.getElementById('additional-images-file').addEventListener('change', function (e) {
-    const files = Array.from(e.target.files);
-
-    // Check limits
-    if (currentAdditionalImages.length + files.length > 5) {
-        showNotification('لا يمكن إضافة أكثر من 5 صور إضافية.', 'error');
-        this.value = '';
-        return;
-    }
-
-    files.forEach(file => {
-        if (file.size > 1024 * 1024) {
-            showNotification(`حجم الملف ${file.name} كبير جداً (يجب أن يكون أقل من 1 ميجابايت).`, 'error');
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            currentAdditionalImages.push(e.target.result);
-            renderAdditionalImages();
-        };
-        reader.readAsDataURL(file);
-    });
-
-    // Clear input so same files can be selected again if needed (though we handle duplicates via array)
-    this.value = '';
-});
 
 function renderAdditionalImages() {
     const container = document.getElementById('additional-images-preview');
@@ -2793,12 +2770,15 @@ window.editProduct = function (id) {
 
         // Load Gallery
         if (product.additionalImages) {
-            currentAdditionalImages = product.additionalImages;
-            renderAdditionalImages();
+            currentAdditionalImages = Array.isArray(product.additionalImages) 
+                ? [...product.additionalImages] 
+                : Object.values(product.additionalImages);
+        } else if (product.images && Array.isArray(product.images) && product.images.length > 1) {
+            currentAdditionalImages = product.images.slice(1);
         } else {
             currentAdditionalImages = [];
-            renderAdditionalImages();
         }
+        renderAdditionalImages();
 
         editingProductId = id;
         document.getElementById('form-title').textContent = 'تعديل المنتج';

@@ -1329,6 +1329,11 @@ function addDynamicStyles() {
 // Product details routing - Navigate directly to dedicated product page
 function showProductDetails(productId) {
     if (!productId) return;
+    const isAlreadyOnProductPage = window.location.pathname.includes('product.html');
+    const currentParamId = new URLSearchParams(window.location.search).get('id') || new URLSearchParams(window.location.search).get('product');
+    if (isAlreadyOnProductPage && (currentParamId === String(productId) || !currentParamId)) {
+        return; // Already on this page, do not reload!
+    }
     window.location.href = `product.html?id=${encodeURIComponent(productId)}`;
 }
 
@@ -1898,10 +1903,12 @@ function loadProductsFromFirebase() {
             }
         }
 
-        if (productIdFromUrl && products[productIdFromUrl]) {
-            setTimeout(() => {
-                showProductDetails(productIdFromUrl);
-            }, 400);
+        if (!window.location.pathname.includes('product.html')) {
+            if (productIdFromUrl && products[productIdFromUrl]) {
+                setTimeout(() => {
+                    showProductDetails(productIdFromUrl);
+                }, 400);
+            }
         }
     });
 }
@@ -2205,13 +2212,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('New Desgin Store initialized successfully!');
 
-    // Check for product ID in URL for direct modal access
-    const urlParams = new URLSearchParams(window.location.search);
-    const directProductId = urlParams.get('id') || urlParams.get('product');
-    if (directProductId) {
-        setTimeout(() => {
-            showProductDetails(directProductId);
-        }, 500);
+    // Check for product ID in URL for direct product redirection on homepage or catalog
+    if (!window.location.pathname.includes('product.html')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const directProductId = urlParams.get('id') || urlParams.get('product');
+        if (directProductId) {
+            setTimeout(() => {
+                showProductDetails(directProductId);
+            }, 500);
+        }
     }
 });
 
